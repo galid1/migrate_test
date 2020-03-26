@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -40,4 +42,24 @@ class UserEntityTest {
                 .build());
     }
 
+    @Test
+    @Transactional
+    public void whenRegisterCardThenUserCardIsNotNull() throws Exception {
+        //given, when
+        userEntity.registerCard(1l);
+
+        //then
+        assertThat(userEntity.getUserCardId(), is(not(equalTo(null))));
+    }
+
+    @Test
+    @Transactional
+    public void whenReturnCardThenUserCardIsNull() throws Exception{
+        //given, when
+        userEntity.registerCard(1l);
+        userEntity.returnCard();
+
+        //then
+        assertThat(userEntity.getUserCardId(), is(equalTo(null)));
+    }
 }

@@ -19,6 +19,8 @@ public class UserEntity extends BaseEntity {
     private String deviceId;
     private String nickname;
 
+    private Long userCardId;
+
     @Builder
     public UserEntity(String deviceId, String nickname) {
         this.setDeviceId(deviceId);
@@ -36,5 +38,17 @@ public class UserEntity extends BaseEntity {
         if(nickname == null || nickname.length() < 3)
             throw new IllegalArgumentException("Nickname은 3글자 이상이어야합니다.");
         this.nickname = nickname;
+    }
+
+    public void registerCard(long userCardId) {
+        if(this.userCardId != null)
+            throw new IllegalStateException("이미 등록된 카드가 존재합니다.");
+        this.userCardId = userCardId;
+    }
+
+    public void returnCard() {
+        if(this.userCardId == null)
+            throw new IllegalStateException("등록된 카드가 존재하지 않습니다.");
+        this.userCardId = null;
     }
 }
