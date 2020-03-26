@@ -6,6 +6,8 @@ import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardReposito
 import com.galid.card_refund.domains.refund.usercard.domain.UserCardEntity;
 import com.galid.card_refund.domains.refund.usercard.domain.UserCardInformation;
 import com.galid.card_refund.domains.refund.usercard.domain.UserCardRepository;
+import com.galid.card_refund.domains.user.domain.UserEntity;
+import com.galid.card_refund.domains.user.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,15 +18,19 @@ public class StoredCardRegisterService {
     private StoredCardRepository storedCardRepository;
     @Autowired
     private UserCardRepository userCardRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional
-    public void registerUser(long userId, StoredCardRegisterRequest request) {
+    public void registerCard(long userId, StoredCardRegisterRequest request) {
         StoredCardEntity storedCardEntity = storedCardRepository.findByCardInformation_CardNum(request.getCardNum())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드번호입니다."));
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
         long userCardId = createUserCard(request);
-
-        storedCardEntity.registerUser(toCardRegistration(userId, userCardId, request));
+        userEntity.registerCard(userCardId);
+        storedCardEntity.register(toCardRegistration(userId, userCardId, request));
     }
 
     private CardRegistration toCardRegistration(long userId, long userCardId, StoredCardRegisterRequest request) {

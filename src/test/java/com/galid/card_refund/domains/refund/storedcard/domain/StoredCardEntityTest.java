@@ -1,12 +1,10 @@
 package com.galid.card_refund.domains.refund.storedcard.domain;
 
-import org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
@@ -14,10 +12,10 @@ public class StoredCardEntityTest {
     @Autowired
     private StoredCardRepository storedCardRepository;
 
-    private String TEST_RIGHT_CARD_NUM = "1111111111111111";
-    private String TEST_WRONG_CARD_NUM = "2222";
+    private String RIGHT_CARD_NUM = "1111111111111111";
+    private String WRONG_CARD_NUM = "2222";
 
-    private String TEST_WRONG_SERIAL = "AAAA";
+    private String WRONG_SERIAL = "AAAA";
 
     private StoredCardEntity savedEntity = null;
 
@@ -25,7 +23,7 @@ public class StoredCardEntityTest {
     public void init() {
         StoredCardEntity entity = StoredCardEntity.builder()
                 .cardInformation(StoredCardInformation.builder()
-                        .cardNum(TEST_RIGHT_CARD_NUM)
+                        .cardNum(RIGHT_CARD_NUM)
                         .build()
                 )
                 .build();
@@ -39,7 +37,7 @@ public class StoredCardEntityTest {
         //given, when, then
         Assertions.assertThrows(IllegalArgumentException.class, () -> StoredCardEntity.builder()
                 .cardInformation(StoredCardInformation.builder()
-                        .cardNum(TEST_WRONG_CARD_NUM)
+                        .cardNum(WRONG_CARD_NUM)
                         .build()
                 )
                 .build());
@@ -66,12 +64,12 @@ public class StoredCardEntityTest {
         CardRegistration cardRegistration = CardRegistration.builder()
                 .userCardId(1l)
                 .userId(1l)
-                .cardNum(TEST_RIGHT_CARD_NUM)
+                .cardNum(RIGHT_CARD_NUM)
                 .serial(serial)
                 .build();
 
         // when
-        savedEntity.registerUser(cardRegistration);
+        savedEntity.register(cardRegistration);
 
         // then
         Assertions.assertNotEquals(savedEntity.getOwnerId(), null);
@@ -86,13 +84,13 @@ public class StoredCardEntityTest {
         CardRegistration cardRegistration = CardRegistration.builder()
                 .userCardId(1l)
                 .userId(1l)
-                .cardNum(TEST_RIGHT_CARD_NUM)
-                .serial(TEST_WRONG_SERIAL)
+                .cardNum(RIGHT_CARD_NUM)
+                .serial(WRONG_SERIAL)
                 .build();
 
         // when, then
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> savedEntity.registerUser(cardRegistration));
+                () -> savedEntity.register(cardRegistration));
     }
 
     @Test
@@ -103,11 +101,11 @@ public class StoredCardEntityTest {
         CardRegistration cardRegistration = CardRegistration.builder()
                 .userCardId(1l)
                 .userId(1l)
-                .cardNum(TEST_RIGHT_CARD_NUM)
+                .cardNum(RIGHT_CARD_NUM)
                 .serial(serial)
                 .build();
 
-        savedEntity.registerUser(cardRegistration);
+        savedEntity.register(cardRegistration);
 
         // when
         savedEntity.initCard();

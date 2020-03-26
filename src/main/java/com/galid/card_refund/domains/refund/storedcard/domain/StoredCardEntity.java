@@ -13,8 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class StoredCardEntity extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue
     private long storedCardId;
 
     @Embedded
@@ -32,7 +31,7 @@ public class StoredCardEntity extends BaseEntity {
         cardState = StoredCardState.UNREGISTERED;
     }
 
-    public void registerUser(CardRegistration cardRegistration) {
+    public void register(CardRegistration cardRegistration) {
         this.verifyRegistrableState();
         this.verifyRegistration(cardRegistration);
 
