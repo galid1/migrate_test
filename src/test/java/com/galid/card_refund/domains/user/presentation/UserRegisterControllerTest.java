@@ -1,7 +1,7 @@
 package com.galid.card_refund.domains.user.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.galid.card_refund.domains.user.service.UserRegisterRequest;
+import com.galid.card_refund.domains.user.service.request_response.UserRegisterRequest;
 import com.galid.card_refund.domains.user.service.UserRegisterService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

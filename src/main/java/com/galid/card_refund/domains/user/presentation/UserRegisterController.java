@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.user.presentation;
 
-import com.galid.card_refund.domains.user.service.UserRegisterRequest;
+import com.galid.card_refund.domains.user.service.request_response.UserRegisterRequest;
 import com.galid.card_refund.domains.user.service.UserRegisterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
