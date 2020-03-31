@@ -2,16 +2,15 @@ package com.galid.card_refund.domains.user.service;
 
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
-public class UserRegisterService {
-    private UserRepository userRepository;
 
-    public UserRegisterService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+@Service
+@RequiredArgsConstructor
+public class UserRegisterService {
+    private final UserRepository userRepository;
 
     @Transactional
     public long registerUser(UserRegisterRequest request) {

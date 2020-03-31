@@ -8,20 +8,17 @@ import com.galid.card_refund.domains.refund.usercard.domain.UserCardInformation;
 import com.galid.card_refund.domains.refund.usercard.domain.UserCardRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class UserRegisterCardService {
-    @Autowired
-    private StoredCardRepository storedCardRepository;
-    @Autowired
-    private UserCardRepository userCardRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final StoredCardRepository storedCardRepository;
+    private final UserCardRepository userCardRepository;
+    private final UserRepository userRepository;
 
     public void registerCard(long userId, UserRegisterCardRequest request) {
         StoredCardEntity storedCardEntity = storedCardRepository.findByCardInformation_CardNum(request.getCardNum())
