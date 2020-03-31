@@ -3,7 +3,11 @@ server:
 
 spring:
   profiles:
-    active: local
+    active: test
+
+---
+spring:
+  profiles: local
 
   jpa:
     properties:
@@ -12,5 +16,9 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+---
+spring:
+  profiles: test
 
 
