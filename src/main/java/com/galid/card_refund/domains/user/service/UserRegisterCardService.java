@@ -1,4 +1,4 @@
-package com.galid.card_refund.domains.refund.storedcard.service;
+package com.galid.card_refund.domains.user.service;
 
 import com.galid.card_refund.domains.refund.storedcard.domain.CardRegistration;
 import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardEntity;
@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Service
-public class StoredCardRegisterService {
+@Transactional
+public class UserRegisterCardService {
     @Autowired
     private StoredCardRepository storedCardRepository;
     @Autowired
@@ -21,8 +23,7 @@ public class StoredCardRegisterService {
     @Autowired
     private UserRepository userRepository;
 
-    @Transactional
-    public void registerCard(long userId, StoredCardRegisterRequest request) {
+    public void registerCard(long userId, UserRegisterCardRequest request) {
         StoredCardEntity storedCardEntity = storedCardRepository.findByCardInformation_CardNum(request.getCardNum())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드번호입니다."));
         UserEntity userEntity = userRepository.findById(userId)
@@ -33,7 +34,7 @@ public class StoredCardRegisterService {
         storedCardEntity.register(toCardRegistration(userId, userCardId, request));
     }
 
-    private CardRegistration toCardRegistration(long userId, long userCardId, StoredCardRegisterRequest request) {
+    private CardRegistration toCardRegistration(long userId, long userCardId, UserRegisterCardRequest request) {
         return CardRegistration.builder()
                 .cardNum(request.getCardNum())
                 .serial(request.getSerial())
@@ -42,7 +43,7 @@ public class StoredCardRegisterService {
                 .build();
     }
 
-    private long createUserCard(StoredCardRegisterRequest request) {
+    private long createUserCard(UserRegisterCardRequest request) {
         UserCardEntity cardEntity = UserCardEntity.builder()
                 .userCardInformation(UserCardInformation.builder()
                         .cardNum(request.getCardNum())
