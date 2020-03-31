@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -19,7 +21,12 @@ public class UserEntity extends BaseEntity {
     private String deviceId;
     private String nickname;
 
-    private Long userCardId;
+    private Long cardId;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "user_card_usage_history",
+            joinColumns = @JoinColumn(name = "user_id"))
+    private List<UsageHistory> usageHistoryList = new ArrayList<>();
 
     @Builder
     public UserEntity(String deviceId, String nickname) {
@@ -40,15 +47,25 @@ public class UserEntity extends BaseEntity {
         this.nickname = nickname;
     }
 
-    public void registerCard(long userCardId) {
-        if(this.userCardId != null)
+    public void registerCard(long cardId) {
+        if(this.cardId != null)
             throw new IllegalStateException("이미 등록된 카드가 존재합니다.");
-        this.userCardId = userCardId;
+        this.cardId = cardId;
     }
 
     public void returnCard() {
-        if(this.userCardId == null)
-            throw new IllegalStateException("등록된 카드가 존재하지 않습니다.");
-        this.userCardId = null;
+        this.verifyIsRegisteredCard();
+        this.cardId = null;
     }
+
+    public void recordCardUsage(UsageHistory usageHistory) {
+        this.verifyIsRegisteredCard();
+        this.usageHistoryList.add(usageHistory);
+    }
+
+    private void verifyIsRegisteredCard() {
+        if(this.cardId == null)
+            throw new IllegalStateException("카드가 등록된 상태가 아닙니다.");
+    }
+
 }

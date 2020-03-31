@@ -9,7 +9,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CardRegistration {
     private long userId;
-    private long userCardId;
     private String serial;
     private String cardNum;
 }

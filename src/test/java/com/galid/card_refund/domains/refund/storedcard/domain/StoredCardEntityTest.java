@@ -62,7 +62,6 @@ public class StoredCardEntityTest {
         String serial = savedEntity.getCardInformation().getSerial();
 
         CardRegistration cardRegistration = CardRegistration.builder()
-                .userCardId(1l)
                 .userId(1l)
                 .cardNum(RIGHT_CARD_NUM)
                 .serial(serial)
@@ -73,7 +72,6 @@ public class StoredCardEntityTest {
 
         // then
         Assertions.assertNotEquals(savedEntity.getOwnerId(), null);
-        Assertions.assertNotEquals(savedEntity.getUserCardId(), null);
         Assertions.assertEquals(savedEntity.getCardState(), StoredCardState.REGISTERED);
     }
 
@@ -82,7 +80,6 @@ public class StoredCardEntityTest {
     public void whenRegisterUserWithWrongSerialThenThrowException() throws Exception {
         // given
         CardRegistration cardRegistration = CardRegistration.builder()
-                .userCardId(1l)
                 .userId(1l)
                 .cardNum(RIGHT_CARD_NUM)
                 .serial(WRONG_SERIAL)
@@ -99,7 +96,6 @@ public class StoredCardEntityTest {
         // given
         String serial = savedEntity.getCardInformation().getSerial();
         CardRegistration cardRegistration = CardRegistration.builder()
-                .userCardId(1l)
                 .userId(1l)
                 .cardNum(RIGHT_CARD_NUM)
                 .serial(serial)
@@ -108,7 +104,7 @@ public class StoredCardEntityTest {
         savedEntity.register(cardRegistration);
 
         // when
-        savedEntity.initCard();
+        savedEntity.returnCard();
 
         // then
         Assertions.assertEquals(savedEntity.getCardState(), StoredCardState.UNREGISTERED);

@@ -44,22 +44,22 @@ class UserEntityTest {
 
     @Test
     @Transactional
-    public void whenRegisterCardThenUserCardIsNotNull() throws Exception {
+    public void whenRegisterCardThenCardIsNotNull() throws Exception {
         //given, when
         userEntity.registerCard(1l);
 
         //then
-        assertThat(userEntity.getUserCardId(), is(not(equalTo(null))));
+        assertThat(userEntity.getCardId(), is(not(equalTo(null))));
     }
 
     @Test
     @Transactional
-    public void whenReturnCardThenUserCardIsNull() throws Exception{
+    public void whenReturnCardThenCardIsNull() throws Exception{
         //given, when
         userEntity.registerCard(1l);
         userEntity.returnCard();
 
         //then
-        assertThat(userEntity.getUserCardId(), is(equalTo(null)));
+        assertThat(userEntity.getCardId(), is(equalTo(null)));
     }
 }

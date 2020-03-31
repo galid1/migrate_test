@@ -23,7 +23,6 @@ public class StoredCardEntity extends BaseEntity {
     private StoredCardState cardState;
 
     private Long ownerId;
-    private Long userCardId;
 
     @Builder
     public StoredCardEntity(StoredCardInformation cardInformation) {
@@ -36,7 +35,6 @@ public class StoredCardEntity extends BaseEntity {
         this.verifyRegistration(cardRegistration);
 
         this.ownerId = cardRegistration.getUserId();
-        this.userCardId = cardRegistration.getUserCardId();
         this.cardState = StoredCardState.REGISTERED;
     }
 
@@ -50,18 +48,19 @@ public class StoredCardEntity extends BaseEntity {
             throw new IllegalArgumentException("serial 번호가 일치하지 않습니다.");
     }
 
-    public void initCard() {
+    public void returnCard() {
         this.verifyRegistered();
+        this.initCard();
+    }
 
+    public void initCard() {
         this.cardInformation.renewSerial();
         this.ownerId = null;
-        this.userCardId = null;
         this.cardState = StoredCardState.UNREGISTERED;
     }
 
     public void lostCard() {
         this.verifyRegistered();
-
         this.cardState = StoredCardState.LOST;
     }
 
