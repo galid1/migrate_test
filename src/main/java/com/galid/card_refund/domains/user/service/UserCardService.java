@@ -3,9 +3,6 @@ package com.galid.card_refund.domains.user.service;
 import com.galid.card_refund.domains.refund.storedcard.domain.CardRegistration;
 import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardEntity;
 import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardRepository;
-import com.galid.card_refund.domains.refund.usercard.domain.UserCardEntity;
-import com.galid.card_refund.domains.refund.usercard.domain.UserCardInformation;
-import com.galid.card_refund.domains.refund.usercard.domain.UserCardRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserRegisterCardRequest;
@@ -16,9 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class UserRegisterCardService {
+public class UserCardService {
     private final StoredCardRepository storedCardRepository;
-    private final UserCardRepository userCardRepository;
     private final UserRepository userRepository;
 
     public void registerCard(long userId, UserRegisterCardRequest request) {
@@ -27,29 +23,26 @@ public class UserRegisterCardService {
         UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
-        long userCardId = createUserCard(request);
-        userEntity.registerCard(userCardId);
-        storedCardEntity.register(toCardRegistration(userId, userCardId, request));
+        storedCardEntity.register(toCardRegistration(userId, request));
+        userEntity.registerCard(storedCardEntity.getStoredCardId());
     }
 
-    private CardRegistration toCardRegistration(long userId, long userCardId, UserRegisterCardRequest request) {
+    private CardRegistration toCardRegistration(long userId, UserRegisterCardRequest request) {
         return CardRegistration.builder()
                 .cardNum(request.getCardNum())
                 .serial(request.getSerial())
                 .userId(userId)
-                .userCardId(userCardId)
                 .build();
     }
 
-    private long createUserCard(UserRegisterCardRequest request) {
-        UserCardEntity cardEntity = UserCardEntity.builder()
-                .userCardInformation(UserCardInformation.builder()
-                        .cardNum(request.getCardNum())
-                        .serial(request.getSerial())
-                        .build())
-                .build();
+    public void returnCard(long userId) {
+        UserEntity findUser = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
-        return userCardRepository.save(cardEntity)
-                .getUserCardId();
+        storedCardRepository.findById(findUser.getCardId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."))
+                .returnCard();
+
+        findUser.returnCard();
     }
 }

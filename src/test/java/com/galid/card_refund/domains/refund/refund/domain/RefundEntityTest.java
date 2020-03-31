@@ -9,11 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class RefundEntityTest {
+public class RefundEntityTest {
     @Autowired
     private RefundRepository refundRepository;
 
@@ -22,7 +21,7 @@ class RefundEntityTest {
     @BeforeEach
     public void init() {
         this.refundEntity = RefundEntity.builder()
-                .refundLineList(new ArrayList<RefundLine>())
+                .estimatedRefundLineList(new ArrayList<RefundLine>())
                 .build();
 
         refundRepository.save(refundEntity);
