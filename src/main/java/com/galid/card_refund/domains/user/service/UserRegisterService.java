@@ -1,5 +1,6 @@
 package com.galid.card_refund.domains.user.service;
 
+import com.galid.card_refund.common.file.S3FileUploader;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserRegisterRequest;
@@ -12,21 +13,27 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserRegisterService {
     private final UserRepository userRepository;
+    private final S3FileUploader s3FileUploader;
+
+    private String IMAGE_PATH_KEY = "user";
 
     @Transactional
-    public long registerUser(UserRegisterRequest request) {
+    public long registerUser(UserRegisterRequest request, byte[] imageByteArray) {
+        validateDuplicateUser(request.getDeviceId());
+
+        String passPortImagePath = s3FileUploader.uploadFile(IMAGE_PATH_KEY, imageByteArray);
+
         UserEntity newUser = UserEntity.builder()
                 .deviceId(request.getDeviceId())
                 .nickname(request.getNickname())
+                .passPortImagePath(passPortImagePath)
                 .build();
-
-        validateDuplicateUser(newUser);
 
         return this.userRepository.save(newUser).getUserId();
     }
 
-    private void validateDuplicateUser(UserEntity userEntity) {
-        if(userRepository.findByDeviceId(userEntity.getDeviceId()).isPresent())
+    private void validateDuplicateUser(String deviceId) {
+        if(userRepository.findByDeviceId(deviceId).isPresent())
             throw new IllegalArgumentException("이미 가입된 디바이스 ID 입니다.");
     }
 }

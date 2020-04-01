@@ -15,6 +15,7 @@ import java.util.UUID;
 
 @Component
 public class S3FileUploader {
+    private String AWS_HOST_PATH = "https://card-refund.s3.ap-northeast-2.amazonaws.com/";
     private String BUCKET_NAME = "card-refund";
 
     private AmazonS3 s3Client;
@@ -26,17 +27,20 @@ public class S3FileUploader {
                 .build();
     }
 
-    public void uploadFile(String key, byte[] byteArray) {
+    public String uploadFile(String key, byte[] byteArray) {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(MediaType.IMAGE_PNG_VALUE);
         objectMetadata.setContentLength(byteArray.length);
 
+        String uploadPath = createObjectPath(key);
         PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET_NAME,
-                createObjectPath(key),
+                uploadPath,
                 new ByteArrayInputStream(byteArray),
                 objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead);
 
         s3Client.putObject(putObjectRequest);
+
+        return AWS_HOST_PATH + uploadPath;
     }
 
     private String createObjectPath(String key) {

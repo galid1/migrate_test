@@ -20,6 +20,7 @@ public class UserEntity extends BaseEntity {
 
     private String deviceId;
     private String nickname;
+    private String passPortImagePath;
 
     private Long cardId;
 
@@ -29,13 +30,14 @@ public class UserEntity extends BaseEntity {
     private List<UsageHistory> usageHistoryList = new ArrayList<>();
 
     @Builder
-    public UserEntity(String deviceId, String nickname) {
+    public UserEntity(String deviceId, String nickname, String passPortImagePath) {
         this.setDeviceId(deviceId);
         this.setNickname(nickname);
+        this.passPortImagePath = passPortImagePath;
     }
 
     private void setDeviceId(String deviceId) {
-        if (deviceId == null)
+        if (deviceId == null || deviceId.length() < 1)
             throw new IllegalArgumentException("Device ID를 입력하세요.");
 
         this.deviceId = deviceId;

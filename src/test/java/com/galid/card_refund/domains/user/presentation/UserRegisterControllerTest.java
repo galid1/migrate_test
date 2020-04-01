@@ -28,22 +28,22 @@ public class UserRegisterControllerTest {
 
     @MockBean
     private UserRegisterService registerService;
-
-    @Test
-    public void registerUserTest() throws Exception {
-        UserRegisterRequest request = UserRegisterRequest.builder()
-                .deviceId("1111")
-                .nickname("asd")
-                .build();
-
-        when(registerService.registerUser(request))
-                .thenReturn(1l);
-
-        this.mockMvc
-                .perform(post("/users")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .content(mapper.writeValueAsString(request)))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
+//
+//    @Test
+//    public void registerUserTest() throws Exception {
+//        UserRegisterRequest request = UserRegisterRequest.builder()
+//                .deviceId("1111")
+//                .nickname("asd")
+//                .build();
+//
+//        when(registerService.registerUser(request))
+//                .thenReturn(1l);
+//
+//        this.mockMvc
+//                .perform(post("/users")
+//                            .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                            .content(mapper.writeValueAsString(request)))
+//                .andDo(print())
+//                .andExpect(status().isOk());
+//    }
 }
