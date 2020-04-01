@@ -28,8 +28,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.15'
 
-    // https://mvnrepository.com/artifact/com.github.gavlyukovskiy/p6spy-spring-boot-starter
+    // p6spy
     implementation group: 'com.github.gavlyukovskiy', name: 'p6spy-spring-boot-starter', version: '1.6.0'
+
+    // software.amazon.awssdk/bom
+    implementation platform('software.amazon.awssdk:bom:2.5.29')
+    // aws-java-sdk-s3
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.754'
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
