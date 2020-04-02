@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface StoredCardRepository extends JpaRepository<StoredCardEntity, Long> {
     Optional<StoredCardEntity> findByCardInformation_CardNum(String cardNum);
+
+    Optional<StoredCardEntity> findByOwnerId(Long ownerId);
 }
