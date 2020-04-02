@@ -1,12 +1,14 @@
 package com.galid.card_refund.domains.refund.storedcard.domain;
 
 import com.galid.card_refund.common.config.logging.BaseEntity;
+import com.galid.card_refund.common.model.Money;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "stored_card")
@@ -22,11 +24,18 @@ public class StoredCardEntity extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private StoredCardState cardState;
 
+    private CardInitMoney initMoney;
+    private LocalDate registeredDate;
+    private Money remainAmount;
+
     private Long ownerId;
 
     @Builder
-    public StoredCardEntity(StoredCardInformation cardInformation) {
+    public StoredCardEntity(StoredCardInformation cardInformation, CardInitMoney initMoney) {
         this.cardInformation = cardInformation;
+        this.registeredDate = LocalDate.now();
+        this.initMoney = initMoney;
+        this.remainAmount = initMoney.getAmount();
         cardState = StoredCardState.UNREGISTERED;
     }
 
@@ -56,6 +65,8 @@ public class StoredCardEntity extends BaseEntity {
     public void initCard() {
         this.cardInformation.renewSerial();
         this.ownerId = null;
+        this.registeredDate = LocalDate.now();
+        this.remainAmount = initMoney.getAmount();
         this.cardState = StoredCardState.UNREGISTERED;
     }
 
