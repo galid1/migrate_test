@@ -1,13 +1,12 @@
 package com.galid.card_refund.domains.refund.refund.domain;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import com.galid.card_refund.common.model.Money;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,48 +15,35 @@ public class RefundEntityTest {
     @Autowired
     private RefundRepository refundRepository;
 
-    private RefundEntity refundEntity;
-
-    @BeforeEach
-    public void init() {
-        this.refundEntity = RefundEntity.builder()
-                .estimatedRefundLineList(new ArrayList<RefundLine>())
-                .build();
-
-        refundRepository.save(refundEntity);
-    }
-    
     @Test
     @Transactional
     public void saveRefundEntityTest() throws Exception {
+        // given
+        double paymentAmount = 10.0;
+        double expectedRefundAmount = Math.floor(paymentAmount * 1 / 11);
+
+        RefundEntity savedEntity = RefundEntity.builder()
+                .requestRefundLine(Arrays.asList(new RefundLine[]{
+                    RefundLine.builder()
+                            .itemImageUrl("TEST")
+                            .paymentAmount(new Money(paymentAmount))
+                            .place("TEST")
+                            .build()
+                }))
+                .requestorId(1l)
+                .build();
+        refundRepository.save(savedEntity);
+
         // when
-        RefundEntity findEntity = refundRepository.findById(this.refundEntity.getRefundId())
+        RefundEntity findEntity = refundRepository.findById(savedEntity.getRefundId())
                 .get();
 
         // then
-        Assertions.assertEquals(refundEntity.getRefundId(), findEntity.getRefundId());
-        Assertions.assertEquals(refundEntity.getRefundState(), findEntity.getRefundState());
+        assertEquals(savedEntity.getRefundId(), findEntity.getRefundId());
+        assertEquals(savedEntity.getRefundState(), findEntity.getRefundState());
+        assertEquals(savedEntity.getRefundState(), RefundState.WAIT);
+        assertEquals(savedEntity.getTotalAmount().getValue(), paymentAmount);
+        assertEquals(savedEntity.getExpectRefundAmount().getValue(), expectedRefundAmount);
     }
 
-    @Test
-    public void whenEstimateThenStateIsComplete() throws Exception {
-        //given, when
-        this.estimateRefundRequest();
-
-        //then
-        assertEquals(this.refundEntity.getRefundState(), RefundState.COMPLETE);
-    }
-
-    @Test
-    public void whenEstimateRepeatThrowException() throws Exception {
-        //given
-        this.estimateRefundRequest();
-
-        //when, then
-        Assertions.assertThrows(IllegalStateException.class, () -> this.estimateRefundRequest());
-    }
-
-    private void estimateRefundRequest() {
-        this.refundEntity.estimateRefundRequest(new ArrayList<>());
-    }
 }

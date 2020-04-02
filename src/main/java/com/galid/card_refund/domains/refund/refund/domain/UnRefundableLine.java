@@ -10,8 +10,9 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class RefundLine {
+public class UnRefundableLine {
+    private String unRefundableReason;
     private String place;
-    private String itemImageUrl;
+    private String refundItemImageUrl;
     private Money paymentAmount;
 }
