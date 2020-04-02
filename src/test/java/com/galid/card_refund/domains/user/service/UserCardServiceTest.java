@@ -1,9 +1,6 @@
 package com.galid.card_refund.domains.user.service;
 
-import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardEntity;
-import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardInformation;
-import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardRepository;
-import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardState;
+import com.galid.card_refund.domains.refund.storedcard.domain.*;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserRegisterCardRequest;
@@ -44,6 +41,7 @@ public class UserCardServiceTest {
                 .cardInformation(StoredCardInformation.builder()
                         .cardNum(STORED_CARD_NUM)
                         .build())
+                .initMoney(CardInitMoney.TEN)
                 .build());
 
         UserRegisterCardRequest userRegisterCardRequest = new UserRegisterCardRequest(STORED_CARD_NUM, savedStoredCard.getCardInformation().getSerial());
@@ -60,12 +58,15 @@ public class UserCardServiceTest {
     @Test
     public void 존재하지_않는사용자_카드등록_예외() throws Exception {
         //given
-        StoredCardEntity savedStoredCard = storedCardRepository.save(StoredCardEntity.builder()
+        StoredCardEntity savedStoredCard = StoredCardEntity.builder()
                 .cardInformation(StoredCardInformation
                         .builder()
                         .cardNum(STORED_CARD_NUM)
                         .build())
-                .build());
+                .initMoney(CardInitMoney.TEN)
+                .build();
+
+        storedCardRepository.save(savedStoredCard);
 
         UserRegisterCardRequest userRegisterCardRequest = new UserRegisterCardRequest(STORED_CARD_NUM, savedStoredCard.getCardInformation().getSerial());
 
@@ -101,6 +102,7 @@ public class UserCardServiceTest {
                 .cardInformation(StoredCardInformation.builder()
                         .cardNum(STORED_CARD_NUM)
                         .build())
+                .initMoney(CardInitMoney.TEN)
                 .build());
 
         UserRegisterCardRequest userRegisterCardRequest = new UserRegisterCardRequest(STORED_CARD_NUM, savedStoredCard.getCardInformation().getSerial());
@@ -110,7 +112,7 @@ public class UserCardServiceTest {
         userCardService.returnCard(savedUserId);
 
         //then
-        assertEquals(savedUser.getCardId(), null);
+        assertEquals(savedUser.getCard(), null);
         assertEquals(savedStoredCard.getOwnerId(), null);
         assertEquals(savedStoredCard.getCardState(), StoredCardState.UNREGISTERED);
     }
