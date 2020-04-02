@@ -32,11 +32,23 @@ public class StoredCardEntity extends BaseEntity {
 
     @Builder
     public StoredCardEntity(StoredCardInformation cardInformation, CardInitMoney initMoney) {
-        this.cardInformation = cardInformation;
+        this.setCardInformation(cardInformation);
         this.registeredDate = LocalDate.now();
-        this.initMoney = initMoney;
+        this.setCardInitMoney(initMoney);
         this.remainAmount = initMoney.getAmount();
         cardState = StoredCardState.UNREGISTERED;
+    }
+
+    private void setCardInformation(StoredCardInformation cardInformation) {
+        if(cardInformation == null)
+            throw new IllegalArgumentException("Card 번호는 필수 입력 값입니다.");
+        this.cardInformation = cardInformation;
+    }
+
+    private void setCardInitMoney(CardInitMoney initMoney) {
+        if(initMoney == null)
+            throw new IllegalArgumentException("카드의 초기금액은 필수 입력 값입니다.");
+        this.initMoney = initMoney;
     }
 
     public void register(CardRegistration cardRegistration) {
@@ -68,6 +80,11 @@ public class StoredCardEntity extends BaseEntity {
         this.registeredDate = LocalDate.now();
         this.remainAmount = initMoney.getAmount();
         this.cardState = StoredCardState.UNREGISTERED;
+    }
+
+    public void recordRemainAmount(Money remainAmount) {
+        verifyRegistered();
+        this.remainAmount = remainAmount;
     }
 
     public void lostCard() {
