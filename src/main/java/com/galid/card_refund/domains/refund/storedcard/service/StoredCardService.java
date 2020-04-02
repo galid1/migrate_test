@@ -5,12 +5,14 @@ import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardReposito
 import com.galid.card_refund.domains.refund.storedcard.service.request_response.CardRegistrationConfirmResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class StoredCardService {
     private final StoredCardRepository storedCardRepository;
 
+    @Transactional(readOnly = true)
     public CardRegistrationConfirmResponse confirmCardRegistration(Long ownerId) {
         StoredCardEntity cardEntity = storedCardRepository.findByOwnerId(ownerId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 등록한 카드정보가 없습니다."));
