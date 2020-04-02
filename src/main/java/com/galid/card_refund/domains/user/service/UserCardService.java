@@ -24,7 +24,7 @@ public class UserCardService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
         storedCardEntity.register(toCardRegistration(userId, request));
-        userEntity.registerCard(storedCardEntity.getStoredCardId());
+        userEntity.registerCard(storedCardEntity);
     }
 
     private CardRegistration toCardRegistration(long userId, UserRegisterCardRequest request) {
@@ -39,7 +39,7 @@ public class UserCardService {
         UserEntity findUser = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
-        storedCardRepository.findById(findUser.getCardId())
+        storedCardRepository.findById(findUser.getCard().getStoredCardId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."))
                 .returnCard();
 

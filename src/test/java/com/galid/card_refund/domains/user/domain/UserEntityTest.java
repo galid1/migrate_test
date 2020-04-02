@@ -1,5 +1,6 @@
 package com.galid.card_refund.domains.user.domain;
 
+import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,20 +47,20 @@ class UserEntityTest {
     @Transactional
     public void whenRegisterCardThenCardIsNotNull() throws Exception {
         //given, when
-        userEntity.registerCard(1l);
+        userEntity.registerCard(StoredCardEntity.builder().build());
 
         //then
-        assertThat(userEntity.getCardId(), is(not(equalTo(null))));
+        assertThat(userEntity.getCard(), is(not(equalTo(null))));
     }
 
     @Test
     @Transactional
     public void whenReturnCardThenCardIsNull() throws Exception{
         //given, when
-        userEntity.registerCard(1l);
+        userEntity.registerCard(StoredCardEntity.builder().build());
         userEntity.returnCard();
 
         //then
-        assertThat(userEntity.getCardId(), is(equalTo(null)));
+        assertThat(userEntity.getCard(), is(equalTo(null)));
     }
 }
