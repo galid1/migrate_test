@@ -1,6 +1,9 @@
 package com.galid.card_refund.domains.user.domain;
 
-import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardEntity;
+import com.galid.card_refund.common.model.Money;
+import com.galid.card_refund.domains.refund.storedcard.domain.CardEntity;
+import com.galid.card_refund.domains.refund.storedcard.domain.CardInformation;
+import com.galid.card_refund.domains.refund.storedcard.domain.CardInitMoney;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class UserEntityTest {
@@ -47,7 +49,12 @@ class UserEntityTest {
     @Transactional
     public void whenRegisterCardThenCardIsNotNull() throws Exception {
         //given, when
-        userEntity.registerCard(StoredCardEntity.builder().build());
+        userEntity.registerCard(CardEntity.builder()
+                .cardInformation(CardInformation.builder()
+                        .cardNum("1234123412341234")
+                        .build())
+                .initMoney(CardInitMoney.TEN)
+                .build());
 
         //then
         assertThat(userEntity.getCard(), is(not(equalTo(null))));
@@ -57,7 +64,12 @@ class UserEntityTest {
     @Transactional
     public void whenReturnCardThenCardIsNull() throws Exception{
         //given, when
-        userEntity.registerCard(StoredCardEntity.builder().build());
+        userEntity.registerCard(CardEntity.builder()
+                .cardInformation(CardInformation.builder()
+                        .cardNum("1234123412341234")
+                        .build())
+                .initMoney(CardInitMoney.TEN)
+                .build());
         userEntity.returnCard();
 
         //then
