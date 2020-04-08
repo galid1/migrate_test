@@ -23,6 +23,9 @@ public class UserEntity extends BaseEntity {
     private String nickname;
     private String passPortImagePath;
 
+    @Embedded
+    private UserInformation userInformation;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
     private StoredCardEntity card;
@@ -72,6 +75,10 @@ public class UserEntity extends BaseEntity {
     private void verifyIsRegisteredCard() {
         if(this.card == null)
             throw new IllegalStateException("카드가 등록된 상태가 아닙니다.");
+    }
+
+    public void addUserInformation(UserInformation userInformation) {
+        this.userInformation = userInformation;
     }
 
 }
