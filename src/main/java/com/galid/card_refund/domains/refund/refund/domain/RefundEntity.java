@@ -35,6 +35,7 @@ public class RefundEntity {
     @AttributeOverride(name = "value", column = @Column(name = "expect_refund_amount"))
     private Money expectRefundAmount;
 
+    @Getter(value = AccessLevel.PRIVATE)
     @ElementCollection
     @CollectionTable(
             name = "refundable_line",
@@ -42,6 +43,7 @@ public class RefundEntity {
     )
     private List<RefundLine> refundableLineList = new ArrayList<>();
 
+    @Getter(value = AccessLevel.PRIVATE)
     @ElementCollection
     @CollectionTable(
         name = "un_refundable_line",
@@ -79,17 +81,43 @@ public class RefundEntity {
                 .build();
     }
 
-    public void estimateRefundRequest(List<RefundLine> refundableLineList, List<UnRefundableLine> unRefundableLineList) {
+    public void estimate(List<RefundLine> refundableLineList, List<UnRefundableLine> unRefundableLineList) {
         verifyNotYetEstimate();
-        if(refundableLineList == null || unRefundableLineList == null)
-            throw new IllegalArgumentException("환급 가능, 불가능 내역은 필수값입니다.");
+        verifyEstimate(refundableLineList, unRefundableLineList);
+
         this.refundableLineList = refundableLineList;
+        this.unRefundableLineList = unRefundableLineList;
 
         this.refundState = RefundState.COMPLETE;
     }
+
+    private void verifyEstimate(List<RefundLine> refundableLineList, List<UnRefundableLine> unRefundableLineList) {
+        if(refundableLineList == null || unRefundableLineList == null)
+            throw new IllegalArgumentException("환급 가능, 불가능 내역은 필수값입니다.");
+
+        if(this.refundLineList.size() != refundLineList.size() + unRefundableLineList.size())
+            throw new IllegalArgumentException("모든 환급요청을 평가해야 합니다.");
+    }
+
 
     private void verifyNotYetEstimate() {
         if(this.refundState == RefundState.COMPLETE)
             throw new IllegalStateException("이미 평가한 환급요청입니다.");
     }
+
+    public List<RefundLine> getRefundableLineList() {
+        verifyIsEstimated();
+        return this.refundableLineList;
+    }
+
+    public List<UnRefundableLine> getUnRefundableLineList() {
+        verifyIsEstimated();
+        return this.unRefundableLineList;
+    }
+
+    private void verifyIsEstimated() {
+        if(this.refundState != RefundState.COMPLETE)
+            throw new IllegalStateException("아직 평가 되지 않은 환급 요청입니다.");
+    }
+
 }
