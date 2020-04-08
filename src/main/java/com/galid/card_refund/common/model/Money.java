@@ -9,6 +9,7 @@ import javax.persistence.Embeddable;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
+@EqualsAndHashCode
 public class Money {
     private double value;
 
