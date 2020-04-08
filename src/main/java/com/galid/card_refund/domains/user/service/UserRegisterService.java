@@ -1,5 +1,6 @@
 package com.galid.card_refund.domains.user.service;
 
+import com.amazonaws.util.Base64;
 import com.galid.card_refund.common.file.S3FileUploader;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
@@ -7,6 +8,8 @@ import com.galid.card_refund.domains.user.service.request_response.UserRegisterR
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
 
 
 @Service
@@ -18,10 +21,10 @@ public class UserRegisterService {
     private String IMAGE_PATH_KEY = "user";
 
     @Transactional
-    public long registerUser(UserRegisterRequest request, byte[] imageByteArray) {
+    public long registerUser(UserRegisterRequest request) {
         validateDuplicateUser(request.getDeviceId());
 
-        String passPortImagePath = s3FileUploader.uploadFile(IMAGE_PATH_KEY, imageByteArray);
+        String passPortImagePath = s3FileUploader.uploadFile(IMAGE_PATH_KEY, Base64.decode(request.getBase64PassPortImage()));
 
         UserEntity newUser = UserEntity.builder()
                 .deviceId(request.getDeviceId())
@@ -36,4 +39,5 @@ public class UserRegisterService {
         if(userRepository.findByDeviceId(deviceId).isPresent())
             throw new IllegalArgumentException("이미 가입된 디바이스 ID 입니다.");
     }
+
 }
