@@ -14,15 +14,15 @@ import java.time.LocalDate;
 @Table(name = "stored_card")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class StoredCardEntity extends BaseEntity {
+public class CardEntity extends BaseEntity {
     @Id @GeneratedValue
     private long storedCardId;
 
     @Embedded
-    private StoredCardInformation cardInformation;
+    private CardInformation cardInformation;
 
     @Enumerated(value = EnumType.STRING)
-    private StoredCardState cardState;
+    private CardState cardState;
 
     private CardInitMoney initMoney;
     private LocalDate registeredDate;
@@ -31,15 +31,15 @@ public class StoredCardEntity extends BaseEntity {
     private Long ownerId;
 
     @Builder
-    public StoredCardEntity(StoredCardInformation cardInformation, CardInitMoney initMoney) {
+    public CardEntity(CardInformation cardInformation, CardInitMoney initMoney) {
         this.setCardInformation(cardInformation);
         this.registeredDate = LocalDate.now();
         this.setCardInitMoney(initMoney);
         this.remainAmount = initMoney.getAmount();
-        cardState = StoredCardState.UNREGISTERED;
+        cardState = CardState.UNREGISTERED;
     }
 
-    private void setCardInformation(StoredCardInformation cardInformation) {
+    private void setCardInformation(CardInformation cardInformation) {
         if(cardInformation == null)
             throw new IllegalArgumentException("Card 번호는 필수 입력 값입니다.");
         this.cardInformation = cardInformation;
@@ -56,11 +56,11 @@ public class StoredCardEntity extends BaseEntity {
         this.verifyRegistration(cardRegistration);
 
         this.ownerId = cardRegistration.getUserId();
-        this.cardState = StoredCardState.REGISTERED;
+        this.cardState = CardState.REGISTERED;
     }
 
     private void verifyRegistrableState() {
-        if(this.cardState != StoredCardState.UNREGISTERED)
+        if(this.cardState != CardState.UNREGISTERED)
             throw new IllegalStateException("이미 등록되었거나, 분실상태의 카드입니다.");
     }
 
@@ -79,7 +79,7 @@ public class StoredCardEntity extends BaseEntity {
         this.ownerId = null;
         this.registeredDate = LocalDate.now();
         this.remainAmount = initMoney.getAmount();
-        this.cardState = StoredCardState.UNREGISTERED;
+        this.cardState = CardState.UNREGISTERED;
     }
 
     public void recordRemainAmount(Money remainAmount) {
@@ -89,11 +89,11 @@ public class StoredCardEntity extends BaseEntity {
 
     public void lostCard() {
         this.verifyRegistered();
-        this.cardState = StoredCardState.LOST;
+        this.cardState = CardState.LOST;
     }
 
     private void verifyRegistered() {
-        if(this.cardState != StoredCardState.REGISTERED)
+        if(this.cardState != CardState.REGISTERED)
             throw new IllegalArgumentException("이미 반납 또는 분실처리된 카드입니다.");
     }
 }

@@ -1,7 +1,7 @@
 package com.galid.card_refund.domains.user.domain;
 
 import com.galid.card_refund.common.config.logging.BaseEntity;
-import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardEntity;
+import com.galid.card_refund.domains.refund.storedcard.domain.CardEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +28,7 @@ public class UserEntity extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
-    private StoredCardEntity card;
+    private CardEntity card;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "user_card_usage_history",
@@ -55,7 +55,7 @@ public class UserEntity extends BaseEntity {
         this.nickname = nickname;
     }
 
-    public void registerCard(StoredCardEntity card) {
+    public void registerCard(CardEntity card) {
         if(this.card != null)
             throw new IllegalStateException("이미 등록된 카드가 존재합니다.");
         this.card = card;

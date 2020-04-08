@@ -40,7 +40,7 @@ public class UserRegisterServiceTest {
                 .build();
 
         //when
-        Long savedId = userRegisterService.registerUser(request, null);
+        Long savedId = userRegisterService.registerUser(request);
         UserEntity findEntity = userRepository.findById(savedId).get();
 
         //then
@@ -54,17 +54,19 @@ public class UserRegisterServiceTest {
         UserRegisterRequest requestOne = UserRegisterRequest.builder()
                 .nickname("KIM")
                 .deviceId("123123")
+                .base64PassPortImage("asd")
                 .build();
 
         UserRegisterRequest requestTwo = UserRegisterRequest.builder()
                 .nickname("JUN")
                 .deviceId("123123")
+                .base64PassPortImage("asd")
                 .build();
 
         //when, then
         assertThrows(IllegalArgumentException.class, () -> {
-            userRegisterService.registerUser(requestOne, null);
-            userRegisterService.registerUser(requestTwo, null);
+            userRegisterService.registerUser(requestOne);
+            userRegisterService.registerUser(requestTwo);
         });
     }
 }

@@ -18,7 +18,7 @@ public class UserCardServiceTest {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private StoredCardRepository storedCardRepository;
+    private CardRepository cardRepository;
 
     @Autowired
     private UserCardService userCardService;
@@ -37,8 +37,8 @@ public class UserCardServiceTest {
                 .nickname("KIM")
                 .build());
 
-        StoredCardEntity savedStoredCard = storedCardRepository.save(StoredCardEntity.builder()
-                .cardInformation(StoredCardInformation.builder()
+        CardEntity savedStoredCard = cardRepository.save(CardEntity.builder()
+                .cardInformation(CardInformation.builder()
                         .cardNum(STORED_CARD_NUM)
                         .build())
                 .initMoney(CardInitMoney.TEN)
@@ -58,15 +58,15 @@ public class UserCardServiceTest {
     @Test
     public void 존재하지_않는사용자_카드등록_예외() throws Exception {
         //given
-        StoredCardEntity savedStoredCard = StoredCardEntity.builder()
-                .cardInformation(StoredCardInformation
+        CardEntity savedStoredCard = CardEntity.builder()
+                .cardInformation(CardInformation
                         .builder()
                         .cardNum(STORED_CARD_NUM)
                         .build())
                 .initMoney(CardInitMoney.TEN)
                 .build();
 
-        storedCardRepository.save(savedStoredCard);
+        cardRepository.save(savedStoredCard);
 
         UserRegisterCardRequest userRegisterCardRequest = new UserRegisterCardRequest(STORED_CARD_NUM, savedStoredCard.getCardInformation().getSerial());
 
@@ -98,8 +98,8 @@ public class UserCardServiceTest {
                 .build());
         Long savedUserId = savedUser.getUserId();
 
-        StoredCardEntity savedStoredCard = storedCardRepository.save(StoredCardEntity.builder()
-                .cardInformation(StoredCardInformation.builder()
+        CardEntity savedStoredCard = cardRepository.save(CardEntity.builder()
+                .cardInformation(CardInformation.builder()
                         .cardNum(STORED_CARD_NUM)
                         .build())
                 .initMoney(CardInitMoney.TEN)
@@ -114,6 +114,6 @@ public class UserCardServiceTest {
         //then
         assertEquals(savedUser.getCard(), null);
         assertEquals(savedStoredCard.getOwnerId(), null);
-        assertEquals(savedStoredCard.getCardState(), StoredCardState.UNREGISTERED);
+        assertEquals(savedStoredCard.getCardState(), CardState.UNREGISTERED);
     }
 }

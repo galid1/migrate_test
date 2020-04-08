@@ -8,35 +8,35 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-public class StoredCardEntityTest {
+public class CardEntityTest {
     @Autowired
-    private StoredCardRepository storedCardRepository;
+    private CardRepository cardRepository;
 
     private String RIGHT_CARD_NUM = "1111111111111111";
     private String WRONG_CARD_NUM = "2222";
 
     private String WRONG_SERIAL = "AAAA";
 
-    private StoredCardEntity savedEntity = null;
+    private CardEntity savedEntity = null;
 
     @BeforeEach
     public void init() {
-        StoredCardEntity entity = StoredCardEntity.builder()
-                .cardInformation(StoredCardInformation.builder()
+        CardEntity entity = CardEntity.builder()
+                .cardInformation(CardInformation.builder()
                         .cardNum(RIGHT_CARD_NUM)
                         .build()
                 )
                 .build();
 
-        savedEntity = storedCardRepository.save(entity);
+        savedEntity = cardRepository.save(entity);
     }
 
     @Test
     @Transactional
     public void whenCardNumLengthIsNot16ThrowError() throws Exception {
         //given, when, then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> StoredCardEntity.builder()
-                .cardInformation(StoredCardInformation.builder()
+        Assertions.assertThrows(IllegalArgumentException.class, () -> CardEntity.builder()
+                .cardInformation(CardInformation.builder()
                         .cardNum(WRONG_CARD_NUM)
                         .build()
                 )
@@ -72,7 +72,7 @@ public class StoredCardEntityTest {
 
         // then
         Assertions.assertNotEquals(savedEntity.getOwnerId(), null);
-        Assertions.assertEquals(savedEntity.getCardState(), StoredCardState.REGISTERED);
+        Assertions.assertEquals(savedEntity.getCardState(), CardState.REGISTERED);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class StoredCardEntityTest {
         savedEntity.returnCard();
 
         // then
-        Assertions.assertEquals(savedEntity.getCardState(), StoredCardState.UNREGISTERED);
+        Assertions.assertEquals(savedEntity.getCardState(), CardState.UNREGISTERED);
     }
 
 }

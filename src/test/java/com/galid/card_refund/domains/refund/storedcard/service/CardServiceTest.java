@@ -1,9 +1,9 @@
 package com.galid.card_refund.domains.refund.storedcard.service;
 
 import com.galid.card_refund.domains.refund.storedcard.domain.CardInitMoney;
-import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardEntity;
-import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardInformation;
-import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardRepository;
+import com.galid.card_refund.domains.refund.storedcard.domain.CardEntity;
+import com.galid.card_refund.domains.refund.storedcard.domain.CardInformation;
+import com.galid.card_refund.domains.refund.storedcard.domain.CardRepository;
 import com.galid.card_refund.domains.refund.storedcard.service.request_response.CardRegistrationConfirmResponse;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
@@ -19,14 +19,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-public class StoredCardServiceTest {
+public class CardServiceTest {
     @Autowired
-    private StoredCardService storedCardService;
+    private CardService cardService;
 
     @Autowired
     private UserCardService userCardService;
     @Autowired
-    private StoredCardRepository storedCardRepository;
+    private CardRepository cardRepository;
     @Autowired
     private UserRepository userRepository;
 
@@ -37,13 +37,13 @@ public class StoredCardServiceTest {
     @Test
     public void 카드등록확인() throws Exception {
         //given
-        StoredCardEntity storedCardEntity = StoredCardEntity.builder()
-                .cardInformation(StoredCardInformation.builder()
+        CardEntity cardEntity = CardEntity.builder()
+                .cardInformation(CardInformation.builder()
                         .cardNum(CARD_NUM)
                         .build())
                 .initMoney(initMoney)
                 .build();
-        storedCardRepository.save(storedCardEntity);
+        cardRepository.save(cardEntity);
 
         UserEntity userEntity = UserEntity.builder()
                 .passPortImagePath("TEST")
@@ -52,10 +52,10 @@ public class StoredCardServiceTest {
                 .build();
         userRepository.save(userEntity);
 
-        userCardService.registerCard(userEntity.getUserId(), new UserRegisterCardRequest(CARD_NUM, storedCardEntity.getCardInformation().getSerial()));
+        userCardService.registerCard(userEntity.getUserId(), new UserRegisterCardRequest(CARD_NUM, cardEntity.getCardInformation().getSerial()));
 
         //when
-        CardRegistrationConfirmResponse cardRegistrationConfirmResponse = storedCardService.confirmCardRegistration(userEntity.getUserId());
+        CardRegistrationConfirmResponse cardRegistrationConfirmResponse = cardService.confirmCardRegistration(userEntity.getUserId());
 
         //then
         assertEquals(cardRegistrationConfirmResponse.getOwnerId(), userEntity.getUserId());

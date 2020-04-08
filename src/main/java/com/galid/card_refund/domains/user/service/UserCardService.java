@@ -1,8 +1,8 @@
 package com.galid.card_refund.domains.user.service;
 
 import com.galid.card_refund.domains.refund.storedcard.domain.CardRegistration;
-import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardEntity;
-import com.galid.card_refund.domains.refund.storedcard.domain.StoredCardRepository;
+import com.galid.card_refund.domains.refund.storedcard.domain.CardEntity;
+import com.galid.card_refund.domains.refund.storedcard.domain.CardRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserRegisterCardRequest;
@@ -14,17 +14,17 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class UserCardService {
-    private final StoredCardRepository storedCardRepository;
+    private final CardRepository cardRepository;
     private final UserRepository userRepository;
 
     public void registerCard(long userId, UserRegisterCardRequest request) {
-        StoredCardEntity storedCardEntity = storedCardRepository.findByCardInformation_CardNum(request.getCardNum())
+        CardEntity cardEntity = cardRepository.findByCardInformation_CardNum(request.getCardNum())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드번호입니다."));
         UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
-        storedCardEntity.register(toCardRegistration(userId, request));
-        userEntity.registerCard(storedCardEntity);
+        cardEntity.register(toCardRegistration(userId, request));
+        userEntity.registerCard(cardEntity);
     }
 
     private CardRegistration toCardRegistration(long userId, UserRegisterCardRequest request) {
@@ -39,7 +39,7 @@ public class UserCardService {
         UserEntity findUser = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
-        storedCardRepository.findById(findUser.getCard().getStoredCardId())
+        cardRepository.findById(findUser.getCard().getStoredCardId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."))
                 .returnCard();
 

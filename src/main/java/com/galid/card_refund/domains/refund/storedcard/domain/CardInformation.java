@@ -10,7 +10,7 @@ import java.util.Random;
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class StoredCardInformation {
+public class CardInformation {
     private String serial;
     @Column(unique = true)
     private String cardNum;
@@ -21,7 +21,7 @@ public class StoredCardInformation {
     private int MIN_SERIAL_NUM = 1;
 
     @Builder
-    public StoredCardInformation(String cardNum) {
+    public CardInformation(String cardNum) {
         this.setCardNum(cardNum);
         this.serial = this.makeFourDigitNewSerial();
     }
