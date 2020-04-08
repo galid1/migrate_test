@@ -1,7 +1,7 @@
 package com.galid.card_refund.domains.user.domain;
 
 import com.galid.card_refund.common.config.logging.BaseEntity;
-import com.galid.card_refund.domains.refund.storedcard.domain.CardEntity;
+import com.galid.card_refund.domains.refund.card.domain.CardEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

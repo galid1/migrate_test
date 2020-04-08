@@ -1,8 +1,8 @@
-package com.galid.card_refund.domains.refund.storedcard.service;
+package com.galid.card_refund.domains.refund.card.service;
 
-import com.galid.card_refund.domains.refund.storedcard.domain.CardEntity;
-import com.galid.card_refund.domains.refund.storedcard.domain.CardRepository;
-import com.galid.card_refund.domains.refund.storedcard.service.request_response.CardRegistrationConfirmResponse;
+import com.galid.card_refund.domains.refund.card.domain.CardEntity;
+import com.galid.card_refund.domains.refund.card.domain.CardRepository;
+import com.galid.card_refund.domains.refund.card.service.request_response.CardRegistrationConfirmResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

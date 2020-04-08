@@ -1,8 +1,8 @@
 package com.galid.card_refund.domains.user.service;
 
-import com.galid.card_refund.domains.refund.storedcard.domain.CardRegistration;
-import com.galid.card_refund.domains.refund.storedcard.domain.CardEntity;
-import com.galid.card_refund.domains.refund.storedcard.domain.CardRepository;
+import com.galid.card_refund.domains.refund.card.domain.CardRegistration;
+import com.galid.card_refund.domains.refund.card.domain.CardEntity;
+import com.galid.card_refund.domains.refund.card.domain.CardRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserRegisterCardRequest;

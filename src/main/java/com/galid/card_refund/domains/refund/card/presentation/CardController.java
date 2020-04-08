@@ -1,7 +1,7 @@
-package com.galid.card_refund.domains.refund.storedcard.presentation;
+package com.galid.card_refund.domains.refund.card.presentation;
 
-import com.galid.card_refund.domains.refund.storedcard.service.CardService;
-import com.galid.card_refund.domains.refund.storedcard.service.request_response.CardRegistrationConfirmResponse;
+import com.galid.card_refund.domains.refund.card.service.CardService;
+import com.galid.card_refund.domains.refund.card.service.request_response.CardRegistrationConfirmResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

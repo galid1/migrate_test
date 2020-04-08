@@ -1,9 +1,8 @@
 package com.galid.card_refund.domains.user.domain;
 
-import com.galid.card_refund.common.model.Money;
-import com.galid.card_refund.domains.refund.storedcard.domain.CardEntity;
-import com.galid.card_refund.domains.refund.storedcard.domain.CardInformation;
-import com.galid.card_refund.domains.refund.storedcard.domain.CardInitMoney;
+import com.galid.card_refund.domains.refund.card.domain.CardEntity;
+import com.galid.card_refund.domains.refund.card.domain.CardInformation;
+import com.galid.card_refund.domains.refund.card.domain.CardInitMoney;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
