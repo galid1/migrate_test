@@ -48,10 +48,4 @@ public class UserCardService {
         findUser.returnCard();
     }
 
-    public Money checkRegistered(long userId) {
-        UserEntity userEntity = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-
-        return userEntity.getCard().getRemainAmount();
-    }
 }
