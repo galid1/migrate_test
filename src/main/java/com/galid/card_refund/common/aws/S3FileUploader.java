@@ -1,4 +1,4 @@
-package com.galid.card_refund.common.file;
+package com.galid.card_refund.common.aws;
 
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;

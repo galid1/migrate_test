@@ -1,15 +1,13 @@
 package com.galid.card_refund.domains.user.service;
 
 import com.amazonaws.util.Base64;
-import com.galid.card_refund.common.file.S3FileUploader;
+import com.galid.card_refund.common.aws.S3FileUploader;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserRegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
 
 
 @Service
