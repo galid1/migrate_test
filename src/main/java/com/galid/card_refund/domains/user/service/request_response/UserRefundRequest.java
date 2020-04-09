@@ -1,6 +1,5 @@
 package com.galid.card_refund.domains.user.service.request_response;
 
-import com.galid.card_refund.common.model.Money;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -16,5 +15,5 @@ public class UserRefundRequest {
     @NotNull
     private String base64File;
     @NotNull
-    private Money paymentAmount;
+    private double paymentAmount;
 }

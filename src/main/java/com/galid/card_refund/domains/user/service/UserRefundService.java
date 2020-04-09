@@ -1,5 +1,6 @@
 package com.galid.card_refund.domains.user.service;
 
+import com.galid.card_refund.common.model.Money;
 import com.galid.card_refund.domains.refund.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.refund.refund.domain.RefundLine;
 import com.galid.card_refund.domains.refund.refund.domain.RefundRepository;
@@ -39,7 +40,7 @@ public class UserRefundService {
                 .map(userRefundRequest ->
                     RefundLine.builder()
                         .place(userRefundRequest.getPlace())
-                        .paymentAmount(userRefundRequest.getPaymentAmount())
+                        .paymentAmount(new Money(userRefundRequest.getPaymentAmount()))
                             .itemImageUrl(userRefundRequest.getBase64File())
                         .build()
                 )
