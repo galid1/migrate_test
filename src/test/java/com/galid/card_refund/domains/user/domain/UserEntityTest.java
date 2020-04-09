@@ -72,6 +72,6 @@ class UserEntityTest {
         userEntity.returnCard();
 
         //then
-        assertThat(userEntity.getCard(), is(equalTo(null)));
+        Assertions.assertThrows(IllegalStateException.class, () -> userEntity.getCard());
     }
 }

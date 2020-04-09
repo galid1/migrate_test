@@ -26,6 +26,7 @@ public class CardEntityTest {
                         .cardNum(RIGHT_CARD_NUM)
                         .build()
                 )
+                .initMoney(CardInitMoney.TEN)
                 .build();
 
         savedEntity = cardRepository.save(entity);

@@ -41,7 +41,7 @@ public class UserRefundServiceTest {
         List<UserRefundRequest> request = Arrays.asList(new UserRefundRequest[]{
                 UserRefundRequest.builder()
                         .base64File("TEST")
-                        .paymentAmount(REFUND_REQUEST_AMOUNT)
+                        .paymentAmount(REFUND_REQUEST_AMOUNT.getValue())
                         .place("TEST")
                         .build()
         });
