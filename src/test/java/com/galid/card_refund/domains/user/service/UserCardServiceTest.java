@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -25,10 +24,6 @@ public class UserCardServiceTest {
 
     private String STORED_CARD_NUM = "1234123412341234";
 
-    /**
-     * 존재하지 않는 사용자에게 등록할 때 예외 (미리 등록된 유저 필요)
-     * 존재하지 않는 카드번호를 이용해 등록할 때 예외 (미리 등록된 카드 필요)
-     * */
     @Test
     public void 카드등록() throws Exception {
         //given

@@ -1,5 +1,6 @@
 package com.galid.card_refund.domains.user.service;
 
+import com.galid.card_refund.common.model.Money;
 import com.galid.card_refund.domains.refund.card.domain.CardRegistration;
 import com.galid.card_refund.domains.refund.card.domain.CardEntity;
 import com.galid.card_refund.domains.refund.card.domain.CardRepository;
@@ -12,11 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class UserCardService {
     private final CardRepository cardRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     public void registerCard(long userId, UserRegisterCardRequest request) {
         CardEntity cardEntity = cardRepository.findByCardInformation_CardNum(request.getCardNum())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드번호입니다."));
@@ -44,5 +46,12 @@ public class UserCardService {
                 .returnCard();
 
         findUser.returnCard();
+    }
+
+    public Money checkRegistered(long userId) {
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+
+        return userEntity.getCard().getRemainAmount();
     }
 }

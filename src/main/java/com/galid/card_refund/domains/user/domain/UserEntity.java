@@ -26,6 +26,7 @@ public class UserEntity extends BaseEntity {
     @Embedded
     private UserInformation userInformation;
 
+    @Getter(value = AccessLevel.PROTECTED)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
     private CardEntity card;
@@ -62,19 +63,24 @@ public class UserEntity extends BaseEntity {
     }
 
     public void returnCard() {
-        this.verifyIsRegisteredCard();
+        this.verifyCardIsRegistered();
         this.card = null;
     }
 
     public void recordCardUsage(UsageHistory usageHistory) {
-        this.verifyIsRegisteredCard();
+        this.verifyCardIsRegistered();
         this.usageHistoryList.add(usageHistory);
         this.card.recordRemainAmount(usageHistory.getRemainAmount());
     }
 
-    private void verifyIsRegisteredCard() {
+    private void verifyCardIsRegistered() {
         if(this.card == null)
             throw new IllegalStateException("카드가 등록된 상태가 아닙니다.");
+    }
+
+    public CardEntity getCard() {
+        verifyCardIsRegistered();
+        return this.card;
     }
 
     public void addUserInformation(UserInformation userInformation) {
