@@ -1,7 +1,7 @@
 package com.galid.card_refund.domains.user.presentation;
 
-import com.galid.card_refund.domains.user.domain.UsageHistory;
 import com.galid.card_refund.domains.user.service.UserCardUsageHistoryService;
+import com.galid.card_refund.domains.user.service.request_response.UsageHistoryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +14,8 @@ import java.util.List;
 public class UserCardUsageHistoryController {
     private final UserCardUsageHistoryService usageHistoryService;
 
-    @GetMapping("/users/{userId}/usercards")
-    public List<UsageHistory> getUsageHistories(@PathVariable("userId") Long userId) {
+    @GetMapping("/users/{userId}/usercards/usage")
+    public List<UsageHistoryResponse> getUsageHistories(@PathVariable("userId") Long userId) {
         return usageHistoryService.getUsageHistories(userId);
     }
 
