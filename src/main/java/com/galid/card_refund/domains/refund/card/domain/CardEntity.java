@@ -11,12 +11,12 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "stored_card")
+@Table(name = "card")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class CardEntity extends BaseEntity {
     @Id @GeneratedValue
-    private long storedCardId;
+    private long cardId;
 
     @Embedded
     private CardInformation cardInformation;
