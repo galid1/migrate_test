@@ -7,6 +7,7 @@ import com.galid.card_refund.domains.refund.card.domain.CardRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserRegisterCardRequest;
+import com.galid.card_refund.domains.user.service.request_response.UserRegisterCardResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,14 +23,16 @@ public class UserCardService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void registerCard(long userId, UserRegisterCardRequest request) {
-        CardEntity cardEntity = cardRepository.findByCardInformation_CardNum(request.getCardNum())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드번호입니다."));
+    public UserRegisterCardResponse registerCard(long userId, UserRegisterCardRequest request) {
         UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        CardEntity cardEntity = cardRepository.findByCardInformation_CardNum(request.getCardNum())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드번호입니다."));
 
-        cardEntity.register(toCardRegistration(userId, request));
         userEntity.registerCard(cardEntity);
+        cardEntity.register(toCardRegistration(userId, request));
+
+        return new UserRegisterCardResponse(cardEntity.getCardId());
     }
 
     private CardRegistration toCardRegistration(long userId, UserRegisterCardRequest request) {
