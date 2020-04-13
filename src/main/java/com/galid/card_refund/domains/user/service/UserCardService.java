@@ -10,6 +10,9 @@ import com.galid.card_refund.domains.user.service.request_response.UserRegisterC
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import javax.validation.Valid;
 
 @Service
 @RequiredArgsConstructor
@@ -37,11 +40,12 @@ public class UserCardService {
                 .build();
     }
 
+    @Transactional
     public void returnCard(long userId) {
         UserEntity findUser = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
-        cardRepository.findById(findUser.getCard().getStoredCardId())
+        cardRepository.findById(findUser.getCard().getCardId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."))
                 .returnCard();
 
