@@ -5,14 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class UsageHistoryResponse {
-    private LocalDate date;
+    private LocalDateTime date;
     private String place;
     private double paymentAmount;
     private double remainAmount;

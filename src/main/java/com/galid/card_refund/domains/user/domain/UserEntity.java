@@ -26,7 +26,7 @@ public class UserEntity extends BaseEntity {
     @Embedded
     private UserInformation userInformation;
 
-    @Getter(value = AccessLevel.PROTECTED)
+    @Getter(value = AccessLevel.PRIVATE)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
     private CardEntity card;

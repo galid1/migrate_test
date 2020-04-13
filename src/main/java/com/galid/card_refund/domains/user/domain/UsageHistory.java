@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Embeddable
 @Getter
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UsageHistory {
-    private LocalDate date;
+    private LocalDateTime date;
     private String place;
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "payment_amount"))

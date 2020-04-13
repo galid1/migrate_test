@@ -1,6 +1,7 @@
 package com.galid.card_refund.domains.user.service;
 
 import com.galid.card_refund.domains.user.domain.UsageHistory;
+import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UsageHistoryResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +13,10 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserCardUsageHistoryService {
     private final UserRepository userRepository;
 
-    @Transactional(readOnly = true)
     public List<UsageHistoryResponse> getUsageHistories(Long userId) {
         List<UsageHistory> usageHistoryList = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저 입니다."))
@@ -33,5 +34,13 @@ public class UserCardUsageHistoryService {
                 .paymentAmount(usageHistory.getPaymentAmount().getValue())
                 .remainAmount(usageHistory.getRemainAmount().getValue())
                 .build();
+    }
+
+    @Transactional
+    public void recordUsageHistory(Long userId, UsageHistory usageHistory) {
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+
+        userEntity.recordCardUsage(usageHistory);
     }
 }
