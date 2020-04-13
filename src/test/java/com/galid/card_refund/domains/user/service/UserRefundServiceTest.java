@@ -24,7 +24,7 @@ public class UserRefundServiceTest {
     @Autowired
     private RefundRepository refundRepository;
     @Autowired
-    private UserRefundService userRefundService;
+    private UserRequestRefundService userRequestRefundService;
 
     private UserEntity savedUser;
     private RefundEntity findRefund;
@@ -45,7 +45,7 @@ public class UserRefundServiceTest {
                         .place("TEST")
                         .build()
         });
-        userRefundService.refund(request, savedUser.getUserId());
+        userRequestRefundService.refund(request, savedUser.getUserId());
 
         findRefund = refundRepository.findByRequestorId(savedUser.getUserId()).get();
     }
