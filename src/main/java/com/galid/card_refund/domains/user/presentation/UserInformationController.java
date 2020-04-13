@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserInformationController {
     private final UserInformationService userInformationService;
 
-    @PostMapping("/admin/users/{userId}/information")
+    @PostMapping("/users/{userId}/information")
     public ResponseEntity addUserInformation(@PathVariable("userId") Long userId, @RequestBody UserInformationRequest request) {
         userInformationService.addUserInformation(userId, request);
         return ResponseEntity.ok().build();
