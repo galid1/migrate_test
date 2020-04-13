@@ -1,7 +1,7 @@
 package com.galid.card_refund.domains.user.presentation;
 
 import com.galid.card_refund.common.config.validation.CustomCollectionValidator;
-import com.galid.card_refund.domains.user.service.UserRefundService;
+import com.galid.card_refund.domains.user.service.UserRequestRefundService;
 import com.galid.card_refund.domains.user.service.request_response.RefundableResponse;
 import com.galid.card_refund.domains.user.service.request_response.UnRefundableLineResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundRequest;
@@ -15,8 +15,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class UserRefundController {
-    private final UserRefundService refundService;
+public class UserRequestRefundController {
+    private final UserRequestRefundService refundService;
     private final CustomCollectionValidator customCollectionValidator;
 
     @PostMapping("/users/{userId}/refunds")

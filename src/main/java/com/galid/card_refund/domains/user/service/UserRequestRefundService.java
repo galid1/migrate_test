@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class UserRefundService {
+public class UserRequestRefundService {
     private final RefundRepository refundRepository;
     private final UserRepository userRepository;
 
