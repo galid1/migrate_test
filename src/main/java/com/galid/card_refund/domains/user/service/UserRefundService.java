@@ -9,6 +9,7 @@ import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.RefundableResponse;
 import com.galid.card_refund.domains.user.service.request_response.UnRefundableLineResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundRequest;
+import com.galid.card_refund.domains.user.service.request_response.UserRefundResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,15 +25,15 @@ public class UserRefundService {
     private final UserRepository userRepository;
 
     @Transactional
-    public double refund(List<UserRefundRequest> refundLineList, Long requestorId) {
+    public UserRefundResponse refund(List<UserRefundRequest> refundLineList, Long requestorId) {
         RefundEntity refundEntity = RefundEntity.builder()
                 .requestRefundLine(toRefundLineList(refundLineList))
                 .requestorId(requestorId)
                 .build();
 
-        return refundRepository.save(refundEntity)
-                .getExpectRefundAmount()
-                .getValue();
+        return new UserRefundResponse(refundRepository.save(refundEntity)
+                    .getExpectRefundAmount()
+                    .getValue());
     }
 
     private List<RefundLine> toRefundLineList(List<UserRefundRequest> refundRequests) {

@@ -5,6 +5,7 @@ import com.galid.card_refund.domains.user.service.UserRefundService;
 import com.galid.card_refund.domains.user.service.request_response.RefundableResponse;
 import com.galid.card_refund.domains.user.service.request_response.UnRefundableLineResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundRequest;
+import com.galid.card_refund.domains.user.service.request_response.UserRefundResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class UserRefundController {
     private final CustomCollectionValidator customCollectionValidator;
 
     @PostMapping("/users/{userId}/refunds")
-    public double requestRefund(@PathVariable("userId") Long userId, @RequestBody @Valid List<UserRefundRequest> userRefundRequestList, BindingResult bindingResult) {
+    public UserRefundResponse requestRefund(@PathVariable("userId") Long userId, @RequestBody @Valid List<UserRefundRequest> userRefundRequestList, BindingResult bindingResult) {
         customCollectionValidator.validate(userRefundRequestList, bindingResult);
 
         if(bindingResult.hasErrors())
