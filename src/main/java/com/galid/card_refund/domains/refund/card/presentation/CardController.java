@@ -15,7 +15,6 @@ public class CardController {
 
     @PostMapping("/cards")
     public Long createCard(@RequestBody @Valid CardCreateRequest request) {
-        System.out.println(request.getCardNum());
         return cardService.createCard(request);
     }
 

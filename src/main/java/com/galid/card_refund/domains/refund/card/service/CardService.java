@@ -32,11 +32,19 @@ public class CardService {
 
     @Transactional
     public Long createCard(CardCreateRequest request) {
+        verifyDuplicateCardNum(request);
+
         CardEntity newCard = CardEntity.builder()
                 .cardInformation(new CardInformation(request.getCardNum()))
                 .initMoney(request.getCardInitMoney())
                 .build();
 
         return cardRepository.save(newCard).getCardId();
+    }
+
+    private void verifyDuplicateCardNum(CardCreateRequest request) {
+        if(cardRepository.findByCardInformation_CardNum(request.getCardNum())
+            .isPresent())
+            throw new IllegalArgumentException("이미 존재하는 카드번호 입니다.");
     }
 }
