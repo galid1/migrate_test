@@ -1,4 +1,4 @@
-package com.galid.card_refund.domains.admin.service.request_response;
+package com.galid.card_refund.domains.user.service.request_response;
 
 import lombok.*;
 

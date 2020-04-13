@@ -1,7 +1,7 @@
-package com.galid.card_refund.domains.admin.presentation;
+package com.galid.card_refund.domains.user.presentation;
 
-import com.galid.card_refund.domains.admin.service.AdminUserInformationService;
-import com.galid.card_refund.domains.admin.service.request_response.UserInformationRequest;
+import com.galid.card_refund.domains.user.service.UserInformationService;
+import com.galid.card_refund.domains.user.service.request_response.UserInformationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class AdminUserInformationController {
-    private final AdminUserInformationService adminUserInformationService;
+public class UserInformationController {
+    private final UserInformationService userInformationService;
 
-    @PostMapping("/users/{userId}/information")
+    @PostMapping("/admin/users/{userId}/information")
     public ResponseEntity addUserInformation(@PathVariable("userId") Long userId, @RequestBody UserInformationRequest request) {
-        adminUserInformationService.addUserInformation(userId, request);
+        userInformationService.addUserInformation(userId, request);
         return ResponseEntity.ok().build();
     }
-
 }
