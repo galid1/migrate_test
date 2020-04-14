@@ -3,7 +3,7 @@ package com.galid.card_refund.domains.user.service;
 import com.galid.card_refund.common.aws.S3FileUploader;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
-import com.galid.card_refund.domains.user.service.request_response.UserRegisterRequest;
+import com.galid.card_refund.domains.user.service.request_response.UserSignUpRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,9 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @Transactional
-public class UserRegisterServiceTest {
+public class UserSignUpServiceTest {
     @Autowired
-    private UserRegisterService userRegisterService;
+    private UserSignUpService userRegisterService;
     @Autowired
     private UserRepository userRepository;
 
@@ -34,7 +34,7 @@ public class UserRegisterServiceTest {
     @Test
     public void 회원가입() throws Exception {
         //given
-        UserRegisterRequest request = UserRegisterRequest.builder()
+        UserSignUpRequest request = UserSignUpRequest.builder()
                 .nickname("KIM")
                 .deviceId("123123")
                 .build();
@@ -51,13 +51,13 @@ public class UserRegisterServiceTest {
     @Test
     public void 중복회원_가입_예외() throws Exception {
         //given
-        UserRegisterRequest requestOne = UserRegisterRequest.builder()
+        UserSignUpRequest requestOne = UserSignUpRequest.builder()
                 .nickname("KIM")
                 .deviceId("123123")
                 .base64PassPortImage("asd")
                 .build();
 
-        UserRegisterRequest requestTwo = UserRegisterRequest.builder()
+        UserSignUpRequest requestTwo = UserSignUpRequest.builder()
                 .nickname("JUN")
                 .deviceId("123123")
                 .base64PassPortImage("asd")

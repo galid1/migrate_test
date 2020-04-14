@@ -1,20 +1,15 @@
 package com.galid.card_refund.domains.user.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.galid.card_refund.domains.user.service.request_response.UserRegisterRequest;
-import com.galid.card_refund.domains.user.service.UserRegisterService;
-import org.junit.jupiter.api.Test;
+import com.galid.card_refund.domains.user.service.UserSignUpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //@SpringBootTest
 //@AutoConfigureMockMvc
@@ -27,7 +22,7 @@ public class UserRegisterControllerTest {
     private ObjectMapper mapper;
 
     @MockBean
-    private UserRegisterService registerService;
+    private UserSignUpService registerService;
 //
 //    @Test
 //    public void registerUserTest() throws Exception {
