@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users/{userId}/usercards")
+@RequestMapping("/users/{userId}/user-cards")
 public class UserCardController {
     private final UserCardService userCardService;
 

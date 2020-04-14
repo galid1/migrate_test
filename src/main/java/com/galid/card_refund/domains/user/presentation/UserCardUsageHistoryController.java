@@ -18,16 +18,17 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping(value = "/users/{userId}/user-cards/usage")
 public class UserCardUsageHistoryController {
     private final UserCardUsageHistoryService usageHistoryService;
     private final ObjectMapper objectMapper;
 
-    @GetMapping("/users/{userId}/usercards/usage")
+    @GetMapping
     public List<UsageHistoryResponse> getUsageHistories(@PathVariable("userId") Long userId) {
         return usageHistoryService.getUsageHistories(userId);
     }
 
-    @PostMapping("/users/{userId}/usercards/usage")
+    @PostMapping
     public void recordUsageHistory(@PathVariable("userId") Long userId, @RequestBody String usageMessage) throws UnsupportedEncodingException, JsonProcessingException {
         String decoded = URLDecoder.decode(usageMessage, "UTF-8");
         String removeLast = decoded.substring(0, decoded.length() - 1);
