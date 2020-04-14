@@ -4,6 +4,7 @@ import com.galid.card_refund.common.aws.S3FileUploader;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserSignUpRequest;
+import com.galid.card_refund.domains.user.service.request_response.UserSignUpResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.when;
 @Transactional
 public class UserSignUpServiceTest {
     @Autowired
-    private UserSignUpService userRegisterService;
+    private UserSignUpService userSignUpService;
     @Autowired
     private UserRepository userRepository;
 
@@ -40,8 +41,8 @@ public class UserSignUpServiceTest {
                 .build();
 
         //when
-        Long savedId = userRegisterService.registerUser(request);
-        UserEntity findEntity = userRepository.findById(savedId).get();
+        UserSignUpResponse signUpResponse = userSignUpService.signUp(request);
+        UserEntity findEntity = userRepository.findById(signUpResponse.getUserId()).get();
 
         //then
         assertEquals(findEntity.getDeviceId(), request.getDeviceId());
@@ -65,8 +66,8 @@ public class UserSignUpServiceTest {
 
         //when, then
         assertThrows(IllegalArgumentException.class, () -> {
-            userRegisterService.registerUser(requestOne);
-            userRegisterService.registerUser(requestTwo);
+            userSignUpService.signUp(requestOne);
+            userSignUpService.signUp(requestTwo);
         });
     }
 }

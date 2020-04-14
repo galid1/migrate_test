@@ -3,6 +3,7 @@ package com.galid.card_refund.domains.user.service;
 import com.galid.card_refund.domains.refund.card.domain.*;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
+import com.galid.card_refund.domains.user.service.request_response.UserCardConfirmResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserRegisterCardRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +92,6 @@ public class UserCardServiceTest {
                 .deviceId("123")
                 .nickname("KIM")
                 .build());
-        Long savedUserId = savedUser.getUserId();
 
         CardEntity savedStoredCard = cardRepository.save(CardEntity.builder()
                 .cardInformation(CardInformation.builder()
@@ -101,14 +101,43 @@ public class UserCardServiceTest {
                 .build());
 
         UserRegisterCardRequest userRegisterCardRequest = new UserRegisterCardRequest(STORED_CARD_NUM, savedStoredCard.getCardInformation().getSerial());
-        userCardService.registerCard(savedUserId, userRegisterCardRequest);
+        userCardService.registerCard(savedUser.getUserId(), userRegisterCardRequest);
 
         //when
-        userCardService.returnCard(savedUserId);
+        userCardService.returnCard(savedUser.getUserId());
 
         //then
-        assertEquals(savedUser.getCard(), null);
-        assertEquals(savedStoredCard.getOwnerId(), null);
         assertEquals(savedStoredCard.getCardState(), CardState.UNREGISTERED);
+    }
+
+    private String CARD_NUM = "1234123412341234";
+    private CardInitMoney initMoney = CardInitMoney.TEN;
+
+    @Test
+    public void 카드등록확인() throws Exception {
+        //given
+        CardEntity cardEntity = CardEntity.builder()
+                .cardInformation(CardInformation.builder()
+                        .cardNum(CARD_NUM)
+                        .build())
+                .initMoney(initMoney)
+                .build();
+        cardRepository.save(cardEntity);
+
+        UserEntity userEntity = UserEntity.builder()
+                .passPortImagePath("TEST")
+                .deviceId("TEST")
+                .nickname("TEST")
+                .build();
+        userRepository.save(userEntity);
+
+        userCardService.registerCard(userEntity.getUserId(), new UserRegisterCardRequest(CARD_NUM, cardEntity.getCardInformation().getSerial()));
+
+        //when
+        UserCardConfirmResponse userCardConfirmResponse = userCardService.confirmCardRegistration(userEntity.getUserId());
+
+        //then
+        assertEquals(userCardConfirmResponse.getOwnerId(), userEntity.getUserId());
+        assertEquals(userCardConfirmResponse.getRemainAmount(), initMoney.getAmount().getValue());
     }
 }

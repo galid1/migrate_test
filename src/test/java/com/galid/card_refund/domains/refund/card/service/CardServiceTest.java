@@ -4,7 +4,7 @@ import com.galid.card_refund.domains.refund.card.domain.CardInitMoney;
 import com.galid.card_refund.domains.refund.card.domain.CardEntity;
 import com.galid.card_refund.domains.refund.card.domain.CardInformation;
 import com.galid.card_refund.domains.refund.card.domain.CardRepository;
-import com.galid.card_refund.domains.refund.card.service.request_response.CardRegistrationConfirmResponse;
+import com.galid.card_refund.domains.user.service.request_response.UserCardConfirmResponse;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.UserCardService;
@@ -34,31 +34,5 @@ public class CardServiceTest {
     private String CARD_NUM = "1234123412341234";
     private CardInitMoney initMoney = CardInitMoney.TEN;
 
-    @Test
-    public void 카드등록확인() throws Exception {
-        //given
-        CardEntity cardEntity = CardEntity.builder()
-                .cardInformation(CardInformation.builder()
-                        .cardNum(CARD_NUM)
-                        .build())
-                .initMoney(initMoney)
-                .build();
-        cardRepository.save(cardEntity);
 
-        UserEntity userEntity = UserEntity.builder()
-                .passPortImagePath("TEST")
-                .deviceId("TEST")
-                .nickname("TEST")
-                .build();
-        userRepository.save(userEntity);
-
-        userCardService.registerCard(userEntity.getUserId(), new UserRegisterCardRequest(CARD_NUM, cardEntity.getCardInformation().getSerial()));
-
-        //when
-        CardRegistrationConfirmResponse cardRegistrationConfirmResponse = cardService.confirmCardRegistration(userEntity.getUserId());
-
-        //then
-        assertEquals(cardRegistrationConfirmResponse.getOwnerId(), userEntity.getUserId());
-        assertEquals(cardRegistrationConfirmResponse.getRemainAmount(), initMoney.getAmount().getValue());
-    }
 }
