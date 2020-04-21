@@ -2,9 +2,12 @@ package com.galid.card_refund.domains.refund.card.presentation;
 
 import com.galid.card_refund.domains.refund.card.service.CardService;
 import com.galid.card_refund.domains.refund.card.service.request_response.CardCreateRequest;
-import com.galid.card_refund.domains.user.service.request_response.UserCardConfirmResponse;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -14,7 +17,13 @@ public class CardController {
     private final CardService cardService;
 
     @PostMapping("/cards")
-    public Long createCard(@RequestBody @Valid CardCreateRequest request) {
-        return cardService.createCard(request);
+    public Result createCard(@RequestBody @Valid CardCreateRequest request) {
+        return new Result(cardService.createCard(request));
+    }
+
+    @Data
+    @AllArgsConstructor
+    private class Result {
+        private Long cardId;
     }
 }
