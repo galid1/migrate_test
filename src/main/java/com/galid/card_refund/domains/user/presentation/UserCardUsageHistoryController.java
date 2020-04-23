@@ -3,14 +3,14 @@ package com.galid.card_refund.domains.user.presentation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.galid.card_refund.domains.user.service.UserCardUsageHistoryService;
-import com.galid.card_refund.domains.user.service.request_response.UsageHistoryResponse;
 import com.galid.card_refund.domains.user.service.request_response.UsageRecordRequest;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,8 +19,14 @@ public class UserCardUsageHistoryController {
     private final ObjectMapper objectMapper;
 
     @GetMapping("/users/{userId}/user-cards/usage")
-    public List<UsageHistoryResponse> getUsageHistories(@PathVariable("userId") Long userId) {
-        return usageHistoryService.getUsageHistories(userId);
+    public Result getUsageHistories(@PathVariable("userId") Long userId) {
+        return new Result(usageHistoryService.getUsageHistories(userId));
+    }
+
+    @Data
+    @AllArgsConstructor
+    private class Result<T> {
+        private T data;
     }
 
     @PostMapping("/users/user-cards/usage")
