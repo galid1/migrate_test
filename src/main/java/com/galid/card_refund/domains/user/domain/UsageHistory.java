@@ -1,5 +1,6 @@
 package com.galid.card_refund.domains.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.galid.card_refund.common.model.Money;
 import lombok.*;
 
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UsageHistory {
+    @JsonFormat(pattern = "yyyy.MM.dd HH:mm", timezone="Asia/Seoul")
     private LocalDateTime date;
     private String place;
     @Embedded
