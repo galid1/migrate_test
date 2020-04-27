@@ -16,7 +16,7 @@ public class UserRefundRequest {
     @NotNull
     private String base64File;
     @NotNull
-    private LocalDateTime purchaseDateTime;
+    private String purchaseDateTime;
     @NotNull
     private double paymentAmount;
 }

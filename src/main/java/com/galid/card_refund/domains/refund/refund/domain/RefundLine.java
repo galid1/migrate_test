@@ -14,6 +14,6 @@ import java.time.LocalDateTime;
 public class RefundLine {
     private String place;
     private String itemImageUrl;
-    private LocalDateTime purchaseDateTime;
+    private String purchaseDateTime;
     private Money paymentAmount;
 }
