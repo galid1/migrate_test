@@ -3,6 +3,7 @@ package com.galid.card_refund.domains.user.service.request_response;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -14,6 +15,8 @@ public class UserRefundRequest {
     private String place;
     @NotNull
     private String base64File;
+    @NotNull
+    private LocalDateTime purchaseDateTime;
     @NotNull
     private double paymentAmount;
 }

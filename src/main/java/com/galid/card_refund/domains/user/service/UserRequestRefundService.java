@@ -32,18 +32,19 @@ public class UserRequestRefundService {
                 .build();
 
         return new UserRefundResponse(refundRepository.save(refundEntity)
-                    .getExpectRefundAmount()
-                    .getValue());
+                .getExpectRefundAmount()
+                .getValue());
     }
 
     private List<RefundLine> toRefundLineList(List<UserRefundRequest> refundRequests) {
         return refundRequests.stream()
                 .map(userRefundRequest ->
-                    RefundLine.builder()
-                        .place(userRefundRequest.getPlace())
-                        .paymentAmount(new Money(userRefundRequest.getPaymentAmount()))
-                            .itemImageUrl(userRefundRequest.getBase64File())
-                        .build()
+                        RefundLine.builder()
+                                .place(userRefundRequest.getPlace())
+                                .paymentAmount(new Money(userRefundRequest.getPaymentAmount()))
+                                .itemImageUrl(userRefundRequest.getBase64File())
+                                .purchaseDateTime(userRefundRequest.getPurchaseDateTime())
+                                .build()
                 )
                 .collect(Collectors.toList());
     }
