@@ -26,6 +26,8 @@ public class UserRefundService {
 
     @Transactional
     public UserRefundResponse refund(List<UserRefundRequest> refundLineList, Long requestorId) {
+        verifyDuplicateRefundRequest(requestorId);
+
         RefundEntity refundEntity = RefundEntity.builder()
                 .requestRefundLine(toRefundLineList(refundLineList))
                 .requestorId(requestorId)
@@ -34,6 +36,11 @@ public class UserRefundService {
         return new UserRefundResponse(refundRepository.save(refundEntity)
                 .getExpectRefundAmount()
                 .getValue());
+    }
+
+    private void verifyDuplicateRefundRequest(Long requestorId) {
+        if(refundRepository.findByRequestorId(requestorId).isPresent())
+            throw new IllegalArgumentException("환급 요청은 한번만 가능합니다.");
     }
 
     private List<RefundLine> toRefundLineList(List<UserRefundRequest> refundRequests) {
@@ -54,7 +61,7 @@ public class UserRefundService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
         RefundEntity refundEntity = refundRepository.findByRequestorId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("환급 요청이 존재하지 않습니다."));
 
         return UserRefundResultResponse.builder()
                 .refundResultResponseLineList(refundEntity.getRefundResultLineList().stream()
