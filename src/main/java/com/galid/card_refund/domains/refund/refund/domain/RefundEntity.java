@@ -22,6 +22,7 @@ public class RefundEntity extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private RefundState refundState;
 
+    @Column(unique = true)
     private Long requestorId;
 
     @ElementCollection
@@ -39,7 +40,7 @@ public class RefundEntity extends BaseEntity {
     @Getter(value = AccessLevel.PRIVATE)
     @ElementCollection
     @CollectionTable(
-            name = "refundable_line",
+            name = "refund_result_line",
             joinColumns = @JoinColumn(name = "refund_id")
     )
     private List<RefundResultLine> refundResultLineList = new ArrayList<>();
