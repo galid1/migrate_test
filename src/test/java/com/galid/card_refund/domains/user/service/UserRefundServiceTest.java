@@ -72,46 +72,12 @@ public class UserRefundServiceTest {
     }
 
     private void estimate() {
-        List<RefundLine> refundableLineList = Arrays.asList(new RefundLine[] {
-                new RefundLine("TEST", "TEST", "20:00", REFUND_REQUEST_AMOUNT)
+        List<RefundResultLine> refundableLineList = Arrays.asList(new RefundResultLine[] {
+                new RefundResultLine("TEST", REFUND_REQUEST_AMOUNT.getValue())
         });
         String unRefundableLineDescription = "";
 
         findRefund.estimate(refundableLineList, unRefundableLineDescription);
-    }
-
-    @Test
-    public void 환급평가_예외() throws Exception {
-        //given
-        List<RefundLine> refundableLineList = Arrays.asList(new RefundLine[] {
-
-        });
-
-        String unRefundableLineDescription = "";
-
-        //when, then
-        assertThrows(IllegalArgumentException.class, () -> findRefund.estimate(refundableLineList, unRefundableLineDescription));
-    }
-
-    @Test
-    public void 환급_가능내역_반환() throws Exception {
-        //given
-        estimate();
-
-        //when
-        List<RefundLine> refundableList = findRefund.getRefundableLineList();
-
-        //then
-        assertEquals(refundableList.size(), 1);
-    }
-
-    @Test
-    public void 환급_가능내역_반환_예외() throws Exception {
-        //given
-        RefundEntity findRefundEntity = refundRepository.findByRequestorId(savedUser.getUserId()).get();
-
-        //when, then
-        assertThrows(IllegalStateException.class, () -> findRefundEntity.getRefundableLineList());
     }
 
 }
