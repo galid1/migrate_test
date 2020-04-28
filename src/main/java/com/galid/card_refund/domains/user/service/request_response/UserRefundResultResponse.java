@@ -11,22 +11,32 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class UserRefundResultResponse {
-    private UserInformation userInformation;
+    private UserInformationDto userInformation;
     private List<RefundResultResponseLine> refundResultResponseLineList;
     private String unRefundableLineDescription;
 
     @Data
     @AllArgsConstructor
-    @Builder
     public static class RefundResultResponseLine {
         private String place;
         private double paymentAmount;
         private double refundAmount;
 
+        @Builder
         public RefundResultResponseLine(String place, Money paymentAmount, Money refundAmount) {
             this.place = place;
             this.paymentAmount = paymentAmount.getValue();
             this.refundAmount = refundAmount.getValue();
         }
+    }
+
+    @Data
+    @AllArgsConstructor
+    @Builder
+    public static class UserInformationDto {
+        private String name;
+        private String nation;
+        private String passportNum;
+        private String address;
     }
 }

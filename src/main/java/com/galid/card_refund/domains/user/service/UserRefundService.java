@@ -5,11 +5,13 @@ import com.galid.card_refund.domains.refund.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.refund.refund.domain.RefundLine;
 import com.galid.card_refund.domains.refund.refund.domain.RefundRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
+import com.galid.card_refund.domains.user.domain.UserInformation;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundResultResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundRequest;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundResultResponse.RefundResultResponseLine;
+import com.galid.card_refund.domains.user.service.request_response.UserRefundResultResponse.UserInformationDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,13 +68,24 @@ public class UserRefundService {
         return UserRefundResultResponse.builder()
                 .refundResultResponseLineList(refundEntity.getRefundResultLineList().stream()
                         .map(r -> RefundResultResponseLine.builder()
-                                .paymentAmount(r.getPaymentAmount().getValue())
-                                .refundAmount(r.getRefundAmount().getValue())
+                                .paymentAmount(r.getPaymentAmount())
+                                .refundAmount(r.getRefundAmount())
                                 .place(r.getPlace())
                                 .build())
                         .collect(Collectors.toList()))
-                .userInformation(userEntity.getUserInformation())
+                .userInformation(toUserInformationDto(userEntity))
                 .unRefundableLineDescription(refundEntity.getUnRefundableLineDescription())
+                .build();
+    }
+
+    private UserInformationDto toUserInformationDto(UserEntity userEntity) {
+        UserInformation userInformation = userEntity.getUserInformation();
+
+        return UserRefundResultResponse.UserInformationDto.builder()
+                .address(userInformation.getAddress())
+                .name(userInformation.getName())
+                .nation(userInformation.getNation())
+                .passportNum(userInformation.getPassportNum())
                 .build();
     }
 }
