@@ -9,6 +9,7 @@ import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundResultResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundRequest;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundResponse;
+import com.galid.card_refund.domains.user.service.request_response.UserRefundResultResponse.RefundResultResponseLine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,8 +57,12 @@ public class UserRefundService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
         return UserRefundResultResponse.builder()
-                .refundableLineList(refundEntity.getRefundableLineList().stream()
-                        .map(refundLine -> new UserRefundResultResponse.RefundableLineResponse(refundLine.getPlace(), refundLine.getPaymentAmount()))
+                .refundResultResponseLineList(refundEntity.getRefundResultLineList().stream()
+                        .map(r -> RefundResultResponseLine.builder()
+                                .paymentAmount(r.getPaymentAmount().getValue())
+                                .refundAmount(r.getRefundAmount().getValue())
+                                .place(r.getPlace())
+                                .build())
                         .collect(Collectors.toList()))
                 .userInformation(userEntity.getUserInformation())
                 .unRefundableLineDescription(refundEntity.getUnRefundableLineDescription())

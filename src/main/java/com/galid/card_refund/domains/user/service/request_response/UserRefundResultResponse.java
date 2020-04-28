@@ -12,16 +12,20 @@ import java.util.List;
 @Builder
 public class UserRefundResultResponse {
     private UserInformation userInformation;
-    private List<RefundResultLine> refundableLineList;
+    private List<RefundResultResponseLine> refundResultResponseLineList;
     private String unRefundableLineDescription;
 
     @Data
-    public static class RefundResultLine {
+    @AllArgsConstructor
+    @Builder
+    public static class RefundResultResponseLine {
         private String place;
+        private double paymentAmount;
         private double refundAmount;
 
-        public RefundResultLine(String place, Money refundAmount) {
+        public RefundResultResponseLine(String place, Money paymentAmount, Money refundAmount) {
             this.place = place;
+            this.paymentAmount = paymentAmount.getValue();
             this.refundAmount = refundAmount.getValue();
         }
     }
