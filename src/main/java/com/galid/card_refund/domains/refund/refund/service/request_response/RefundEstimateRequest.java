@@ -13,5 +13,5 @@ import java.util.List;
 @Builder
 public class RefundEstimateRequest {
     private List<RefundableLineRequest> refundableLineRequestList;
-    private List<UnRefundableLineRequest> unRefundableLineRequestList;
+    private String unRefundableLineDescription;
 }

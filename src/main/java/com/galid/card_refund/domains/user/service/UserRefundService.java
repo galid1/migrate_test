@@ -6,8 +6,7 @@ import com.galid.card_refund.domains.refund.refund.domain.RefundLine;
 import com.galid.card_refund.domains.refund.refund.domain.RefundRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
-import com.galid.card_refund.domains.user.service.request_response.RefundableResponse;
-import com.galid.card_refund.domains.user.service.request_response.UnRefundableLineResponse;
+import com.galid.card_refund.domains.user.service.request_response.UserRefundResultResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundRequest;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class UserRequestRefundService {
+public class UserRefundService {
     private final RefundRepository refundRepository;
     private final UserRepository userRepository;
 
@@ -49,33 +48,19 @@ public class UserRequestRefundService {
                 .collect(Collectors.toList());
     }
 
-    public RefundableResponse getRefundable(Long userId) {
+    public UserRefundResultResponse getRefundRequestResult(Long userId) {
         UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
         RefundEntity refundEntity = refundRepository.findByRequestorId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
-        return RefundableResponse.builder()
+        return UserRefundResultResponse.builder()
                 .refundableLineList(refundEntity.getRefundableLineList().stream()
-                        .map(refundLine -> new RefundableResponse.RefundableLineResponse(refundLine.getPlace(), refundLine.getPaymentAmount()))
+                        .map(refundLine -> new UserRefundResultResponse.RefundableLineResponse(refundLine.getPlace(), refundLine.getPaymentAmount()))
                         .collect(Collectors.toList()))
                 .userInformation(userEntity.getUserInformation())
+                .unRefundableLineDescription(refundEntity.getUnRefundableLineDescription())
                 .build();
-    }
-
-    public List<UnRefundableLineResponse> getUnRefundable(Long userId) {
-        RefundEntity refundEntity = refundRepository.findByRequestorId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-
-        return refundEntity.getUnRefundableLineList()
-                .stream()
-                .map(unRefundableLine -> UnRefundableLineResponse.builder()
-                        .paymentAmount(unRefundableLine.getPaymentAmount())
-                        .place(unRefundableLine.getPlace())
-                        .refundItemImageUrl(unRefundableLine.getRefundItemImageUrl())
-                        .unRefundableReason(unRefundableLine.getUnRefundableReason())
-                        .build())
-                .collect(Collectors.toList());
     }
 }

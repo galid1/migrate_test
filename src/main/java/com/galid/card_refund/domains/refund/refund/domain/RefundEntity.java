@@ -45,12 +45,7 @@ public class RefundEntity extends BaseEntity {
     private List<RefundLine> refundableLineList = new ArrayList<>();
 
     @Getter(value = AccessLevel.PRIVATE)
-    @ElementCollection
-    @CollectionTable(
-        name = "un_refundable_line",
-        joinColumns = @JoinColumn(name = "refund_id")
-    )
-    private List<UnRefundableLine> unRefundableLineList = new ArrayList<>();
+    private String unRefundableLineDescription;
 
     @Builder
     public RefundEntity(List<RefundLine> requestRefundLine, Long requestorId) {
@@ -82,24 +77,19 @@ public class RefundEntity extends BaseEntity {
                 .build();
     }
 
-    public void estimate(List<RefundLine> refundableLineList, List<UnRefundableLine> unRefundableLineList) {
+    public void estimate(List<RefundLine> refundableLineList, String unRefundableLineDescription) {
         verifyNotYetEstimate();
-        verifyEstimate(refundableLineList, unRefundableLineList);
+        verifyEstimate(refundableLineList, unRefundableLineDescription);
 
         this.refundableLineList = refundableLineList;
-        this.unRefundableLineList = unRefundableLineList;
 
         this.refundState = RefundState.COMPLETE;
     }
 
-    private void verifyEstimate(List<RefundLine> refundableLineList, List<UnRefundableLine> unRefundableLineList) {
-        if(refundableLineList == null || unRefundableLineList == null)
+    private void verifyEstimate(List<RefundLine> refundableLineList, String unRefundableLineDescription) {
+        if(refundableLineList == null || unRefundableLineDescription == null)
             throw new IllegalArgumentException("환급 가능, 불가능 내역은 필수값입니다.");
-
-        if(this.refundLineList.size() != refundLineList.size() + unRefundableLineList.size())
-            throw new IllegalArgumentException("모든 환급요청을 평가해야 합니다.");
     }
-
 
     private void verifyNotYetEstimate() {
         if(this.refundState == RefundState.COMPLETE)
@@ -111,9 +101,9 @@ public class RefundEntity extends BaseEntity {
         return this.refundableLineList;
     }
 
-    public List<UnRefundableLine> getUnRefundableLineList() {
+    public String getUnRefundableLineDescription() {
         verifyIsEstimated();
-        return this.unRefundableLineList;
+        return this.unRefundableLineDescription;
     }
 
     private void verifyIsEstimated() {

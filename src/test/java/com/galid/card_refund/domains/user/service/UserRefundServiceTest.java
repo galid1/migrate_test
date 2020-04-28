@@ -24,7 +24,7 @@ public class UserRefundServiceTest {
     @Autowired
     private RefundRepository refundRepository;
     @Autowired
-    private UserRequestRefundService userRequestRefundService;
+    private UserRefundService userRefundService;
 
     private UserEntity savedUser;
     private RefundEntity findRefund;
@@ -45,7 +45,7 @@ public class UserRefundServiceTest {
                         .place("TEST")
                         .build()
         });
-        userRequestRefundService.refund(request, savedUser.getUserId());
+        userRefundService.refund(request, savedUser.getUserId());
 
         findRefund = refundRepository.findByRequestorId(savedUser.getUserId()).get();
     }
@@ -75,10 +75,9 @@ public class UserRefundServiceTest {
         List<RefundLine> refundableLineList = Arrays.asList(new RefundLine[] {
                 new RefundLine("TEST", "TEST", "20:00", REFUND_REQUEST_AMOUNT)
         });
-        List<UnRefundableLine> unRefundableLineList = Arrays.asList(new UnRefundableLine[] {
+        String unRefundableLineDescription = "";
 
-        });
-        findRefund.estimate(refundableLineList, unRefundableLineList);
+        findRefund.estimate(refundableLineList, unRefundableLineDescription);
     }
 
     @Test
@@ -87,12 +86,11 @@ public class UserRefundServiceTest {
         List<RefundLine> refundableLineList = Arrays.asList(new RefundLine[] {
 
         });
-        List<UnRefundableLine> unRefundableLineList = Arrays.asList(new UnRefundableLine[] {
 
-        });
+        String unRefundableLineDescription = "";
 
         //when, then
-        assertThrows(IllegalArgumentException.class, () -> findRefund.estimate(refundableLineList, unRefundableLineList));
+        assertThrows(IllegalArgumentException.class, () -> findRefund.estimate(refundableLineList, unRefundableLineDescription));
     }
 
     @Test
@@ -116,24 +114,4 @@ public class UserRefundServiceTest {
         assertThrows(IllegalStateException.class, () -> findRefundEntity.getRefundableLineList());
     }
 
-    @Test
-    public void 환급_불가내역_반환() throws Exception {
-        //given
-        estimate();
-
-        //when
-        List<UnRefundableLine> unRefundableList = findRefund.getUnRefundableLineList();
-
-        //then
-        assertEquals(unRefundableList.size(), 0);
-    }
-
-    @Test
-    public void 환급_불가능_내역_반환_예외() throws Exception {
-        //given
-        RefundEntity findRefundEntity = refundRepository.findByRequestorId(savedUser.getUserId()).get();
-
-        //when, then
-        assertThrows(IllegalStateException.class, () -> findRefundEntity.getUnRefundableLineList());
-    }
 }
