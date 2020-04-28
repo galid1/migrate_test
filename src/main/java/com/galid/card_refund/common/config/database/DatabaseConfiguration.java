@@ -26,7 +26,7 @@ public class DatabaseConfiguration {
         builder.username(username);
         builder.password(password);
         builder.driverClassName("com.mysql.cj.jdbc.Driver");
-        builder.url("jdbc:mysql://localhost:3306/refund?serverTimezone=Asia/Seoul&useSSL=false&characterEncoding=UTF-8");
+        builder.url("jdbc:mysql://localhost:3306/refund?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8");
         return builder.build();
     }
 }

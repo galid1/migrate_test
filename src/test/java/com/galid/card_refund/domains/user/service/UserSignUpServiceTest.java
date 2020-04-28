@@ -38,6 +38,7 @@ public class UserSignUpServiceTest {
         UserSignUpRequest request = UserSignUpRequest.builder()
                 .nickname("KIM")
                 .deviceId("123123")
+                .base64PassPortImage("TEST")
                 .build();
 
         //when

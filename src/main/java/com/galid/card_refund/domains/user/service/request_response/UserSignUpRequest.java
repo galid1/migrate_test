@@ -9,13 +9,13 @@ import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
+@Builder
 public class UserSignUpRequest {
     @NotNull
     private String deviceId;
     @NotNull
     private String nickname;
-    @NotNull
+//    @NotNull
     private String base64PassPortImage;
 }
