@@ -73,7 +73,7 @@ public class UserRefundServiceTest {
 
     private void estimate() {
         List<RefundLine> refundableLineList = Arrays.asList(new RefundLine[] {
-                new RefundLine("TEST", "TEST", REFUND_REQUEST_AMOUNT)
+                new RefundLine("TEST", "TEST", "20:00", REFUND_REQUEST_AMOUNT)
         });
         List<UnRefundableLine> unRefundableLineList = Arrays.asList(new UnRefundableLine[] {
 
