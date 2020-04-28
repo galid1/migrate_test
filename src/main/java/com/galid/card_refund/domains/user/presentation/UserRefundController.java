@@ -28,7 +28,7 @@ public class UserRefundController {
        return refundService.refund(userRefundRequestList, userId);
     }
 
-    @GetMapping("/users/{userId}/refunds/refundable")
+    @GetMapping("/users/{userId}/refunds")
     public UserRefundResultResponse getRefundRequestResult(@PathVariable("userId") Long userId) {
         return refundService.getRefundRequestResult(userId);
     }
