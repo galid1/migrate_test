@@ -80,6 +80,9 @@ public class UserRefundService {
 
     private UserInformationDto toUserInformationDto(UserEntity userEntity) {
         UserInformation userInformation = userEntity.getUserInformation();
+        if(userInformation == null) {
+            throw new IllegalArgumentException("여권정보가 아직 입력되지 않은 상태입니다.");
+        }
 
         return UserRefundResultResponse.UserInformationDto.builder()
                 .address(userInformation.getAddress())
