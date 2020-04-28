@@ -83,6 +83,7 @@ public class RefundEntity extends BaseEntity {
         verifyEstimate(refundResultLineList, unRefundableLineDescription);
 
         this.refundResultLineList = refundResultLineList;
+        this.unRefundableLineDescription = unRefundableLineDescription;
 
         this.refundState = RefundState.COMPLETE;
     }
