@@ -1,4 +1,4 @@
-package com.galid.card_refund.domains.user.service.request_response;
+package com.galid.card_refund.domains.admin.presentation.request_response;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Builder
-public class UserInformationRequest {
+public class AdminUserInformationRequest {
     private String name;
     private String nation;
     private String passportNum;
