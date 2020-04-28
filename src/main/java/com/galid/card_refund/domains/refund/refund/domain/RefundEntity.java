@@ -42,7 +42,7 @@ public class RefundEntity extends BaseEntity {
             name = "refundable_line",
             joinColumns = @JoinColumn(name = "refund_id")
     )
-    private List<RefundLine> refundableLineList = new ArrayList<>();
+    private List<RefundResultLine> refundResultLineList = new ArrayList<>();
 
     @Getter(value = AccessLevel.PRIVATE)
     private String unRefundableLineDescription;
@@ -77,16 +77,16 @@ public class RefundEntity extends BaseEntity {
                 .build();
     }
 
-    public void estimate(List<RefundLine> refundableLineList, String unRefundableLineDescription) {
+    public void estimate(List<RefundResultLine> refundResultLineList, String unRefundableLineDescription) {
         verifyNotYetEstimate();
-        verifyEstimate(refundableLineList, unRefundableLineDescription);
+        verifyEstimate(refundResultLineList, unRefundableLineDescription);
 
-        this.refundableLineList = refundableLineList;
+        this.refundResultLineList = refundResultLineList;
 
         this.refundState = RefundState.COMPLETE;
     }
 
-    private void verifyEstimate(List<RefundLine> refundableLineList, String unRefundableLineDescription) {
+    private void verifyEstimate(List<RefundResultLine> refundableLineList, String unRefundableLineDescription) {
         if(refundableLineList == null || unRefundableLineDescription == null)
             throw new IllegalArgumentException("환급 가능, 불가능 내역은 필수값입니다.");
     }
@@ -96,9 +96,9 @@ public class RefundEntity extends BaseEntity {
             throw new IllegalStateException("이미 평가한 환급요청입니다.");
     }
 
-    public List<RefundLine> getRefundableLineList() {
+    public List<RefundResultLine> getRefundResultLineList() {
         verifyIsEstimated();
-        return this.refundableLineList;
+        return this.refundResultLineList;
     }
 
     public String getUnRefundableLineDescription() {

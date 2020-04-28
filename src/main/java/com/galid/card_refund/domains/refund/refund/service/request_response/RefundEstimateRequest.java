@@ -12,6 +12,15 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class RefundEstimateRequest {
-    private List<RefundableLineRequest> refundableLineRequestList;
+    private List<RefundEstimateLine> refundEstimateLineList;
     private String unRefundableLineDescription;
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class RefundEstimateLine {
+        private String placeAndName;
+        private String itemImageUrl;
+        private double paymentAmount;
+    }
 }

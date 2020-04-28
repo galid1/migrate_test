@@ -1,12 +1,10 @@
 package com.galid.card_refund.domains.refund.refund.service;
 
-import com.galid.card_refund.common.model.Money;
 import com.galid.card_refund.domains.refund.refund.domain.RefundEntity;
-import com.galid.card_refund.domains.refund.refund.domain.RefundLine;
 import com.galid.card_refund.domains.refund.refund.domain.RefundRepository;
+import com.galid.card_refund.domains.refund.refund.domain.RefundResultLine;
 import com.galid.card_refund.domains.refund.refund.service.request_response.RefundEstimateRequest;
-import com.galid.card_refund.domains.refund.refund.service.request_response.RefundableLineRequest;
-import com.galid.card_refund.domains.user.domain.UserRepository;
+import com.galid.card_refund.domains.refund.refund.service.request_response.RefundEstimateRequest.RefundEstimateLine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,20 +23,19 @@ public class RefundEstimateService {
         RefundEntity refundEntity = refundRepository.findById(refundId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 환급 요청입니다."));
 
-        List<RefundLine> refundableLineList = request.getRefundableLineRequestList()
+        List<RefundResultLine> refundableLineList = request.getRefundEstimateLineList()
                 .stream()
-                .map(refundableLineRequest -> toRefundLine(refundableLineRequest))
+                .map(refundEstimateLine -> toRefundResultLine(refundEstimateLine))
                 .collect(Collectors.toList());
 
 
         refundEntity.estimate(refundableLineList, request.getUnRefundableLineDescription());
     }
 
-    private RefundLine toRefundLine(RefundableLineRequest request) {
-        return RefundLine.builder()
-                .paymentAmount(new Money(request.getPaymentAmount()))
-                .itemImageUrl(request.getItemImageUrl())
+    private RefundResultLine toRefundResultLine(RefundEstimateLine request) {
+        return RefundResultLine.builder()
                 .place(request.getPlaceAndName())
+                .paymentAmount(request.getPaymentAmount())
                 .build();
     }
 }
