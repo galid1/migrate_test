@@ -20,7 +20,6 @@ public class RefundEstimateRequest {
     @NoArgsConstructor
     public static class RefundEstimateLine {
         private String placeAndName;
-        private String itemImageUrl;
         private double paymentAmount;
     }
 }
