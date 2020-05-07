@@ -51,8 +51,8 @@ public class UserEntity extends BaseEntity {
     }
 
     private void setNickname(String nickname) {
-        if(nickname == null || nickname.length() < 3)
-            throw new IllegalArgumentException("Nickname은 3글자 이상이어야합니다.");
+        if(nickname == null || nickname.length() < 0)
+            throw new IllegalArgumentException("Nickname은 1글자 이상이어야합니다.");
         this.nickname = nickname;
     }
 

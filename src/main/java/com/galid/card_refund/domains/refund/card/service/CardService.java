@@ -27,8 +27,7 @@ public class CardService {
     }
 
     private void verifyDuplicateCardNum(CardCreateRequest request) {
-        if(cardRepository.findByCardInformation_CardNum(request.getCardNum())
-            .isPresent())
+        if(cardRepository.findByCardInformation_CardNum(request.getCardNum()).isPresent())
             throw new IllegalArgumentException("이미 존재하는 카드번호 입니다.");
     }
 }
