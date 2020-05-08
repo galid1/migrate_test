@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class UserInformationController {
+public class UserController {
     private final UserInformationService service;
 
     @GetMapping("/users/{userId}/information")

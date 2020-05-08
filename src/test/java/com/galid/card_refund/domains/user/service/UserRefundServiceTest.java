@@ -68,7 +68,7 @@ public class UserRefundServiceTest {
         estimate();
 
         //then
-        assertEquals(findRefund.getRefundStatus(), RefundStatus.COMPLETE);
+        assertEquals(findRefund.getRefundStatus(), RefundStatus.COMPLETE_STATUS);
     }
 
     private void estimate() {
