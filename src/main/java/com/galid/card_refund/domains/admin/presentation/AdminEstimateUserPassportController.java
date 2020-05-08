@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminEstimateUserPassportController {
     private final AdminEstimateUserPassportService adminEstimateUserPassportService;
 
-    @PostMapping("/admin/users/{userId}/passport-information")
+    @PostMapping("/admin/users/{userId}/passport")
     public ResponseEntity addUserInformation(@PathVariable("userId") Long userId, @RequestBody AdminEstimateUserPassportRequest request) {
         adminEstimateUserPassportService.addUserInformation(userId, request);
         return ResponseEntity.ok().build();
