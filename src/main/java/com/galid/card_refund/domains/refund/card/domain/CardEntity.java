@@ -22,7 +22,7 @@ public class CardEntity extends BaseEntity {
     private CardInformation cardInformation;
 
     @Enumerated(value = EnumType.STRING)
-    private CardState cardState;
+    private CardStatus cardStatus;
 
     private CardInitMoney initMoney;
     private LocalDate registeredDate;
@@ -36,7 +36,7 @@ public class CardEntity extends BaseEntity {
         this.registeredDate = LocalDate.now();
         this.setCardInitMoney(initMoney);
         this.remainAmount = initMoney.getAmount();
-        cardState = CardState.UNREGISTERED;
+        cardStatus = CardStatus.UNREGISTERED_STATUS;
     }
 
     private void setCardInformation(CardInformation cardInformation) {
@@ -56,11 +56,11 @@ public class CardEntity extends BaseEntity {
         this.verifyRegistration(cardRegistration);
 
         this.ownerId = cardRegistration.getUserId();
-        this.cardState = CardState.REGISTERED;
+        this.cardStatus = CardStatus.REGISTERED_STATUS;
     }
 
     private void verifyRegistrableState() {
-        if(this.cardState != CardState.UNREGISTERED)
+        if(this.cardStatus != CardStatus.UNREGISTERED_STATUS)
             throw new IllegalStateException("이미 등록되었거나, 분실상태의 카드입니다.");
     }
 
@@ -79,7 +79,7 @@ public class CardEntity extends BaseEntity {
         this.ownerId = null;
         this.registeredDate = LocalDate.now();
         this.remainAmount = initMoney.getAmount();
-        this.cardState = CardState.UNREGISTERED;
+        this.cardStatus = CardStatus.UNREGISTERED_STATUS;
     }
 
     public void recordRemainAmount(Money remainAmount) {
@@ -89,11 +89,11 @@ public class CardEntity extends BaseEntity {
 
     public void lostCard() {
         this.verifyRegistered();
-        this.cardState = CardState.LOST;
+        this.cardStatus = CardStatus.LOST_STATUS;
     }
 
     private void verifyRegistered() {
-        if(this.cardState != CardState.REGISTERED)
+        if(this.cardStatus != CardStatus.REGISTERED_STATUS)
             throw new IllegalArgumentException("이미 반납 또는 분실처리된 카드입니다.");
     }
 }

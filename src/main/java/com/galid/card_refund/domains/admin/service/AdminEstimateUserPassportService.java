@@ -18,7 +18,7 @@ public class AdminEstimateUserPassportService {
         UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
-        userEntity.estimatePassport(request.getEstimateResultState(), UserPassportInformation.builder()
+        userEntity.estimatePassport(request.getEstimateResultStatus(), UserPassportInformation.builder()
                 .address(request.getAddress())
                 .name(request.getName())
                 .nation(request.getNation())

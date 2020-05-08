@@ -73,7 +73,7 @@ public class CardEntityTest {
 
         // then
         Assertions.assertNotEquals(savedEntity.getOwnerId(), null);
-        Assertions.assertEquals(savedEntity.getCardState(), CardState.REGISTERED);
+        Assertions.assertEquals(savedEntity.getCardStatus(), CardStatus.REGISTERED_STATUS);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class CardEntityTest {
         savedEntity.returnCard();
 
         // then
-        Assertions.assertEquals(savedEntity.getCardState(), CardState.UNREGISTERED);
+        Assertions.assertEquals(savedEntity.getCardStatus(), CardStatus.UNREGISTERED_STATUS);
     }
 
 }

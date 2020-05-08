@@ -3,7 +3,7 @@ package com.galid.card_refund.domains.user.service;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserInformationResponse;
-import com.galid.card_refund.domains.user.service.request_response.UserPassportStateResponse;
+import com.galid.card_refund.domains.user.service.request_response.UserPassportStatusResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +24,10 @@ public class UserInformationService {
                 .build();
     }
 
-    public UserPassportStateResponse getUserPassportState(Long userId) {
+    public UserPassportStatusResponse getUserPassportStatus(Long userId) {
         UserEntity userEntity = userRepository.findById((userId))
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
-        return new UserPassportStateResponse(userEntity.getPassportState());
+        return new UserPassportStatusResponse(userEntity.getPassportStatus());
     }
 }

@@ -21,7 +21,7 @@ public class RefundEntity extends BaseEntity {
     private Long refundId;
 
     @Enumerated(value = EnumType.STRING)
-    private RefundState refundState;
+    private RefundStatus refundStatus;
 
     @Column(unique = true)
     private Long requestorId;
@@ -53,7 +53,7 @@ public class RefundEntity extends BaseEntity {
     public RefundEntity(List<RefundLine> requestRefundLine, Long requestorId) {
         this.setRefundLineList(requestRefundLine);
         this.requestorId = requestorId;
-        this.refundState = RefundState.ESTIMATING_STATE;
+        this.refundStatus = RefundStatus.ESTIMATING_STATUS;
     }
 
     private void setRefundLineList(List<RefundLine> requestRefundLine) {
@@ -86,7 +86,7 @@ public class RefundEntity extends BaseEntity {
         this.refundResultLineList = refundResultLineList;
         this.unRefundableLineDescription = unRefundableLineDescription;
 
-        this.refundState = RefundState.COMPLETE_STATE;
+        this.refundStatus = RefundStatus.COMPLETE_STATUS;
     }
 
     private void verifyEstimate(List<RefundResultLine> refundableLineList, String unRefundableLineDescription) {
@@ -95,7 +95,7 @@ public class RefundEntity extends BaseEntity {
     }
 
     private void verifyNotYetEstimate() {
-        if(this.refundState == RefundState.COMPLETE_STATE)
+        if(this.refundStatus == RefundStatus.COMPLETE_STATUS)
             throw new IllegalStateException("이미 평가한 환급요청입니다.");
     }
 
@@ -110,7 +110,7 @@ public class RefundEntity extends BaseEntity {
     }
 
     private void verifyIsEstimated() {
-        if(this.refundState != RefundState.COMPLETE_STATE) {
+        if(this.refundStatus != RefundStatus.COMPLETE_STATUS) {
             throw new NotYetEstimatedException();
         }
     }

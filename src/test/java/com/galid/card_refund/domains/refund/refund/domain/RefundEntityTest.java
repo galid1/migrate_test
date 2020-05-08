@@ -40,7 +40,7 @@ public class RefundEntityTest {
 
         // then
         assertEquals(savedEntity.getRefundId(), findEntity.getRefundId());
-        assertEquals(savedEntity.getRefundState(), RefundState.WAIT);
+        assertEquals(savedEntity.getRefundStatus(), RefundStatus.ESTIMATING_STATUS);
         assertEquals(savedEntity.getTotalAmount().getValue(), paymentAmount);
         assertEquals(savedEntity.getExpectRefundAmount().getValue(), expectedRefundAmount);
     }

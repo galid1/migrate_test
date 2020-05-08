@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.admin.presentation.request_response;
 
-import com.galid.card_refund.domains.user.domain.UserPassportState;
+import com.galid.card_refund.domains.user.domain.UserPassportStatus;
 import lombok.*;
 
 @AllArgsConstructor
@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @Builder
 public class AdminEstimateUserPassportRequest {
-    private UserPassportState estimateResultState;
+    private UserPassportStatus estimateResultStatus;
     private String name;
     private String nation;
     private String passportNum;

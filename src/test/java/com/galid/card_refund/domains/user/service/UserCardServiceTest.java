@@ -107,7 +107,7 @@ public class UserCardServiceTest {
         userCardService.returnCard(savedUser.getUserId());
 
         //then
-        assertEquals(savedStoredCard.getCardState(), CardState.UNREGISTERED);
+        assertEquals(savedStoredCard.getCardStatus(), CardStatus.UNREGISTERED_STATUS);
     }
 
     private String CARD_NUM = "1234123412341234";
