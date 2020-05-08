@@ -22,10 +22,7 @@ public class CardEntityTest {
     @BeforeEach
     public void init() {
         CardEntity entity = CardEntity.builder()
-                .cardInformation(CardInformation.builder()
-                        .cardNum(RIGHT_CARD_NUM)
-                        .build()
-                )
+                .cardInformation(new CardInformation(RIGHT_CARD_NUM))
                 .initMoney(CardInitMoney.TEN)
                 .build();
 
@@ -37,10 +34,7 @@ public class CardEntityTest {
     public void whenCardNumLengthIsNot16ThrowError() throws Exception {
         //given, when, then
         Assertions.assertThrows(IllegalArgumentException.class, () -> CardEntity.builder()
-                .cardInformation(CardInformation.builder()
-                        .cardNum(WRONG_CARD_NUM)
-                        .build()
-                )
+                .cardInformation(new CardInformation(WRONG_CARD_NUM))
                 .build());
     }
 

@@ -20,7 +20,6 @@ public class CardInformation {
     @Transient
     private int MIN_SERIAL_NUM = 1;
 
-    @Builder
     public CardInformation(String cardNum) {
         this.setCardNum(cardNum);
         this.serial = this.makeFourDigitNewSerial();

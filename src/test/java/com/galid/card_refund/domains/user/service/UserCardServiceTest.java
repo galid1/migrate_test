@@ -34,9 +34,7 @@ public class UserCardServiceTest {
                 .build());
 
         CardEntity savedStoredCard = cardRepository.save(CardEntity.builder()
-                .cardInformation(CardInformation.builder()
-                        .cardNum(STORED_CARD_NUM)
-                        .build())
+                .cardInformation(new CardInformation(STORED_CARD_NUM))
                 .initMoney(CardInitMoney.TEN)
                 .build());
 
@@ -55,10 +53,7 @@ public class UserCardServiceTest {
     public void 존재하지_않는사용자_카드등록_예외() throws Exception {
         //given
         CardEntity savedStoredCard = CardEntity.builder()
-                .cardInformation(CardInformation
-                        .builder()
-                        .cardNum(STORED_CARD_NUM)
-                        .build())
+                .cardInformation(new CardInformation(STORED_CARD_NUM))
                 .initMoney(CardInitMoney.TEN)
                 .build();
 
@@ -94,9 +89,7 @@ public class UserCardServiceTest {
                 .build());
 
         CardEntity savedStoredCard = cardRepository.save(CardEntity.builder()
-                .cardInformation(CardInformation.builder()
-                        .cardNum(STORED_CARD_NUM)
-                        .build())
+                .cardInformation(new CardInformation(STORED_CARD_NUM))
                 .initMoney(CardInitMoney.TEN)
                 .build());
 
@@ -117,9 +110,7 @@ public class UserCardServiceTest {
     public void 카드등록확인() throws Exception {
         //given
         CardEntity cardEntity = CardEntity.builder()
-                .cardInformation(CardInformation.builder()
-                        .cardNum(CARD_NUM)
-                        .build())
+                .cardInformation(new CardInformation(CARD_NUM))
                 .initMoney(initMoney)
                 .build();
         cardRepository.save(cardEntity);

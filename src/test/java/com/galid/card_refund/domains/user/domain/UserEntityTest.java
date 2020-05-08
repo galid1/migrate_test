@@ -19,6 +19,7 @@ class UserEntityTest {
     private UserRepository userRepository;
 
     private String DEVICE_ID = "123123123123";
+    private String CARD_NUM = "1234123412341234";
     private String RIGHT_NICKNAME = "JJY";
     private String WRONG_NICKNAME = "X";
 
@@ -49,9 +50,7 @@ class UserEntityTest {
     public void whenRegisterCardThenCardIsNotNull() throws Exception {
         //given, when
         userEntity.registerCard(CardEntity.builder()
-                .cardInformation(CardInformation.builder()
-                        .cardNum("1234123412341234")
-                        .build())
+                .cardInformation(new CardInformation(CARD_NUM))
                 .initMoney(CardInitMoney.TEN)
                 .build());
 
@@ -64,9 +63,7 @@ class UserEntityTest {
     public void whenReturnCardThenCardIsNull() throws Exception{
         //given, when
         userEntity.registerCard(CardEntity.builder()
-                .cardInformation(CardInformation.builder()
-                        .cardNum("1234123412341234")
-                        .build())
+                .cardInformation(new CardInformation(CARD_NUM))
                 .initMoney(CardInitMoney.TEN)
                 .build());
         userEntity.returnCard();
