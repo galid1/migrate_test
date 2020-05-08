@@ -7,6 +7,7 @@ import com.galid.card_refund.domains.refund.refund.domain.RefundRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserInformation;
 import com.galid.card_refund.domains.user.domain.UserRepository;
+import com.galid.card_refund.domains.user.exception.NotExistRefundRequestException;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundResultResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundRequest;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundResponse;
@@ -63,7 +64,7 @@ public class UserRefundService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
         RefundEntity refundEntity = refundRepository.findByRequestorId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("환급 요청이 존재하지 않습니다."));
+                .orElseThrow(() -> new NotExistRefundRequestException());
 
         return UserRefundResultResponse.builder()
                 .refundResultResponseLineList(refundEntity.getRefundResultLineList().stream()
