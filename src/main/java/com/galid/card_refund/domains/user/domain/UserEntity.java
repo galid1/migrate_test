@@ -86,7 +86,8 @@ public class UserEntity extends BaseEntity {
         return this.card;
     }
 
-    public void estimatePassport(UserPassportInformation userPassportInformation) {
+    public void estimatePassport(UserPassportState passportState, UserPassportInformation userPassportInformation) {
+        this.passportState = passportState;
         this.userPassportInformation = userPassportInformation;
     }
 
