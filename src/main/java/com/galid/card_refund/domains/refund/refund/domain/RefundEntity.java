@@ -2,6 +2,7 @@ package com.galid.card_refund.domains.refund.refund.domain;
 
 import com.galid.card_refund.common.config.logging.BaseEntity;
 import com.galid.card_refund.common.model.Money;
+import com.galid.card_refund.domains.user.exception.NotYetEstimatedException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -52,7 +53,7 @@ public class RefundEntity extends BaseEntity {
     public RefundEntity(List<RefundLine> requestRefundLine, Long requestorId) {
         this.setRefundLineList(requestRefundLine);
         this.requestorId = requestorId;
-        this.refundState = RefundState.WAIT;
+        this.refundState = RefundState.ESTIMATING_STATE;
     }
 
     private void setRefundLineList(List<RefundLine> requestRefundLine) {
@@ -85,7 +86,7 @@ public class RefundEntity extends BaseEntity {
         this.refundResultLineList = refundResultLineList;
         this.unRefundableLineDescription = unRefundableLineDescription;
 
-        this.refundState = RefundState.COMPLETE;
+        this.refundState = RefundState.COMPLETE_STATE;
     }
 
     private void verifyEstimate(List<RefundResultLine> refundableLineList, String unRefundableLineDescription) {
@@ -94,7 +95,7 @@ public class RefundEntity extends BaseEntity {
     }
 
     private void verifyNotYetEstimate() {
-        if(this.refundState == RefundState.COMPLETE)
+        if(this.refundState == RefundState.COMPLETE_STATE)
             throw new IllegalStateException("이미 평가한 환급요청입니다.");
     }
 
@@ -109,8 +110,9 @@ public class RefundEntity extends BaseEntity {
     }
 
     private void verifyIsEstimated() {
-        if(this.refundState != RefundState.COMPLETE)
-            throw new IllegalStateException("아직 평가 되지 않은 환급 요청입니다.");
+        if(this.refundState != RefundState.COMPLETE_STATE) {
+            throw new NotYetEstimatedException();
+        }
     }
 
 }
