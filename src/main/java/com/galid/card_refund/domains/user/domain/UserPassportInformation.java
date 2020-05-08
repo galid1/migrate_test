@@ -9,7 +9,7 @@ import javax.persistence.Embeddable;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class UserInformation {
+public class UserPassportInformation {
     private String name;
     private String nation;
     private String passportNum;

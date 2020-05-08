@@ -5,7 +5,7 @@ import com.galid.card_refund.domains.refund.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.refund.refund.domain.RefundLine;
 import com.galid.card_refund.domains.refund.refund.domain.RefundRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
-import com.galid.card_refund.domains.user.domain.UserInformation;
+import com.galid.card_refund.domains.user.domain.UserPassportInformation;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.exception.NotExistRefundRequestException;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundResultResponse;
@@ -80,16 +80,16 @@ public class UserRefundService {
     }
 
     private UserInformationDto toUserInformationDto(UserEntity userEntity) {
-        UserInformation userInformation = userEntity.getUserInformation();
-        if(userInformation == null) {
+        UserPassportInformation userPassportInformation = userEntity.getUserPassportInformation();
+        if(userPassportInformation == null) {
             throw new IllegalArgumentException("여권정보가 아직 입력되지 않은 상태입니다.");
         }
 
         return UserRefundResultResponse.UserInformationDto.builder()
-                .address(userInformation.getAddress())
-                .name(userInformation.getName())
-                .nation(userInformation.getNation())
-                .passportNum(userInformation.getPassportNum())
+                .address(userPassportInformation.getAddress())
+                .name(userPassportInformation.getName())
+                .nation(userPassportInformation.getNation())
+                .passportNum(userPassportInformation.getPassportNum())
                 .build();
     }
 }

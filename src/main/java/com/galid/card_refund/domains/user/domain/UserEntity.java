@@ -24,7 +24,9 @@ public class UserEntity extends BaseEntity {
     private String passPortImagePath;
 
     @Embedded
-    private UserInformation userInformation;
+    private UserPassportInformation userPassportInformation;
+    @Enumerated(value = EnumType.STRING)
+    private UserPassportState passportState;
 
     @Getter(value = AccessLevel.PRIVATE)
     @OneToOne(fetch = FetchType.LAZY)
@@ -40,6 +42,7 @@ public class UserEntity extends BaseEntity {
     public UserEntity(String deviceId, String nickname, String passPortImagePath) {
         this.setDeviceId(deviceId);
         this.setNickname(nickname);
+        this.passportState = UserPassportState.ESTIMATING_STATE;
         this.passPortImagePath = passPortImagePath;
     }
 
@@ -83,8 +86,8 @@ public class UserEntity extends BaseEntity {
         return this.card;
     }
 
-    public void addUserInformation(UserInformation userInformation) {
-        this.userInformation = userInformation;
+    public void estimatePassport(UserPassportInformation userPassportInformation) {
+        this.userPassportInformation = userPassportInformation;
     }
 
 }
