@@ -12,10 +12,10 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Builder
 public class UserSignUpRequest {
-    @NotNull
+//    @NotNull
     private String deviceId;
-    @NotNull
+//    @NotNull
     private String nickname;
 //    @NotNull
-    private String base64PassPortImage;
+    private String base64PassportImage;
 }
