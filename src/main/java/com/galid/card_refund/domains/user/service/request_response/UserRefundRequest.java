@@ -14,7 +14,7 @@ public class UserRefundRequest {
     @NotNull
     private String place;
     @NotNull
-    private String base64File;
+    private String base64RefundImage;
     @NotNull
     private String purchaseDateTime;
     @NotNull

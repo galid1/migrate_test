@@ -1,5 +1,6 @@
 package com.galid.card_refund.domains.user.service;
 
+import com.galid.card_refund.common.aws.S3FileUploader;
 import com.galid.card_refund.common.model.Money;
 import com.galid.card_refund.domains.refund.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.refund.refund.domain.RefundLine;
@@ -17,7 +18,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,12 +30,15 @@ public class UserRefundService {
     private final RefundRepository refundRepository;
     private final UserRepository userRepository;
 
+    private final S3FileUploader s3FileUploader;
+    private String IMAGE_PATH = "refund";
+
     @Transactional
     public UserRefundResponse refund(List<UserRefundRequest> refundLineList, Long requestorId) {
         verifyDuplicateRefundRequest(requestorId);
 
         RefundEntity refundEntity = RefundEntity.builder()
-                .requestRefundLine(toRefundLineList(refundLineList))
+                .requestRefundLineList(toRefundLineList(requestorId, refundLineList))
                 .requestorId(requestorId)
                 .build();
 
@@ -46,17 +52,22 @@ public class UserRefundService {
             throw new IllegalArgumentException("환급 요청은 한번만 가능합니다.");
     }
 
-    private List<RefundLine> toRefundLineList(List<UserRefundRequest> refundRequests) {
-        return refundRequests.stream()
+    private List<RefundLine> toRefundLineList(Long requestorId, List<UserRefundRequest> refundRequestList) {
+        return refundRequestList.stream()
                 .map(userRefundRequest ->
                         RefundLine.builder()
                                 .place(userRefundRequest.getPlace())
                                 .paymentAmount(new Money(userRefundRequest.getPaymentAmount()))
-                                .itemImageUrl(userRefundRequest.getBase64File())
+                                .itemImageUrl(s3FileUploader.uploadFile(makeS3UploadPath(requestorId),
+                                        Base64.getDecoder().decode(userRefundRequest.getBase64RefundImage())))
                                 .purchaseDateTime(userRefundRequest.getPurchaseDateTime())
                                 .build()
                 )
                 .collect(Collectors.toList());
+    }
+
+    private String makeS3UploadPath(Long requestorId) {
+        return IMAGE_PATH + "/" + requestorId;
     }
 
     public UserRefundResultResponse getRefundRequestResult(Long userId) {

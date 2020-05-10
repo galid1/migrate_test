@@ -50,8 +50,8 @@ public class RefundEntity extends BaseEntity {
     private String unRefundableLineDescription;
 
     @Builder
-    public RefundEntity(List<RefundLine> requestRefundLine, Long requestorId) {
-        this.setRefundLineList(requestRefundLine);
+    public RefundEntity(List<RefundLine> requestRefundLineList, Long requestorId) {
+        this.setRefundLineList(requestRefundLineList);
         this.requestorId = requestorId;
         this.refundStatus = RefundStatus.ESTIMATING_STATUS;
     }
