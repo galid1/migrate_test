@@ -1,9 +1,6 @@
 package com.galid.card_refund.domains.user.service.request_response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,11 +8,10 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Builder
+@ToString
 public class UserSignUpRequest {
 //    @NotNull
     private String deviceId;
 //    @NotNull
     private String nickname;
-//    @NotNull
-    private String base64PassportImage;
 }

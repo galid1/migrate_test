@@ -23,10 +23,10 @@ public class UserSignUpService {
     private String IMAGE_PATH_KEY = "user";
 
     @Transactional
-    public UserSignUpResponse signUp(UserSignUpRequest request) throws IOException {
+    public UserSignUpResponse signUp(UserSignUpRequest request, MultipartFile passportImage) throws IOException {
         validateDuplicateUser(request.getDeviceId());
 
-        String passPortImagePath = s3FileUploader.uploadFile(IMAGE_PATH_KEY, Base64.getDecoder().decode(request.getBase64PassportImage()));
+        String passPortImagePath = s3FileUploader.uploadFile(IMAGE_PATH_KEY, passportImage.getBytes());
 
         UserEntity newUser = UserEntity.builder()
                 .deviceId(request.getDeviceId())

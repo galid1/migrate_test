@@ -3,10 +3,13 @@ package com.galid.card_refund.domains.user.presentation;
 import com.galid.card_refund.domains.user.service.UserSignUpService;
 import com.galid.card_refund.domains.user.service.request_response.UserSignUpRequest;
 import com.galid.card_refund.domains.user.service.request_response.UserSignUpResponse;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -15,10 +18,9 @@ import java.io.IOException;
 public class UserSignUpController {
     private final UserSignUpService signUpService;
 
-    @PostMapping("/users")
-    public UserSignUpResponse signUp(@RequestBody UserSignUpRequest request) throws IOException {
-        return signUpService.signUp(request);
+    @PostMapping(value = "/users", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public UserSignUpResponse signUp(@RequestParam("information") UserSignUpRequest request, @RequestParam("image") MultipartFile passportImage) throws IOException {
+        return signUpService.signUp(request, passportImage);
     }
-
 
 }
