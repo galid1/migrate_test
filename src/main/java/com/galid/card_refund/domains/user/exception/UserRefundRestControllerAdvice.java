@@ -1,4 +1,4 @@
-package com.galid.card_refund.domains.user.presentation;
+package com.galid.card_refund.domains.user.exception;
 
 import com.galid.card_refund.domains.user.exception.NotExistRefundRequestException;
 import com.galid.card_refund.domains.user.exception.NotYetEstimatedException;
