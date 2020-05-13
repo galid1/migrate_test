@@ -18,10 +18,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static java.util.Map.*;
+import static java.util.stream.Collectors.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,11 +36,13 @@ public class UserRefundService {
     private String IMAGE_PATH = "refund";
 
     @Transactional
-    public UserRefundResponse refund(List<UserRefundRequest> refundLineList, Long requestorId) {
+    public UserRefundResponse refund(Long requestorId, List<UserRefundRequest> refundLineList, Map<String, byte[]> refundItemImageByteMap) {
         verifyDuplicateRefundRequest(requestorId);
 
+        Map<String, String> refundItemImageUrlMap = uploadRefundItemImageList(requestorId, refundItemImageByteMap);
+
         RefundEntity refundEntity = RefundEntity.builder()
-                .requestRefundLineList(toRefundLineList(requestorId, refundLineList))
+                .requestRefundLineList(toRefundLineList(refundLineList, refundItemImageUrlMap))
                 .requestorId(requestorId)
                 .build();
 
@@ -48,26 +52,42 @@ public class UserRefundService {
     }
 
     private void verifyDuplicateRefundRequest(Long requestorId) {
-        if(refundRepository.findByRequestorId(requestorId).isPresent())
+        if (refundRepository.findByRequestorId(requestorId).isPresent())
             throw new IllegalArgumentException("환급 요청은 한번만 가능합니다.");
     }
 
-    private List<RefundLine> toRefundLineList(Long requestorId, List<UserRefundRequest> refundRequestList) {
-        return refundRequestList.stream()
-                .map(userRefundRequest ->
-                        RefundLine.builder()
-                                .place(userRefundRequest.getPlace())
-                                .paymentAmount(new Money(userRefundRequest.getPaymentAmount()))
-                                .itemImageUrl(s3FileUploader.uploadFile(makeS3UploadPath(requestorId),
-                                        Base64.getDecoder().decode(userRefundRequest.getBase64RefundImage())))
-                                .purchaseDateTime(userRefundRequest.getPurchaseDateTime())
-                                .build()
+    private Map<String, String> uploadRefundItemImageList(Long requestorId, Map<String, byte[]> refundItemImageByteMap) {
+        String uploadPath = makeS3UploadPath(requestorId);
+
+        return refundItemImageByteMap.entrySet().stream()
+                .map(entry ->
+                        entry(
+                                entry.getKey(),
+                                s3FileUploader.uploadFile(uploadPath, entry.getValue())
+                        )
                 )
-                .collect(Collectors.toList());
+                .collect(toMap(
+                        e -> e.getKey(),
+                        e -> e.getValue()
+                ));
     }
 
     private String makeS3UploadPath(Long requestorId) {
         return IMAGE_PATH + "/" + requestorId;
+    }
+
+    private List<RefundLine> toRefundLineList(List<UserRefundRequest> refundRequestList,
+                                              Map<String, String> refundItemImageUrlMap) {
+        return refundRequestList.stream()
+                .map(userRefundRequest ->
+                        RefundLine.builder()
+                                .place(userRefundRequest.getPlace())
+                                .itemImageUrl(refundItemImageUrlMap.get(userRefundRequest.getRefundItemId()))
+                                .paymentAmount(new Money(userRefundRequest.getPaymentAmount()))
+                                .purchaseDateTime(userRefundRequest.getPurchaseDateTime())
+                                .build()
+                )
+                .collect(Collectors.toList());
     }
 
     public UserRefundResultResponse getRefundRequestResult(Long userId) {
@@ -92,7 +112,7 @@ public class UserRefundService {
 
     private UserInformationDto toUserInformationDto(UserEntity userEntity) {
         UserPassportInformation userPassportInformation = userEntity.getUserPassportInformation();
-        if(userPassportInformation == null) {
+        if (userPassportInformation == null) {
             throw new IllegalArgumentException("여권정보가 아직 입력되지 않은 상태입니다.");
         }
 

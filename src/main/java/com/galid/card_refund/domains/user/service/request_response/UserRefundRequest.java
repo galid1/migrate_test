@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @Builder
 public class UserRefundRequest {
     @NotNull
-    private String place;
+    private int refundItemId;
     @NotNull
-    private String base64RefundImage;
+    private String place;
     @NotNull
     private String purchaseDateTime;
     @NotNull
