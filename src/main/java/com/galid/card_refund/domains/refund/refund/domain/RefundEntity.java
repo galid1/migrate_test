@@ -44,7 +44,7 @@ public class RefundEntity extends BaseEntity {
             joinColumns = @JoinColumn(name = "refund_id")
     )
     private List<RefundResultLine> refundResultLineList = new ArrayList<>();
-
+    private String refundResultBarcodeImageUrl;
     private String unRefundableLineDescription;
 
     @Builder
@@ -77,13 +77,13 @@ public class RefundEntity extends BaseEntity {
                 .build();
     }
 
-    public void estimate(List<RefundResultLine> refundResultLineList, String unRefundableLineDescription) {
+    public void estimate(List<RefundResultLine> refundResultLineList, String unRefundableLineDescription, String refundResultBarcodeImageUrl) {
         verifyNotYetEstimate();
         verifyEstimate(refundResultLineList, unRefundableLineDescription);
 
         this.refundResultLineList = refundResultLineList;
         this.unRefundableLineDescription = unRefundableLineDescription;
-
+        this.refundResultBarcodeImageUrl = refundResultBarcodeImageUrl;
         this.refundStatus = RefundStatus.COMPLETE_STATUS;
     }
 
