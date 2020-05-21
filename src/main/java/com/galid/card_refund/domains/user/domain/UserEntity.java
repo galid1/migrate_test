@@ -28,7 +28,6 @@ public class UserEntity extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private UserPassportStatus passportStatus;
 
-    @Getter(value = AccessLevel.PRIVATE)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")
     private CardEntity card;

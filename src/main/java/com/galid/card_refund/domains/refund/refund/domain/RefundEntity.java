@@ -38,7 +38,6 @@ public class RefundEntity extends BaseEntity {
     @AttributeOverride(name = "value", column = @Column(name = "expect_refund_amount"))
     private Money expectRefundAmount;
 
-    @Getter(value = AccessLevel.PRIVATE)
     @ElementCollection
     @CollectionTable(
             name = "refund_result_line",
@@ -46,7 +45,6 @@ public class RefundEntity extends BaseEntity {
     )
     private List<RefundResultLine> refundResultLineList = new ArrayList<>();
 
-    @Getter(value = AccessLevel.PRIVATE)
     private String unRefundableLineDescription;
 
     @Builder
