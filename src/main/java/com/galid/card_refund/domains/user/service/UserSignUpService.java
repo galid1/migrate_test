@@ -19,13 +19,13 @@ public class UserSignUpService {
     private final UserRepository userRepository;
     private final S3FileUploader s3FileUploader;
 
-    private String IMAGE_PATH_KEY = "user";
+    private String UPLOAD_PATH_KEY = "user";
 
     @Transactional
     public UserSignUpResponse signUp(UserSignUpRequest request, MultipartFile passportImage) throws IOException {
         validateDuplicateUser(request.getDeviceId());
 
-        String passPortImagePath = s3FileUploader.uploadFile(IMAGE_PATH_KEY, passportImage.getBytes());
+        String passPortImagePath = s3FileUploader.uploadFile(UPLOAD_PATH_KEY, passportImage.getBytes());
 
         UserEntity newUser = UserEntity.builder()
                 .deviceId(request.getDeviceId())

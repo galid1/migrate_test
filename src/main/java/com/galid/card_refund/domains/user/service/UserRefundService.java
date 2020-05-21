@@ -35,7 +35,7 @@ public class UserRefundService {
     private final UserRepository userRepository;
 
     private final S3FileUploader s3FileUploader;
-    private String IMAGE_PATH = "refund";
+    private String UPLOAD_PATH_KEY = "refund";
 
     @Transactional
     public UserRefundResponse refund(Long requestorId, List<UserRefundRequest> refundLineList, Map<String, byte[]> refundItemImageByteMap) {
@@ -74,7 +74,7 @@ public class UserRefundService {
     }
 
     private String makeS3UploadPath(Long requestorId) {
-        return IMAGE_PATH + "/" + requestorId;
+        return UPLOAD_PATH_KEY + "/" + requestorId;
     }
 
     private List<RefundLine> toRefundLineList(List<UserRefundRequest> refundRequestList,
