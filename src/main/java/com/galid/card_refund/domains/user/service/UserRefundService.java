@@ -19,11 +19,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 import java.util.Map;
+import static java.util.Map.entry;
+
 import java.util.stream.Collectors;
 
-import static java.util.Map.*;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toMap;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +40,7 @@ public class UserRefundService {
     @Transactional
     public UserRefundResponse refund(Long requestorId, List<UserRefundRequest> refundLineList, Map<String, byte[]> refundItemImageByteMap) {
         verifyDuplicateRefundRequest(requestorId);
+        verifyRefundRequestImageCount(refundLineList, refundItemImageByteMap);
 
         Map<String, String> refundItemImageUrlMap = uploadRefundItemImageList(requestorId, refundItemImageByteMap);
 
@@ -56,20 +59,18 @@ public class UserRefundService {
             throw new IllegalArgumentException("환급 요청은 한번만 가능합니다.");
     }
 
+    private void verifyRefundRequestImageCount(List<UserRefundRequest> refundLineList, Map<String, byte[]> refundItemImageByteMap) {
+        if (refundLineList.size() != refundItemImageByteMap.size())
+            throw new IllegalArgumentException("환급 요청 상품의 수와 상품의 이미지 수가 다릅니다.");
+    }
+
     private Map<String, String> uploadRefundItemImageList(Long requestorId, Map<String, byte[]> refundItemImageByteMap) {
         String uploadPath = makeS3UploadPath(requestorId);
 
-        return refundItemImageByteMap.entrySet().stream()
-                .map(entry ->
-                        entry(
-                                entry.getKey(),
-                                s3FileUploader.uploadFile(uploadPath, entry.getValue())
-                        )
-                )
-                .collect(toMap(
-                        e -> e.getKey(),
-                        e -> e.getValue()
-                ));
+        return refundItemImageByteMap.entrySet()
+                .stream()
+                .map(e -> entry(e.getKey(), s3FileUploader.uploadFile(uploadPath, e.getValue())))
+                .collect(toMap(e -> e.getKey(), e -> e.getValue()));
     }
 
     private String makeS3UploadPath(Long requestorId) {
