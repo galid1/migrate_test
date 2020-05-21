@@ -95,22 +95,5 @@ public class UserRefundServiceTest {
                 ,() -> userRefundService.refund(savedUser.getUserId(), refundLineList, refundItemImageByteMap));
     }
 
-    @Test
-    public void 환급평가() throws Exception {
-        //given, when
-        estimate();
-
-        //then
-        assertEquals(findRefund.getRefundStatus(), RefundStatus.COMPLETE_STATUS);
-    }
-
-    private void estimate() {
-        List<RefundResultLine> refundableLineList = Arrays.asList(new RefundResultLine[]{
-                new RefundResultLine("TEST", REFUND_REQUEST_AMOUNT.getValue())
-        });
-        String unRefundableLineDescription = "";
-
-        findRefund.estimate(refundableLineList, unRefundableLineDescription);
-    }
 
 }
