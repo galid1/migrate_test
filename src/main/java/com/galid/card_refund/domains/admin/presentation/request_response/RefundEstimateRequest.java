@@ -1,4 +1,4 @@
-package com.galid.card_refund.domains.refund.refund.service.request_response;
+package com.galid.card_refund.domains.admin.presentation.request_response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

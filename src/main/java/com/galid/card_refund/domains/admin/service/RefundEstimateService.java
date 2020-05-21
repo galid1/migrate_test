@@ -1,10 +1,10 @@
-package com.galid.card_refund.domains.refund.refund.service;
+package com.galid.card_refund.domains.admin.service;
 
 import com.galid.card_refund.domains.refund.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.refund.refund.domain.RefundRepository;
 import com.galid.card_refund.domains.refund.refund.domain.RefundResultLine;
-import com.galid.card_refund.domains.refund.refund.service.request_response.RefundEstimateRequest;
-import com.galid.card_refund.domains.refund.refund.service.request_response.RefundEstimateRequest.RefundEstimateLine;
+import com.galid.card_refund.domains.admin.presentation.request_response.RefundEstimateRequest;
+import com.galid.card_refund.domains.admin.presentation.request_response.RefundEstimateRequest.RefundEstimateLine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

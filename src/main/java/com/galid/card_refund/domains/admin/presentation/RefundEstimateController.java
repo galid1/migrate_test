@@ -1,7 +1,7 @@
-package com.galid.card_refund.domains.refund.refund.presentation;
+package com.galid.card_refund.domains.admin.presentation;
 
-import com.galid.card_refund.domains.refund.refund.service.RefundEstimateService;
-import com.galid.card_refund.domains.refund.refund.service.request_response.RefundEstimateRequest;
+import com.galid.card_refund.domains.admin.service.RefundEstimateService;
+import com.galid.card_refund.domains.admin.presentation.request_response.RefundEstimateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
