@@ -1,9 +1,6 @@
 package com.galid.card_refund.domains.admin.presentation.request_response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,13 +9,13 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class RefundEstimateRequest {
-    private List<RefundEstimateLine> refundEstimateLineList;
+    private List<RefundEstimateLineRequest> refundEstimateLineList;
     private String unRefundableLineDescription;
 
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class RefundEstimateLine {
+    public static class RefundEstimateLineRequest {
         private String placeAndName;
         private double paymentAmount;
     }
