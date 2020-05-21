@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,6 +27,7 @@ public class UserSignUpServiceTest {
     @MockBean
     private S3FileUploader s3FileUploader;
 
+
     @BeforeEach
     public void init() {
         when(s3FileUploader.uploadFile("user", null))
@@ -38,11 +40,10 @@ public class UserSignUpServiceTest {
         UserSignUpRequest request = UserSignUpRequest.builder()
                 .nickname("KIM")
                 .deviceId("123123")
-                .base64PassPortImage("TEST")
                 .build();
 
         //when
-        UserSignUpResponse signUpResponse = userSignUpService.signUp(request);
+        UserSignUpResponse signUpResponse = userSignUpService.signUp(request, new MockMultipartFile("TEST", "TEST".getBytes()));
         UserEntity findEntity = userRepository.findById(signUpResponse.getUserId()).get();
 
         //then
@@ -56,19 +57,19 @@ public class UserSignUpServiceTest {
         UserSignUpRequest requestOne = UserSignUpRequest.builder()
                 .nickname("KIM")
                 .deviceId("123123")
-                .base64PassPortImage("asd")
                 .build();
 
         UserSignUpRequest requestTwo = UserSignUpRequest.builder()
                 .nickname("JUN")
                 .deviceId("123123")
-                .base64PassPortImage("asd")
                 .build();
+
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("TEST", "TEST".getBytes());
 
         //when, then
         assertThrows(IllegalArgumentException.class, () -> {
-            userSignUpService.signUp(requestOne);
-            userSignUpService.signUp(requestTwo);
+            userSignUpService.signUp(requestOne, mockMultipartFile);
+            userSignUpService.signUp(requestTwo, mockMultipartFile);
         });
     }
 }

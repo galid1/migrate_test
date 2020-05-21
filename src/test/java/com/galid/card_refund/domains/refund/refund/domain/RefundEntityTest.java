@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,13 +24,13 @@ public class RefundEntityTest {
         double expectedRefundAmount = Math.floor(paymentAmount * 1 / 11);
 
         RefundEntity savedEntity = RefundEntity.builder()
-                .requestRefundLine(Arrays.asList(new RefundLine[]{
-                    RefundLine.builder()
-                            .itemImageUrl("TEST")
-                            .paymentAmount(new Money(paymentAmount))
-                            .place("TEST")
-                            .build()
-                }))
+                .requestRefundLineList(List.of(
+                        RefundLine.builder()
+                                .itemImageUrl("TEST")
+                                .paymentAmount(new Money(paymentAmount))
+                                .place("TEST")
+                                .build()
+                ))
                 .requestorId(1l)
                 .build();
         refundRepository.save(savedEntity);

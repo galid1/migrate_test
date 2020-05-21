@@ -21,7 +21,6 @@ class UserEntityTest {
     private String DEVICE_ID = "123123123123";
     private String CARD_NUM = "1234123412341234";
     private String RIGHT_NICKNAME = "JJY";
-    private String WRONG_NICKNAME = "X";
 
     private UserEntity userEntity;
 
@@ -33,16 +32,6 @@ class UserEntityTest {
                 .build();
 
         userRepository.save(userEntity);
-    }
-
-    @Test
-    @Transactional
-    public void whenCreateUserWithWrongNicknameThrowException() throws Exception {
-        // given, when, then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> UserEntity.builder()
-                .nickname(WRONG_NICKNAME)
-                .deviceId(DEVICE_ID)
-                .build());
     }
 
     @Test

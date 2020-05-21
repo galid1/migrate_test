@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,14 +39,17 @@ public class UserRefundServiceTest {
                 .nickname("JJY")
                 .build());
 
-        List<UserRefundRequest> request = Arrays.asList(new UserRefundRequest[]{
+        List<UserRefundRequest> request = List.of(
                 UserRefundRequest.builder()
-                        .base64File("TEST")
                         .paymentAmount(REFUND_REQUEST_AMOUNT.getValue())
                         .place("TEST")
+                        .purchaseDateTime("date")
                         .build()
-        });
-        userRefundService.refund(request, savedUser.getUserId());
+        );
+
+        userRefundService.refund(savedUser.getUserId(),
+                                 request,
+                                 Map.ofEntries(Map.entry("", new String("").getBytes())));
 
         findRefund = refundRepository.findByRequestorId(savedUser.getUserId()).get();
     }
@@ -61,7 +65,7 @@ public class UserRefundServiceTest {
         Money expectRefundAmount = new Money(Math.floor(REFUND_REQUEST_AMOUNT.getValue() * 1 / 11));
         assertEquals(findRefund.getExpectRefundAmount(), expectRefundAmount);
     }
-    
+
     @Test
     public void 환급평가() throws Exception {
         //given, when
@@ -72,7 +76,7 @@ public class UserRefundServiceTest {
     }
 
     private void estimate() {
-        List<RefundResultLine> refundableLineList = Arrays.asList(new RefundResultLine[] {
+        List<RefundResultLine> refundableLineList = Arrays.asList(new RefundResultLine[]{
                 new RefundResultLine("TEST", REFUND_REQUEST_AMOUNT.getValue())
         });
         String unRefundableLineDescription = "";

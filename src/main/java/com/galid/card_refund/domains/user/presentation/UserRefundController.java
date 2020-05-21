@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Map.entry;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toMap;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -35,12 +35,12 @@ public class UserRefundController {
 
     private Map<String, byte[]> toRefundItemImageByteMap(Map<String, MultipartFile> refundItemImageMap) {
         return refundItemImageMap.entrySet().stream()
-                .map(entry -> {
+                .map(e -> {
                     Map.Entry<String, byte[]> byteEntry = null;
                     try {
-                        byteEntry = entry(entry.getKey(), entry.getValue().getBytes());
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        byteEntry = Map.entry(e.getKey(), e.getValue().getBytes());
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
                     }
                     return byteEntry;
                 })
@@ -49,7 +49,6 @@ public class UserRefundController {
                     e -> e.getValue()
                 ));
     }
-
 
     @GetMapping("/users/{userId}/refunds")
     public UserRefundResultResponse getRefundRequestResult(@PathVariable("userId") Long userId) {
