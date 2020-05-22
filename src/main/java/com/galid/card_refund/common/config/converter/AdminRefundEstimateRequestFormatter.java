@@ -2,7 +2,7 @@ package com.galid.card_refund.common.config.converter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.galid.card_refund.domains.admin.presentation.request_response.RefundEstimateRequest;
+import com.galid.card_refund.domains.admin.presentation.request_response.AdminRefundEstimateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Component;
@@ -12,22 +12,22 @@ import java.util.Locale;
 
 @Component
 @RequiredArgsConstructor
-public class RefundEstimateRequestFormatter implements Formatter<RefundEstimateRequest> {
+public class AdminRefundEstimateRequestFormatter implements Formatter<AdminRefundEstimateRequest> {
     private final ObjectMapper objectMapper;
 
     @Override
-    public RefundEstimateRequest parse(String text, Locale locale) throws ParseException {
-        RefundEstimateRequest refundEstimateRequest = null;
+    public AdminRefundEstimateRequest parse(String text, Locale locale) throws ParseException {
+        AdminRefundEstimateRequest adminRefundEstimateRequest = null;
         try {
-            refundEstimateRequest = objectMapper.readValue(text, RefundEstimateRequest.class);
+            adminRefundEstimateRequest = objectMapper.readValue(text, AdminRefundEstimateRequest.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return refundEstimateRequest;
+        return adminRefundEstimateRequest;
     }
 
     @Override
-    public String print(RefundEstimateRequest object, Locale locale) {
+    public String print(AdminRefundEstimateRequest object, Locale locale) {
         return object.toString();
     }
 }

@@ -4,8 +4,8 @@ import com.galid.card_refund.common.aws.S3FileUploader;
 import com.galid.card_refund.domains.refund.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.refund.refund.domain.RefundRepository;
 import com.galid.card_refund.domains.refund.refund.domain.RefundResultLine;
-import com.galid.card_refund.domains.admin.presentation.request_response.RefundEstimateRequest;
-import com.galid.card_refund.domains.admin.presentation.request_response.RefundEstimateRequest.RefundEstimateLineRequest;
+import com.galid.card_refund.domains.admin.presentation.request_response.AdminRefundEstimateRequest;
+import com.galid.card_refund.domains.admin.presentation.request_response.AdminRefundEstimateRequest.RefundEstimateLineRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +16,13 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class RefundEstimateService {
+public class AdminRefundEstimateService {
     private final RefundRepository refundRepository;
     private final S3FileUploader s3FileUploader;
     private String UPLOAD_PATH_KEY = "refund-result-barcode";
 
     @Transactional
-    public void estimateRefundRequest(Long refundId, RefundEstimateRequest request, byte[] refundResultBarcodeImageBytes) {
+    public void estimateRefundRequest(Long refundId, AdminRefundEstimateRequest request, byte[] refundResultBarcodeImageBytes) {
         RefundEntity refundEntity = refundRepository.findById(refundId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 환급 요청입니다."));
 
