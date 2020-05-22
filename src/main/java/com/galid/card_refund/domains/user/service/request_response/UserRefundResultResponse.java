@@ -13,6 +13,7 @@ public class UserRefundResultResponse {
     private UserInformationDto userInformation;
     private List<RefundResultResponseLine> refundResultResponseLineList;
     private String unRefundableLineDescription;
+    private String refundResultBarcodeImageUrl;
 
     @Data
     @AllArgsConstructor

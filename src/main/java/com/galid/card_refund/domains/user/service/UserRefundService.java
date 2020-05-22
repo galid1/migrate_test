@@ -108,6 +108,7 @@ public class UserRefundService {
                         .collect(Collectors.toList()))
                 .userInformation(toUserInformationDto(userEntity))
                 .unRefundableLineDescription(refundEntity.getUnRefundableLineDescription())
+                .refundResultBarcodeImageUrl(refundEntity.getRefundResultBarcodeImageUrl())
                 .build();
     }
 
