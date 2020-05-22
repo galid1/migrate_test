@@ -107,10 +107,14 @@ public class RefundEntity extends BaseEntity {
         return this.unRefundableLineDescription;
     }
 
+    public String getRefundResultBarcodeImageUrl() {
+        verifyIsEstimated();
+        return this.refundResultBarcodeImageUrl;
+    }
+
     private void verifyIsEstimated() {
         if(this.refundStatus != RefundStatus.COMPLETE_STATUS) {
             throw new NotYetEstimatedException();
         }
     }
-
 }
