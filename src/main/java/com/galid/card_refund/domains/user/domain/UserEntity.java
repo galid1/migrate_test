@@ -90,4 +90,10 @@ public class UserEntity extends BaseEntity {
         this.userPassportInformation = userPassportInformation;
     }
 
+    public String getPassPortImagePath() {
+        if(passportStatus != UserPassportStatus.SUCCESS_STATUS)
+            throw new IllegalStateException("여권 평가에 실패했거나, 여권평가가 진행중입니다.");
+
+        return this.passPortImagePath;
+    }
 }
