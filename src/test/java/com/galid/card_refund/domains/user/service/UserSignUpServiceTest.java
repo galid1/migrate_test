@@ -1,5 +1,6 @@
 package com.galid.card_refund.domains.user.service;
 
+import com.galid.card_refund.common.aws.ImageType;
 import com.galid.card_refund.common.aws.S3FileUploader;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
@@ -30,7 +31,7 @@ public class UserSignUpServiceTest {
 
     @BeforeEach
     public void init() {
-        when(s3FileUploader.uploadFile("user", null))
+        when(s3FileUploader.uploadFile("test", ImageType.PASSPORT_IMAGE, null))
                 .thenReturn("test");
     }
 
