@@ -75,6 +75,9 @@ public class CardEntity extends BaseEntity {
     }
 
     public void initCard() {
+        if(cardStatus == CardStatus.LOST_STATUS)
+            throw new IllegalStateException("분실된 카드는 초기화가 불가능합니다.");
+
         this.cardInformation.renewSerial();
         this.ownerId = null;
         this.registeredDate = LocalDate.now();
