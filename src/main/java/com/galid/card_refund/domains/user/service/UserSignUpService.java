@@ -29,9 +29,15 @@ public class UserSignUpService {
                 .nickname(request.getNickname())
                 .build();
 
-        uploadUserPassportImage(passportImage, newUser);
+        UserEntity savedUser = this.userRepository.save(newUser);
+        uploadUserPassportImage(passportImage, savedUser);
 
-        return new UserSignUpResponse(this.userRepository.save(newUser).getUserId());
+        return new UserSignUpResponse(savedUser.getUserId());
+    }
+
+    private void validateDuplicateUser(String deviceId) {
+        if(userRepository.findByDeviceId(deviceId).isPresent())
+            throw new IllegalArgumentException("이미 가입된 디바이스 ID 입니다.");
     }
 
     private void uploadUserPassportImage(MultipartFile passportImage, UserEntity newUser) throws IOException {
@@ -41,10 +47,4 @@ public class UserSignUpService {
 
         newUser.changePassportImage(passPortImagePath);
     }
-
-    private void validateDuplicateUser(String deviceId) {
-        if(userRepository.findByDeviceId(deviceId).isPresent())
-            throw new IllegalArgumentException("이미 가입된 디바이스 ID 입니다.");
-    }
-
 }

@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @PutMapping("/passport-image")
-    public UserPassportImageResponse reUploadPassportImage(@PathVariable("userId")Long userId, @RequestParam MultipartFile passportImage) throws IOException {
+    public UserPassportImageResponse reUploadPassportImage(@PathVariable("userId")Long userId, @RequestParam("image") MultipartFile passportImage) throws IOException {
         return service.reUploadPassportImage(userId, passportImage.getBytes());
     }
 }
