@@ -27,12 +27,12 @@ public class S3FileUploader {
                 .build();
     }
 
-    public String uploadFile(String key, byte[] byteArray) {
+    public String uploadFile(String key, ImageType imageType, byte[] byteArray) {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(MediaType.IMAGE_PNG_VALUE);
         objectMetadata.setContentLength(byteArray.length);
 
-        String uploadPath = createObjectPath(key);
+        String uploadPath = createObjectPath(key, imageType);
         PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET_NAME,
                 uploadPath,
                 new ByteArrayInputStream(byteArray),
@@ -43,12 +43,13 @@ public class S3FileUploader {
         return AWS_HOST_PATH + uploadPath;
     }
 
-    private String createObjectPath(String key) {
+    private String createObjectPath(String key, ImageType imageType) {
         int year = LocalDate.now().getYear();
         int month = LocalDate.now().getMonthValue();
         int day = LocalDate.now().getDayOfMonth();
 
-        return key + "/"
+        return imageType.group + "/"
+                + key + "/"
                 + year + "/"
                 + month + "-" + day + "/"
                 + UUID.randomUUID() + ".png";
