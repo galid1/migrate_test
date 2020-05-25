@@ -53,9 +53,7 @@ public class UserInformationService {
     }
 
     private void verifyExistUser(Long userId) {
-        if (userRepository.findById(userId).isPresent())
+        if (!userRepository.findById(userId).isPresent())
             throw new IllegalArgumentException("존재하지 않는 유저입니다.");
     }
-
-
 }
