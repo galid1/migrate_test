@@ -89,14 +89,15 @@ public class UserEntity extends BaseEntity {
         this.userPassportInformation = userPassportInformation;
     }
 
-    public String getPassPortImagePath() {
-        if(getPassportStatus() != UserPassportStatus.SUCCESS_STATUS)
-            throw new IllegalStateException("여권 평가에 실패했거나, 여권평가가 진행중입니다.");
-
-        return this.passPortImagePath;
+    public void uploadPassportImagePath(String passportImagePath) {
+        this.passPortImagePath = passportImagePath;
     }
 
     public void updateUserInformation(String nickname, String passportImagePath) {
-        
+        if(nickname != null && nickname.length() > 1)
+            this.nickname = nickname;
+
+        if(passportImagePath != null && passportImagePath.length() > 1)
+            this.passPortImagePath = passportImagePath;
     }
 }

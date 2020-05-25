@@ -45,6 +45,6 @@ public class UserSignUpService {
                 ImageType.PASSPORT_IMAGE,
                 passportImage.getBytes());
 
-        newUser.changePassportImage(passPortImagePath);
+        newUser.uploadPassportImagePath(passPortImagePath);
     }
 }
