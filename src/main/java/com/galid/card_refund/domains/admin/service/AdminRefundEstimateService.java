@@ -1,5 +1,6 @@
 package com.galid.card_refund.domains.admin.service;
 
+import com.galid.card_refund.common.aws.ImageType;
 import com.galid.card_refund.common.aws.S3FileUploader;
 import com.galid.card_refund.domains.refund.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.refund.refund.domain.RefundRepository;
@@ -19,7 +20,6 @@ import java.util.stream.Collectors;
 public class AdminRefundEstimateService {
     private final RefundRepository refundRepository;
     private final S3FileUploader s3FileUploader;
-    private String UPLOAD_PATH_KEY = "refund-result-barcode";
 
     @Transactional
     public void estimateRefundRequest(Long refundId, AdminRefundEstimateRequest request, byte[] refundResultBarcodeImageBytes) {
@@ -34,11 +34,7 @@ public class AdminRefundEstimateService {
 
         refundEntity.estimate(refundableLineList,
                               request.getUnRefundableLineDescription(),
-                              s3FileUploader.uploadFile(makeS3UploadPath(refundId), refundResultBarcodeImageBytes));
-    }
-
-    private String makeS3UploadPath(long refundId) {
-        return UPLOAD_PATH_KEY + "/" + refundId;
+                              s3FileUploader.uploadFile(String.valueOf(refundId), ImageType.BARCODE_IMAGE, refundResultBarcodeImageBytes));
     }
 
     private RefundResultLine toRefundResultLine(RefundEstimateLineRequest request) {

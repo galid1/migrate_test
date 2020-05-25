@@ -1,5 +1,6 @@
 package com.galid.card_refund.domains.user.service;
 
+import com.galid.card_refund.common.aws.ImageType;
 import com.galid.card_refund.common.aws.S3FileUploader;
 import com.galid.card_refund.common.model.Money;
 import com.galid.card_refund.domains.refund.refund.domain.RefundEntity;
@@ -35,7 +36,6 @@ public class UserRefundService {
     private final UserRepository userRepository;
 
     private final S3FileUploader s3FileUploader;
-    private String UPLOAD_PATH_KEY = "refund";
 
     @Transactional
     public UserRefundResponse refund(Long requestorId, List<UserRefundRequest> refundLineList, Map<String, byte[]> refundItemImageByteMap) {
@@ -65,16 +65,13 @@ public class UserRefundService {
     }
 
     private Map<String, String> uploadRefundItemImageList(Long requestorId, Map<String, byte[]> refundItemImageByteMap) {
-        String uploadPath = makeS3UploadPath(requestorId);
-
         return refundItemImageByteMap.entrySet()
                 .stream()
-                .map(e -> entry(e.getKey(), s3FileUploader.uploadFile(uploadPath, e.getValue())))
+                .map(e -> entry(e.getKey(),
+                                s3FileUploader.uploadFile(String.valueOf(requestorId), ImageType.REFUND_IMAGE, e.getValue())
+                        )
+                )
                 .collect(toMap(e -> e.getKey(), e -> e.getValue()));
-    }
-
-    private String makeS3UploadPath(Long requestorId) {
-        return UPLOAD_PATH_KEY + "/" + requestorId;
     }
 
     private List<RefundLine> toRefundLineList(List<UserRefundRequest> refundRequestList,
