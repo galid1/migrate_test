@@ -1,7 +1,7 @@
 package com.galid.card_refund.domains.user.service;
 
 import com.galid.card_refund.common.model.Money;
-import com.galid.card_refund.domains.refund.refund.domain.*;
+import com.galid.card_refund.domains.refund.domain.*;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundRequest;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +35,6 @@ public class UserRefundServiceTest {
     public void init() {
         savedUser = userRepository.save(UserEntity.builder()
                 .deviceId("123")
-                .passPortImagePath("asdasd")
                 .nickname("JJY")
                 .build());
 

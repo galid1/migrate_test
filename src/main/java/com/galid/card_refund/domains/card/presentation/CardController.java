@@ -1,7 +1,7 @@
-package com.galid.card_refund.domains.refund.card.presentation;
+package com.galid.card_refund.domains.card.presentation;
 
-import com.galid.card_refund.domains.refund.card.service.CardService;
-import com.galid.card_refund.domains.refund.card.service.request_response.CardCreateRequest;
+import com.galid.card_refund.domains.card.service.CardService;
+import com.galid.card_refund.domains.card.service.request_response.CardCreateRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

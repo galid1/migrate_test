@@ -1,10 +1,9 @@
-package com.galid.card_refund.domains.refund.refund.domain;
+package com.galid.card_refund.domains.refund.domain;
 
 import com.galid.card_refund.common.model.Money;
 import lombok.*;
 
 import javax.persistence.Embeddable;
-import java.time.LocalDateTime;
 
 @Embeddable
 @Getter

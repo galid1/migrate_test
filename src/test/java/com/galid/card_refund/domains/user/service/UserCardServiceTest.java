@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.user.service;
 
-import com.galid.card_refund.domains.refund.card.domain.*;
+import com.galid.card_refund.domains.card.domain.*;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserCardConfirmResponse;
@@ -116,7 +116,6 @@ public class UserCardServiceTest {
         cardRepository.save(cardEntity);
 
         UserEntity userEntity = UserEntity.builder()
-                .passPortImagePath("TEST")
                 .deviceId("TEST")
                 .nickname("TEST")
                 .build();

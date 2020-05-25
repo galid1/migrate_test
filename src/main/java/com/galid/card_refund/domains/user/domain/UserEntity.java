@@ -1,7 +1,7 @@
 package com.galid.card_refund.domains.user.domain;
 
 import com.galid.card_refund.common.config.logging.BaseEntity;
-import com.galid.card_refund.domains.refund.card.domain.CardEntity;
+import com.galid.card_refund.domains.card.domain.CardEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -90,13 +90,13 @@ public class UserEntity extends BaseEntity {
     }
 
     public String getPassPortImagePath() {
-        if(passportStatus != UserPassportStatus.SUCCESS_STATUS)
+        if(getPassportStatus() != UserPassportStatus.SUCCESS_STATUS)
             throw new IllegalStateException("여권 평가에 실패했거나, 여권평가가 진행중입니다.");
 
         return this.passPortImagePath;
     }
 
-    public void changePassportImage(String passportImagePath) {
-        this.passPortImagePath = passportImagePath;
+    public void updateUserInformation(String nickname, String passportImagePath) {
+        
     }
 }

@@ -1,4 +1,4 @@
-package com.galid.card_refund.domains.refund.card.domain;
+package com.galid.card_refund.domains.card.domain;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

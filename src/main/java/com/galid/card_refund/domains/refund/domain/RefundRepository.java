@@ -1,4 +1,4 @@
-package com.galid.card_refund.domains.refund.refund.domain;
+package com.galid.card_refund.domains.refund.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
