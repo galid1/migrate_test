@@ -50,8 +50,7 @@ public class S3FileUploader {
 
         return key + "/"
                 + year + "/"
-                + month + "/"
-                + day + "/"
+                + month + "-" + day + "/"
                 + UUID.randomUUID() + ".png";
     }
 
