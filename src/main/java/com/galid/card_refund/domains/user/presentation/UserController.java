@@ -2,9 +2,11 @@ package com.galid.card_refund.domains.user.presentation;
 
 import com.galid.card_refund.domains.user.service.UserInformationService;
 import com.galid.card_refund.domains.user.service.request_response.UserInformationResponse;
+import com.galid.card_refund.domains.user.service.request_response.UserInformationUpdateRequest;
 import com.galid.card_refund.domains.user.service.request_response.UserPassportImageResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserPassportStatusResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,18 +23,17 @@ public class UserController {
         return service.getUserInformation(userId);
     }
 
+    @PutMapping("/information")
+    public ResponseEntity updateUserInformation(@PathVariable("userId") Long userId,
+                                                @RequestParam("nickname") String nickname,
+                                                @RequestParam("image") MultipartFile passportImage) throws IOException {
+        service.updateUserInformation(userId, new UserInformationUpdateRequest(nickname, passportImage.getBytes()));
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/passport-status")
     public UserPassportStatusResponse getUserPassportStatus(@PathVariable("userId") Long userId) {
         return service.getUserPassportStatus(userId);
     }
 
-    @GetMapping("/passport-image")
-    public UserPassportImageResponse getPassportImage(@PathVariable("userId")Long userId) {
-        return service.getUserPassportImage(userId);
-    }
-
-    @PutMapping("/passport-image")
-    public UserPassportImageResponse reUploadPassportImage(@PathVariable("userId")Long userId, @RequestParam("image") MultipartFile passportImage) throws IOException {
-        return service.reUploadPassportImage(userId, passportImage.getBytes());
-    }
 }

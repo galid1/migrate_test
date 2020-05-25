@@ -5,6 +5,7 @@ import com.galid.card_refund.common.aws.S3FileUploader;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserInformationResponse;
+import com.galid.card_refund.domains.user.service.request_response.UserInformationUpdateRequest;
 import com.galid.card_refund.domains.user.service.request_response.UserPassportImageResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserPassportStatusResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,8 @@ public class UserInformationService {
     private final S3FileUploader s3FileUploader;
 
     public UserInformationResponse getUserInformation(Long userId) {
-        UserEntity userEntity = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        verifyExistUser(userId);
+        UserEntity userEntity = userRepository.findById(userId).get();
 
         return UserInformationResponse.builder()
                 .nickname(userEntity.getNickname())
@@ -28,28 +29,33 @@ public class UserInformationService {
                 .build();
     }
 
+    @Transactional
+    public void updateUserInformation(Long userId, UserInformationUpdateRequest request) {
+        verifyExistUser(userId);
+        UserEntity userEntity = userRepository.findById(userId).get();
+
+        userEntity.updateUserInformation(request.getNickname(),
+                s3FileUploader.uploadFile(String.valueOf(userId), ImageType.PASSPORT_IMAGE, request.getUserPassportImageByte()));
+    }
+
     public UserPassportStatusResponse getUserPassportStatus(Long userId) {
-        UserEntity userEntity = userRepository.findById((userId))
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        verifyExistUser(userId);
+        UserEntity userEntity = userRepository.findById((userId)).get();
 
         return new UserPassportStatusResponse(userEntity.getPassportStatus());
     }
 
     public UserPassportImageResponse getUserPassportImage(Long userId) {
-        UserEntity userEntity = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        verifyExistUser(userId);
+        UserEntity userEntity = userRepository.findById(userId).get();
 
         return new UserPassportImageResponse(userEntity.getPassPortImagePath());
     }
 
-    @Transactional
-    public UserPassportImageResponse reUploadPassportImage(Long userId, byte[] passportImageByte) {
-        UserEntity userEntity = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-
-        String passportImagePath = s3FileUploader.uploadFile(String.valueOf(userId), ImageType.PASSPORT_IMAGE, passportImageByte);
-        userEntity.changePassportImage(passportImagePath);
-
-        return new UserPassportImageResponse(passportImagePath);
+    private void verifyExistUser(Long userId) {
+        if (userRepository.findById(userId).isPresent())
+            throw new IllegalArgumentException("존재하지 않는 유저입니다.");
     }
+
+
 }
