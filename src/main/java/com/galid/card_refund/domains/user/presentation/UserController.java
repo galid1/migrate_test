@@ -5,10 +5,10 @@ import com.galid.card_refund.domains.user.service.request_response.UserInformati
 import com.galid.card_refund.domains.user.service.request_response.UserPassportImageResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserPassportStatusResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,4 +31,8 @@ public class UserController {
         return service.getUserPassportImage(userId);
     }
 
+    @PutMapping("/passport-image")
+    public UserPassportImageResponse reUploadPassportImage(@PathVariable("userId")Long userId, @RequestParam MultipartFile passportImage) throws IOException {
+        return service.reUploadPassportImage(userId, passportImage.getBytes());
+    }
 }
