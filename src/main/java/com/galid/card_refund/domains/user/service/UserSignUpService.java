@@ -1,5 +1,6 @@
 package com.galid.card_refund.domains.user.service;
 
+import com.galid.card_refund.common.aws.ImageType;
 import com.galid.card_refund.common.aws.S3FileUploader;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
@@ -19,21 +20,26 @@ public class UserSignUpService {
     private final UserRepository userRepository;
     private final S3FileUploader s3FileUploader;
 
-    private String UPLOAD_PATH_KEY = "user";
-
     @Transactional
     public UserSignUpResponse signUp(UserSignUpRequest request, MultipartFile passportImage) throws IOException {
         validateDuplicateUser(request.getDeviceId());
 
-        String passPortImagePath = s3FileUploader.uploadFile(UPLOAD_PATH_KEY, passportImage.getBytes());
-
         UserEntity newUser = UserEntity.builder()
                 .deviceId(request.getDeviceId())
                 .nickname(request.getNickname())
-                .passPortImagePath(passPortImagePath)
                 .build();
 
+        uploadUserPassportImage(passportImage, newUser);
+
         return new UserSignUpResponse(this.userRepository.save(newUser).getUserId());
+    }
+
+    private void uploadUserPassportImage(MultipartFile passportImage, UserEntity newUser) throws IOException {
+        String passPortImagePath = s3FileUploader.uploadFile(String.valueOf(newUser.getUserId()),
+                ImageType.PASSPORT_IMAGE,
+                passportImage.getBytes());
+
+        newUser.changePassportImage(passPortImagePath);
     }
 
     private void validateDuplicateUser(String deviceId) {

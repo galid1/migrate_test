@@ -38,11 +38,10 @@ public class UserEntity extends BaseEntity {
     private List<UsageHistory> usageHistoryList = new ArrayList<>();
 
     @Builder
-    public UserEntity(String deviceId, String nickname, String passPortImagePath) {
+    public UserEntity(String deviceId, String nickname) {
         this.setDeviceId(deviceId);
         this.setNickname(nickname);
         this.passportStatus = UserPassportStatus.ESTIMATING_STATUS;
-        this.passPortImagePath = passPortImagePath;
     }
 
     private void setDeviceId(String deviceId) {
@@ -95,5 +94,9 @@ public class UserEntity extends BaseEntity {
             throw new IllegalStateException("여권 평가에 실패했거나, 여권평가가 진행중입니다.");
 
         return this.passPortImagePath;
+    }
+
+    public void changePassportImage(String passportImagePath) {
+        this.passPortImagePath = passportImagePath;
     }
 }
