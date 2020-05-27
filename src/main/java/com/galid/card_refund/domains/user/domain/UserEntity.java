@@ -41,7 +41,7 @@ public class UserEntity extends BaseEntity {
     public UserEntity(String deviceId, String nickname) {
         this.setDeviceId(deviceId);
         this.setNickname(nickname);
-        this.passportStatus = UserPassportStatus.ESTIMATING_STATUS;
+        this.passportStatus = UserPassportStatus.SUCCESS_STATUS;
     }
 
     private void setDeviceId(String deviceId) {
