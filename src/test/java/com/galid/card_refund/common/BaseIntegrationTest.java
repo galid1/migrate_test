@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Disabled             // 이 클래스의 테스트를 건너띔 (상속전용이므로)
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-@AutoConfigureRestDocs(outputDir = "target/snippets")
+@AutoConfigureRestDocs(outputDir = "target/snippets", uriHost = "rest.tour-cash.com", uriPort = 443)
 public class BaseIntegrationTest {
     @Autowired
     protected MockMvc mvc;
