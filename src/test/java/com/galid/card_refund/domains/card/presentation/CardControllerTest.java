@@ -7,15 +7,16 @@ import com.galid.card_refund.domains.card.service.request_response.CardCreateReq
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class CardControllerTest extends BaseIntegrationTest {
     @Autowired
@@ -26,13 +27,11 @@ class CardControllerTest extends BaseIntegrationTest {
         //given
         CardCreateRequest createRequest = new CardCreateRequest("1234123422223333", CardInitMoney.TEN);
 
-        //when, then
-        mvc.perform(post("/cards")
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .accept(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(createRequest)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("cardId", is(notNullValue())))
+        //when
+        ResultActions resultActions = mvc.perform(post("/cards")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(createRequest)))
                 .andDo(print())
                 .andDo(document("card/{method-name}",
                         requestFields(
@@ -43,5 +42,12 @@ class CardControllerTest extends BaseIntegrationTest {
                                 fieldWithPath("cardId").description("디비상의 card_id")
                         )
                 ));
+
+        //then
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("cardId", is(notNullValue())));
     }
+
+
+
 }
