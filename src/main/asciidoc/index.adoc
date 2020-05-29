@@ -1,10 +1,50 @@
-= Getting Started With Spring REST Docs
+= Tour-Cash REST API Docs
 
-This is an example output for a service running at http://localhost:80:
+== Card
+
+=== /cards
+#### 카드 생성
 
 .request
-include::{snippets}/home/http-request.adoc[]
+include::{snippets}/card/카드생성/http-request.adoc[]
+include::{snippets}/card/카드생성/request-fields.adoc[]
 
 .response
-include::{snippets}/home/http-response.adoc[]
+include::{snippets}/card/카드생성/http-response.adoc[]
+include::{snippets}/card/카드생성/response-fields.adoc[]
 
+
+
+== User
+
+=== /users
+
+#### 로그인
+.request
+include::{snippets}/user/로그인/http-request.adoc[]
+include::{snippets}/user/로그인/request-fields.adoc[]
+
+.response
+include::{snippets}/user/로그인/http-response.adoc[]
+include::{snippets}/user/로그인/response-fields.adoc[]
+
+=== /users/{userId}/information
+
+#### 유저정보 조회
+
+.request
+include::{snippets}/user/유저정보_조회/http-request.adoc[]
+
+.response
+include::{snippets}/user/유저정보_조회/http-response.adoc[]
+include::{snippets}/user/유저정보_조회/response-fields.adoc[]
+
+
+
+#### 여권상태 조회
+.request
+include::{snippets}/user/여권상태_조회/http-request.adoc[]
+
+.response
+include::{snippets}/user/여권상태_조회/http-response.adoc[]
+include::{snippets}/user/여권상태_조회/response-fields.adoc[]
