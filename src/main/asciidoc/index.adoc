@@ -2,6 +2,7 @@
 :toc: left
 :toclevels: 2
 
+
 == 1. Card
 === /cards
 #### 카드 생성
@@ -13,7 +14,6 @@ include::{snippets}/card/카드생성/request-fields.adoc[]
 .response
 include::{snippets}/card/카드생성/http-response.adoc[]
 include::{snippets}/card/카드생성/response-fields.adoc[]
-
 
 
 == 2. User
@@ -29,6 +29,7 @@ include::{snippets}/user/로그인/request-fields.adoc[]
 include::{snippets}/user/로그인/http-response.adoc[]
 include::{snippets}/user/로그인/response-fields.adoc[]
 
+
 === /users/{userId}/information
 
 #### 유저정보 조회
@@ -39,7 +40,6 @@ include::{snippets}/user/유저정보_조회/http-request.adoc[]
 .response
 include::{snippets}/user/유저정보_조회/http-response.adoc[]
 include::{snippets}/user/유저정보_조회/response-fields.adoc[]
-
 
 
 #### 여권상태 조회
@@ -63,3 +63,18 @@ include::{snippets}/user/유저_카드등록/http-response.adoc[]
 include::{snippets}/user/유저_카드등록/response-fields.adoc[]
 
 
+#### 유저 카드반납
+.request
+include::{snippets}/user/유저_카드반납/http-request.adoc[]
+
+.response
+include::{snippets}/user/유저_카드반납/http-response.adoc[]
+
+
+#### 유저 카드 등록상태 확인
+.request
+include::{snippets}/user/유저_카드등록상태_확인/http-request.adoc[]
+
+.response
+include::{snippets}/user/유저_카드등록상태_확인/http-response.adoc[]
+include::{snippets}/user/유저_카드등록상태_확인/response-fields.adoc[]
