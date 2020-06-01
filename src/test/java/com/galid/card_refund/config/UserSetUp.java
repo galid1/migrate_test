@@ -1,5 +1,6 @@
 package com.galid.card_refund.config;
 
+import com.galid.card_refund.domains.user.domain.UsageHistory;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,9 @@ public class UserSetUp {
         savedUser.uploadPassportImagePath(testPassportImageUrl);
 
         return savedUser;
+    }
+
+    public void saveUserCardUsageHistory(UserEntity userEntity, UsageHistory history) {
+        userEntity.recordCardUsage(history);
     }
 }

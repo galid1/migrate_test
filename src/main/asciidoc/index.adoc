@@ -71,10 +71,21 @@ include::{snippets}/user/유저_카드반납/http-request.adoc[]
 include::{snippets}/user/유저_카드반납/http-response.adoc[]
 
 
-#### 유저 카드 등록상태 확인
+#### 유저 카드 등록상태 조회
 .request
-include::{snippets}/user/유저_카드등록상태_확인/http-request.adoc[]
+include::{snippets}/user/유저_카드등록상태_조회/http-request.adoc[]
 
 .response
-include::{snippets}/user/유저_카드등록상태_확인/http-response.adoc[]
-include::{snippets}/user/유저_카드등록상태_확인/response-fields.adoc[]
+include::{snippets}/user/유저_카드등록상태_조회/http-response.adoc[]
+include::{snippets}/user/유저_카드등록상태_조회/response-fields.adoc[]
+
+
+=== /users/{userId}/user-cards/usage
+
+#### 유저 카드 사용내역 조회
+.request
+include::{snippets}/user/카드사용내역_조회/http-request.adoc[]
+
+.response
+include::{snippets}/user/카드사용내역_조회/http-response.adoc[]
+include::{snippets}/user/카드사용내역_조회/response-fields.adoc[]

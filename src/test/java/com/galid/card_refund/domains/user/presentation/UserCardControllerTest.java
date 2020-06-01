@@ -95,7 +95,7 @@ class UserCardControllerTest  extends BaseIntegrationTest {
     }
 
     @Test
-    public void 유저_카드등록상태_확인() throws Exception {
+    public void 유저_카드등록상태_조회() throws Exception {
         //given
         registerCard();
 
