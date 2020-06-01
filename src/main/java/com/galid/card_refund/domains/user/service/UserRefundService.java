@@ -49,9 +49,10 @@ public class UserRefundService {
                 .requestorId(requestorId)
                 .build();
 
-        return new UserRefundResponse(refundRepository.save(refundEntity)
-                .getExpectRefundAmount()
-                .getValue());
+        RefundEntity savedRefundEntity = refundRepository.save(refundEntity);
+
+        return new UserRefundResponse(savedRefundEntity.getRefundId(),
+                savedRefundEntity.getExpectRefundAmount().getValue());
     }
 
     private void verifyDuplicateRefundRequest(Long requestorId) {

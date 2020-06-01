@@ -9,5 +9,6 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 @NotEmpty
 public class UserRefundResponse {
+    private Long refundId;
     private double expectRefundAmount;
 }
