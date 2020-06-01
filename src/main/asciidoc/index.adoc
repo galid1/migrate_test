@@ -1,7 +1,8 @@
 = Tour-Cash REST API Docs
+:toc: left
+:toclevels: 2
 
-== Card
-
+== 1. Card
 === /cards
 #### 카드 생성
 
@@ -15,7 +16,7 @@ include::{snippets}/card/카드생성/response-fields.adoc[]
 
 
 
-== User
+== 2. User
 
 === /users
 
@@ -48,3 +49,17 @@ include::{snippets}/user/여권상태_조회/http-request.adoc[]
 .response
 include::{snippets}/user/여권상태_조회/http-response.adoc[]
 include::{snippets}/user/여권상태_조회/response-fields.adoc[]
+
+
+=== /users/{userId}/user-cards
+
+#### 유저 카드등록
+.request
+include::{snippets}/user/유저_카드등록/http-request.adoc[]
+include::{snippets}/user/유저_카드등록/request-fields.adoc[]
+
+.response
+include::{snippets}/user/유저_카드등록/http-response.adoc[]
+include::{snippets}/user/유저_카드등록/response-fields.adoc[]
+
+
