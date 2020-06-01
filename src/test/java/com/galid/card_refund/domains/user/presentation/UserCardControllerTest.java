@@ -39,15 +39,8 @@ class UserCardControllerTest  extends BaseIntegrationTest {
 
     @BeforeEach
     public void init() {
-        //given
-        String TEST_CARD_NUM = "1111222211112222";
-        CardInitMoney TEST_INIT_MONEY = CardInitMoney.TEN;
-        String TEST_USER_DEVICE_ID = "TEST";
-        String TEST_USER_NICKNAME = "TEST";
-        String TEST_USER_PASSPORT_IMAGE = "TEST";
-
-        TEST_CARD_ENTITY = cardSetUp.saveCard(new CardInformation(TEST_CARD_NUM), TEST_INIT_MONEY);
-        TEST_USER_ENTITY = userSetUp.saveUser(TEST_USER_DEVICE_ID, TEST_USER_NICKNAME, TEST_USER_PASSPORT_IMAGE);
+        TEST_USER_ENTITY = userSetUp.saveUser();
+        TEST_CARD_ENTITY = cardSetUp.saveCard();
     }
 
     @Test

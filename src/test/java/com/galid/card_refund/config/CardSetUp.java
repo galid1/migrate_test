@@ -12,13 +12,11 @@ public class CardSetUp {
     @Autowired
     private CardRepository cardRepository;
 
-    public CardEntity saveCard(CardInformation cardInformation, CardInitMoney initMoney) {
-        CardEntity savedCard = cardRepository.save(CardEntity.builder()
-                .initMoney(initMoney)
-                .cardInformation(cardInformation)
+    public CardEntity saveCard() {
+        return cardRepository.save(CardEntity.builder()
+                .initMoney(CardInitMoney.TEN)
+                .cardInformation(new CardInformation("1234123412341234"))
                 .build());
-
-        return savedCard;
     }
 }
 

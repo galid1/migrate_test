@@ -21,14 +21,10 @@ public class UserControllerTest extends BaseIntegrationTest {
     @Autowired
     private UserSetUp userSetUp;
 
-    private String TEST_DEVICE_ID = "TEST";
-    private String TEST_NICKNAME = "TEST";
-    private String TEST_PASSPORT_IMAGE_URL = "TEST";
-
     @Test
     public void 유저정보_조회() throws Exception {
         //given
-        UserEntity userEntity = userSetUp.saveUser(TEST_DEVICE_ID, TEST_NICKNAME, TEST_PASSPORT_IMAGE_URL);
+        UserEntity userEntity = userSetUp.saveUser();
 
         //when
         ResultActions resultActions = mvc.perform(get("/users/{userId}/information", userEntity.getUserId())
@@ -44,8 +40,8 @@ public class UserControllerTest extends BaseIntegrationTest {
         //then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("nickname").value(TEST_NICKNAME))
-                .andExpect(jsonPath("passportImageUrl").value(TEST_PASSPORT_IMAGE_URL));
+                .andExpect(jsonPath("nickname").value(userEntity.getNickname()))
+                .andExpect(jsonPath("passportImageUrl").value(userEntity.getPassPortImagePath()));
     }
     
 //    @Test
@@ -76,7 +72,7 @@ public class UserControllerTest extends BaseIntegrationTest {
     @Test
     public void 여권상태_조회() throws Exception {
         //given
-        UserEntity userEntity = userSetUp.saveUser(TEST_DEVICE_ID, TEST_NICKNAME, TEST_PASSPORT_IMAGE_URL);
+        UserEntity userEntity = userSetUp.saveUser();
 
         //when
         ResultActions resultActions = mvc.perform(get("/users/{userId}/passport-status", userEntity.getUserId())

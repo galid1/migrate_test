@@ -5,12 +5,8 @@ import com.galid.card_refund.common.model.Money;
 import com.galid.card_refund.config.CardSetUp;
 import com.galid.card_refund.config.UserSetUp;
 import com.galid.card_refund.domains.card.domain.CardEntity;
-import com.galid.card_refund.domains.card.domain.CardInformation;
-import com.galid.card_refund.domains.card.domain.CardInitMoney;
 import com.galid.card_refund.domains.user.domain.UsageHistory;
 import com.galid.card_refund.domains.user.domain.UserEntity;
-import com.galid.card_refund.domains.user.service.UserCardService;
-import com.galid.card_refund.domains.user.service.request_response.UserRegisterCardRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,27 +28,15 @@ class UserCardUsageHistoryControllerTest extends BaseIntegrationTest {
     @Autowired
     private CardSetUp cardSetUp;
 
-    @Autowired
-    private UserCardService userCardService;
-
     private UserEntity TEST_USER_ENTITY;
     private CardEntity TEST_CARD_ENTITY;
 
     @BeforeEach
     public void init() {
-        String TEST_DEVICE_ID = "TEST";
-        String TEST_NICKNAME = "TEST";
-        String TEST_PASSPORT_IMAGE = "TEST";
-        TEST_USER_ENTITY = userSetUp.saveUser(TEST_DEVICE_ID, TEST_NICKNAME, TEST_PASSPORT_IMAGE);
+        TEST_USER_ENTITY = userSetUp.saveUser();
+        TEST_CARD_ENTITY = cardSetUp.saveCard();
 
-        String TEST_CARD_NUM = "1111222211112222";
-        TEST_CARD_ENTITY = cardSetUp.saveCard(new CardInformation(TEST_CARD_NUM), CardInitMoney.TEN);
-
-        userCardService.registerCard(TEST_USER_ENTITY.getUserId(),
-                new UserRegisterCardRequest(
-                            TEST_CARD_ENTITY.getCardInformation().getCardNum(),
-                            TEST_CARD_ENTITY.getCardInformation().getSerial()
-                        ));
+        userSetUp.registerCard(TEST_USER_ENTITY, TEST_CARD_ENTITY);
     }
 
     @Test

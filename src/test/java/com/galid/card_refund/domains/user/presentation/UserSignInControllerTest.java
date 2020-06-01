@@ -2,6 +2,7 @@ package com.galid.card_refund.domains.user.presentation;
 
 import com.galid.card_refund.common.BaseIntegrationTest;
 import com.galid.card_refund.config.UserSetUp;
+import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.service.request_response.UserSignInRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,8 @@ class UserSignInControllerTest extends BaseIntegrationTest {
     @Test
     public void 로그인() throws Exception {
         //given
-        String DEVICE_ID = "TEST";
-        userSetUp.saveUser(DEVICE_ID, "TEST", "TEST");
-        UserSignInRequest signInRequest = new UserSignInRequest(DEVICE_ID);
+        UserEntity userEntity = userSetUp.saveUser();
+        UserSignInRequest signInRequest = new UserSignInRequest(userEntity.getDeviceId());
 
         //when
         ResultActions resultActions = mvc.perform(post("/users/sign-in")
