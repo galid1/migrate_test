@@ -25,7 +25,7 @@ class UserSignInControllerTest extends BaseIntegrationTest {
     public void 로그인() throws Exception {
         //given
         String DEVICE_ID = "TEST";
-        Long userId = userSetUp.saveUser(DEVICE_ID, "TEST", "TEST");
+        userSetUp.saveUser(DEVICE_ID, "TEST", "TEST");
         UserSignInRequest signInRequest = new UserSignInRequest(DEVICE_ID);
 
         //when

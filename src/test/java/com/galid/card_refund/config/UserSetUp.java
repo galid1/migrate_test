@@ -10,13 +10,13 @@ public class UserSetUp {
     @Autowired
     private UserRepository userRepository;
 
-    public Long saveUser(String testDeviceId, String testNickname, String testPassportImageUrl) {
+    public UserEntity saveUser(String testDeviceId, String testNickname, String testPassportImageUrl) {
         UserEntity savedUser = userRepository.save(UserEntity.builder()
                 .deviceId(testDeviceId)
                 .nickname(testNickname)
                 .build());
         savedUser.uploadPassportImagePath(testPassportImageUrl);
 
-        return savedUser.getUserId();
+        return savedUser;
     }
 }

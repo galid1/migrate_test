@@ -2,6 +2,7 @@ package com.galid.card_refund.domains.user.presentation;
 
 import com.galid.card_refund.common.BaseIntegrationTest;
 import com.galid.card_refund.config.UserSetUp;
+import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserPassportStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,10 @@ public class UserControllerTest extends BaseIntegrationTest {
     @Test
     public void 유저정보_조회() throws Exception {
         //given
-        Long userId = userSetUp.saveUser(TEST_DEVICE_ID, TEST_NICKNAME, TEST_PASSPORT_IMAGE_URL);
+        UserEntity userEntity = userSetUp.saveUser(TEST_DEVICE_ID, TEST_NICKNAME, TEST_PASSPORT_IMAGE_URL);
 
         //when
-        ResultActions resultActions = mvc.perform(get("/users/{userId}/information", userId)
+        ResultActions resultActions = mvc.perform(get("/users/{userId}/information", userEntity.getUserId())
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andDo(document("user/{method-name}",
@@ -75,10 +76,10 @@ public class UserControllerTest extends BaseIntegrationTest {
     @Test
     public void 여권상태_조회() throws Exception {
         //given
-        Long userId = userSetUp.saveUser(TEST_DEVICE_ID, TEST_NICKNAME, TEST_PASSPORT_IMAGE_URL);
+        UserEntity userEntity = userSetUp.saveUser(TEST_DEVICE_ID, TEST_NICKNAME, TEST_PASSPORT_IMAGE_URL);
 
         //when
-        ResultActions resultActions = mvc.perform(get("/users/{userId}/passport-status", userId)
+        ResultActions resultActions = mvc.perform(get("/users/{userId}/passport-status", userEntity.getUserId())
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andDo(document("user/{method-name}",
