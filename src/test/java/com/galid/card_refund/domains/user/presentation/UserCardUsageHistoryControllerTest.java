@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -59,6 +61,7 @@ class UserCardUsageHistoryControllerTest extends BaseIntegrationTest {
         //when
         ResultActions resultActions = mvc.perform(get("/users/{userId}/user-cards/usage", TEST_USER_ENTITY.getUserId()))
                 .andDo(document("user/{method-name}",
+                        preprocessResponse(prettyPrint()),
                         responseFields(
                                 fieldWithPath("data[0].date").description("카드 사용날짜"),
                                 fieldWithPath("data[0].place").description("카드 사용 장소"),

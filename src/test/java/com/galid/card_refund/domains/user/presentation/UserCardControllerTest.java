@@ -21,6 +21,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -56,6 +58,8 @@ class UserCardControllerTest  extends BaseIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andDo(document("user/{method-name}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
                         requestFields(
                                 fieldWithPath("cardNum").description("등록할 12자리 카드번호"),
                                 fieldWithPath("serial").description("등록할 카드의 4자리 serial 번호")
@@ -96,6 +100,7 @@ class UserCardControllerTest  extends BaseIntegrationTest {
         ResultActions resultActions = mvc.perform(get("/users/{userId}/user-cards", TEST_USER_ENTITY.getUserId())
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(document("user/{method-name}",
+                        preprocessResponse(prettyPrint()),
                         responseFields(
                                 fieldWithPath("ownerId").description("Database 상의 카드 소유주 user_id"),
                                 fieldWithPath("remainAmount").description("카드 잔액")

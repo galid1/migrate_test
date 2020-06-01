@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -31,6 +33,7 @@ public class UserControllerTest extends BaseIntegrationTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andDo(document("user/{method-name}",
+                        preprocessResponse(prettyPrint()),
                         responseFields(
                                 fieldWithPath("nickname").description("사용자 닉네임"),
                                 fieldWithPath("passportImageUrl").description("사용자 여권 이미지 경로")
@@ -79,6 +82,7 @@ public class UserControllerTest extends BaseIntegrationTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andDo(document("user/{method-name}",
+                    preprocessResponse(prettyPrint()),
                     responseFields(
                         fieldWithPath("passportStatus").description("여권 상태 정보")
                     )
