@@ -90,9 +90,9 @@ public class CardEntity extends BaseEntity {
         this.remainAmount = remainAmount;
     }
 
-    public void lostCard() {
+    public void reportLoss() {
         this.verifyRegistered();
-        this.cardStatus = CardStatus.LOST_STATUS;
+        this.cardStatus = CardStatus.LOSS_STATUS;
     }
 
     private void verifyRegistered() {
