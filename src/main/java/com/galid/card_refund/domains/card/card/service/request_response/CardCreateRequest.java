@@ -1,7 +1,7 @@
-package com.galid.card_refund.domains.card.service.request_response;
+package com.galid.card_refund.domains.card.card.service.request_response;
 
 import com.galid.card_refund.common.config.validation.CardNumLength;
-import com.galid.card_refund.domains.card.domain.CardInitMoney;
+import com.galid.card_refund.domains.card.card.domain.CardInitMoney;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

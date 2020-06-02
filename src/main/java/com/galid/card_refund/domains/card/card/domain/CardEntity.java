@@ -1,4 +1,4 @@
-package com.galid.card_refund.domains.card.domain;
+package com.galid.card_refund.domains.card.card.domain;
 
 import com.galid.card_refund.common.config.logging.BaseEntity;
 import com.galid.card_refund.common.model.Money;

@@ -1,0 +1,13 @@
+1590028746081|100|statement|connection 31|url jdbc:h2:mem:testdb|drop table refund_line if exists|drop table refund_line if exists
+1590028746086|0|statement|connection 31|url jdbc:h2:mem:testdb|drop table refund_result_line if exists|drop table refund_result_line if exists
+1590028746087|0|statement|connection 31|url jdbc:h2:mem:testdb|drop table user if exists|drop table user if exists
+1590028746087|0|statement|connection 31|url jdbc:h2:mem:testdb|drop table user_card_usage_history if exists|drop table user_card_usage_history if exists
+1590028746087|0|statement|connection 31|url jdbc:h2:mem:testdb|drop sequence if exists hibernate_sequence|drop sequence if exists hibernate_sequence
+1590385717282|103|statement|connection 36|url jdbc:h2:mem:testdb|drop table refund_line if exists|drop table refund_line if exists
+1590385717301|0|statement|connection 36|url jdbc:h2:mem:testdb|drop table refund_result_line if exists|drop table refund_result_line if exists
+1590385717302|0|statement|connection 36|url jdbc:h2:mem:testdb|drop table user if exists|drop table user if exists
+1590385717302|0|statement|connection 36|url jdbc:h2:mem:testdb|drop table user_card_usage_history if exists|drop table user_card_usage_history if exists
+1590385717302|0|statement|connection 36|url jdbc:h2:mem:testdb|drop sequence if exists hibernate_sequence|drop sequence if exists hibernate_sequence
+1590390131416|102|statement|connection 36|url jdbc:h2:mem:testdb|drop table user if exists|drop table user if exists
+1590390131417|0|statement|connection 36|url jdbc:h2:mem:testdb|drop table user_card_usage_history if exists|drop table user_card_usage_history if exists
+1590390131417|0|statement|connection 36|url jdbc:h2:mem:testdb|drop sequence if exists hibernate_sequence|drop sequence if exists hibernate_sequence
