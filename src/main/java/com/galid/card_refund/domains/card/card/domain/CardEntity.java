@@ -71,18 +71,7 @@ public class CardEntity extends BaseEntity {
 
     public void returnCard() {
         this.verifyRegistered();
-        this.initCard();
-    }
-
-    public void initCard() {
-        if(cardStatus == CardStatus.LOST_STATUS)
-            throw new IllegalStateException("분실된 카드는 초기화가 불가능합니다.");
-
-        this.cardInformation.renewSerial();
-        this.ownerId = null;
-        this.registeredDate = LocalDate.now();
-        this.remainAmount = initMoney.getAmount();
-        this.cardStatus = CardStatus.UNREGISTERED_STATUS;
+        this.cardStatus = CardStatus.RETURN_STATUS;
     }
 
     public void recordRemainAmount(Money remainAmount) {
