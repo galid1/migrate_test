@@ -46,7 +46,7 @@ public class UserCardServiceTest {
 
 
         //then
-        assertEquals(savedUser.getUserId(), savedStoredCard.getOwnerId());
+        assertEquals(savedUser.getUserId(), savedStoredCard.getOwner().getUserId());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class UserCardServiceTest {
         userCardService.returnCard(savedUser.getUserId());
 
         //then
-        assertEquals(savedStoredCard.getCardStatus(), CardStatus.UNREGISTERED_STATUS);
+        assertEquals(savedStoredCard.getCardStatus(), CardStatus.RETURNED_STATUS);
     }
 
     private String CARD_NUM = "1234123412341234";

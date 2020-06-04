@@ -2,6 +2,7 @@ package com.galid.card_refund.domains.card.card.domain;
 
 import com.galid.card_refund.common.config.logging.BaseEntity;
 import com.galid.card_refund.common.model.Money;
+import com.galid.card_refund.domains.user.domain.UserEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +29,8 @@ public class CardEntity extends BaseEntity {
     private LocalDate registeredDate;
     private Money remainAmount;
 
-    private Long ownerId;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "card")
+    private UserEntity owner;
 
     @Builder
     public CardEntity(CardInformation cardInformation, CardInitMoney initMoney) {
@@ -55,7 +57,7 @@ public class CardEntity extends BaseEntity {
         this.verifyRegistrableState();
         this.verifyRegistration(cardRegistration);
 
-        this.ownerId = cardRegistration.getUserId();
+        this.owner = cardRegistration.getOwner();
         this.cardStatus = CardStatus.REGISTERED_STATUS;
     }
 

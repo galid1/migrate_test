@@ -1,5 +1,7 @@
 package com.galid.card_refund.domains.card.card.domain;
 
+import com.galid.card_refund.domains.user.domain.UserEntity;
+import com.galid.card_refund.domains.user.domain.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,13 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class CardEntityTest {
     @Autowired
     private CardRepository cardRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     private String RIGHT_CARD_NUM = "1111111111111111";
     private String WRONG_CARD_NUM = "2222";
 
     private String WRONG_SERIAL = "AAAA";
 
-    private CardEntity savedEntity = null;
+    private CardEntity card = null;
+    private UserEntity owner = null;
 
     @BeforeEach
     public void init() {
@@ -25,8 +30,14 @@ public class CardEntityTest {
                 .cardInformation(new CardInformation(RIGHT_CARD_NUM))
                 .initMoney(CardInitMoney.TEN)
                 .build();
+        card = cardRepository.save(entity);
 
-        savedEntity = cardRepository.save(entity);
+        UserEntity owner = UserEntity.builder()
+                .nickname("TEST")
+                .deviceId("TEST")
+                .build();
+
+        this.owner = userRepository.save(owner);
     }
 
     @Test
@@ -42,9 +53,9 @@ public class CardEntityTest {
     @Transactional
     public void whenRenewSerialCreatedNotDuplicatedSerial() throws Exception {
         // given, when
-        String oldSerial = savedEntity.getCardInformation().getSerial();
-        savedEntity.getCardInformation().renewSerial();
-        String newSerial = savedEntity.getCardInformation().getSerial();
+        String oldSerial = card.getCardInformation().getSerial();
+        card.getCardInformation().renewSerial();
+        String newSerial = card.getCardInformation().getSerial();
 
         //then
         Assertions.assertNotEquals(oldSerial, newSerial);
@@ -54,20 +65,20 @@ public class CardEntityTest {
     @Transactional
     public void whenRegisterUserTest() throws Exception {
         // given
-        String serial = savedEntity.getCardInformation().getSerial();
+        String serial = card.getCardInformation().getSerial();
 
         CardRegistration cardRegistration = CardRegistration.builder()
-                .userId(1l)
+                .owner(owner)
                 .cardNum(RIGHT_CARD_NUM)
                 .serial(serial)
                 .build();
 
         // when
-        savedEntity.register(cardRegistration);
+        card.register(cardRegistration);
 
         // then
-        Assertions.assertNotEquals(savedEntity.getOwnerId(), null);
-        Assertions.assertEquals(savedEntity.getCardStatus(), CardStatus.REGISTERED_STATUS);
+        Assertions.assertNotEquals(card.getOwner(), null);
+        Assertions.assertEquals(card.getCardStatus(), CardStatus.REGISTERED_STATUS);
     }
 
     @Test
@@ -75,34 +86,34 @@ public class CardEntityTest {
     public void whenRegisterUserWithWrongSerialThenThrowException() throws Exception {
         // given
         CardRegistration cardRegistration = CardRegistration.builder()
-                .userId(1l)
+                .owner(owner)
                 .cardNum(RIGHT_CARD_NUM)
                 .serial(WRONG_SERIAL)
                 .build();
 
         // when, then
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> savedEntity.register(cardRegistration));
+                () -> card.register(cardRegistration));
     }
 
     @Test
     @Transactional
     public void whenReturnCardThenCardStateIsUNREGISTERED() throws Exception {
         // given
-        String serial = savedEntity.getCardInformation().getSerial();
+        String serial = card.getCardInformation().getSerial();
         CardRegistration cardRegistration = CardRegistration.builder()
-                .userId(1l)
+                .owner(owner)
                 .cardNum(RIGHT_CARD_NUM)
                 .serial(serial)
                 .build();
 
-        savedEntity.register(cardRegistration);
+        card.register(cardRegistration);
 
         // when
-        savedEntity.returnCard();
+        card.returnCard();
 
         // then
-        Assertions.assertEquals(savedEntity.getCardStatus(), CardStatus.UNREGISTERED_STATUS);
+        Assertions.assertEquals(card.getCardStatus(), CardStatus.RETURNED_STATUS);
     }
 
 }

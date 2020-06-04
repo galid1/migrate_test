@@ -88,7 +88,7 @@ class UserCardControllerTest  extends BaseIntegrationTest {
         //then
         resultActions
                 .andExpect(status().isOk());
-        assertEquals(TEST_CARD_ENTITY.getCardStatus(), CardStatus.UNREGISTERED_STATUS);
+        assertEquals(TEST_CARD_ENTITY.getCardStatus(), CardStatus.RETURNED_STATUS);
     }
 
     @Test
