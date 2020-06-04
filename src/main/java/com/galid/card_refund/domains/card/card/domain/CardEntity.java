@@ -71,7 +71,7 @@ public class CardEntity extends BaseEntity {
 
     public void returnCard() {
         this.verifyRegistered();
-        this.cardStatus = CardStatus.RETURN_STATUS;
+        this.cardStatus = CardStatus.RETURNED_STATUS;
     }
 
     public void recordRemainAmount(Money remainAmount) {
