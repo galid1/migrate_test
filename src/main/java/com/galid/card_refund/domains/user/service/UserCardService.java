@@ -21,8 +21,7 @@ public class UserCardService {
 
     @Transactional
     public UserRegisterCardResponse registerCard(long userId, UserRegisterCardRequest request) {
-        UserEntity userEntity = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        UserEntity userEntity = getUserEntity(userId);
         CardEntity cardEntity = cardRepository.findByCardInformation_CardNum(request.getCardNum())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드번호입니다."));
 
@@ -36,14 +35,13 @@ public class UserCardService {
         return CardRegistration.builder()
                 .cardNum(request.getCardNum())
                 .serial(request.getSerial())
-                .userId(userId)
+                .owner(getUserEntity(userId))
                 .build();
     }
 
     @Transactional
     public void returnCard(long userId) {
-        UserEntity findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        UserEntity findUser = getUserEntity(userId);
 
         cardRepository.findById(findUser.getCard().getCardId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."))
@@ -53,16 +51,20 @@ public class UserCardService {
     }
 
     public UserCardConfirmResponse confirmCardRegistration(Long ownerId) {
-        UserEntity userEntity = userRepository.findById(ownerId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        UserEntity userEntity = getUserEntity(ownerId);
 
         return toCardRegistrationConfirmResponse(userEntity.getCard());
     }
 
     private UserCardConfirmResponse toCardRegistrationConfirmResponse(CardEntity cardEntity) {
         return UserCardConfirmResponse.builder()
-                .ownerId(cardEntity.getOwnerId())
+                .ownerId(cardEntity.getOwner().getUserId())
                 .remainAmount(cardEntity.getRemainAmount().getValue())
                 .build();
+    }
+
+    private UserEntity getUserEntity(long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
     }
 }
