@@ -46,6 +46,8 @@ spring:
     password:
     driver-class-name: org.h2.Driver
 
+logging.level:   # queryDSL의 sql이 찍힘
+  org.hibernate.SQL: debug
 
 ---
 ###### deploy ######
