@@ -2,7 +2,10 @@ package com.galid.card_refund.domains.card.loss.domain;
 
 import com.galid.card_refund.common.config.logging.BaseEntity;
 import com.galid.card_refund.domains.card.card.domain.CardEntity;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -15,6 +18,7 @@ public class LossEntity extends BaseEntity {
     private Long lossId;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lost_card_id")
     private CardEntity lostCard;
 
     @Enumerated(value = EnumType.STRING)
