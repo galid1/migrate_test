@@ -100,3 +100,14 @@ include::{snippets}/user/환급요청_결과_조회/http-request.adoc[]
 .response
 include::{snippets}/user/환급요청_결과_조회/http-response.adoc[]
 include::{snippets}/user/환급요청_결과_조회/response-fields.adoc[]
+
+
+=== /users/{userId}/loss
+
+#### 분실 신고
+.request
+include::{snippets}/user/분실신고/http-request.adoc[]
+
+.response
+include::{snippets}/user/분실신고/http-response.adoc[]
+include::{snippets}/user/분실신고/response-fields.adoc[]
