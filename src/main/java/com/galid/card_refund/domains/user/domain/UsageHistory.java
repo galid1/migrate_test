@@ -8,7 +8,6 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Embeddable

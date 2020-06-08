@@ -3,7 +3,6 @@ package com.galid.card_refund.domains.user.presentation;
 import com.galid.card_refund.domains.user.service.UserInformationService;
 import com.galid.card_refund.domains.user.service.request_response.UserInformationResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserInformationUpdateRequest;
-import com.galid.card_refund.domains.user.service.request_response.UserPassportImageResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserPassportStatusResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
