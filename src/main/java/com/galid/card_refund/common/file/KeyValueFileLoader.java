@@ -16,7 +16,7 @@ public class KeyValueFileLoader {
 
     public String getValueFromFile(String filePathMapKey, String rowKey) {
         if (this.storeMaps.get(filePathMapKey) == null) {
-            initValueMap(filePathMapKey);
+            storeFilesValueList(filePathMapKey);
         }
 
         return this.storeMaps.get(filePathMapKey)
@@ -24,7 +24,7 @@ public class KeyValueFileLoader {
                 .orElseThrow(() -> new IllegalArgumentException("키 값에 해당하는 값이 KeyValueStore에 존재하지 않습니다."));
     }
 
-    private void initValueMap(String filePath) {
+    private void storeFilesValueList(String filePath) {
         String resultPath = filePathStartWithUserHome + filePath;
         Map<String, Optional<String>> keyValueStore = new HashMap<>();
 
