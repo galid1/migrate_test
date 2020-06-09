@@ -41,13 +41,15 @@ class UserSignInControllerTest extends BaseIntegrationTest {
                                 fieldWithPath("deviceId").description("디바이스 고유 id")
                         ),
                         responseFields(
-                                fieldWithPath("userId").description("Database상의 user_id")
+                                fieldWithPath("userId").description("Database상의 user_id"),
+                                fieldWithPath("token").description("restapi 인증 token")
                         )
                 ));
 
         //then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("userId", is(notNullValue())));
+                .andExpect(jsonPath("userId", is(notNullValue())))
+                .andExpect(jsonPath("token", is(notNullValue())));
     }
 }
