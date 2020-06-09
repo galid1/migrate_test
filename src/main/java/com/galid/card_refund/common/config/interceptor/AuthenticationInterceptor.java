@@ -15,8 +15,10 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String authorization = request.getHeader("Authorization");
 
-        if(authorization == null)
+        if(authorization == null) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authorization Header가 존재하지 않습니다.");
+            return false;
+        }
 
         validateToken(authorization);
         return true;
