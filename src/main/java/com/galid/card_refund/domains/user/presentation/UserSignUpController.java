@@ -17,7 +17,7 @@ import java.io.IOException;
 public class UserSignUpController {
     private final UserSignUpService signUpService;
 
-    @PostMapping(value = "/users", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/auth/users", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UserSignUpResponse signUp(@RequestParam("information") UserSignUpRequest request, @RequestParam("image") MultipartFile passportImage) throws IOException {
         return signUpService.signUp(request, passportImage);
     }
