@@ -1,5 +1,6 @@
 package com.galid.card_refund.config;
 
+import com.galid.card_refund.common.config.interceptor.AuthenticationInterceptor;
 import com.galid.card_refund.domains.admin.presentation.request_response.AdminEstimateUserPassportRequest;
 import com.galid.card_refund.domains.admin.presentation.request_response.AdminRefundEstimateRequest;
 import com.galid.card_refund.domains.admin.service.AdminEstimateUserPassportService;
@@ -13,14 +14,19 @@ import com.galid.card_refund.domains.user.domain.UserPassportStatus;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.UserCardService;
 import com.galid.card_refund.domains.user.service.UserRefundService;
+import com.galid.card_refund.domains.user.service.UserSignInService;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundRequest;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserRegisterCardRequest;
+import com.galid.card_refund.domains.user.service.request_response.UserSignInRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+
+import static org.mockito.BDDMockito.given;
 
 @Component
 public class UserSetUp {
@@ -28,6 +34,8 @@ public class UserSetUp {
     private UserRepository userRepository;
     @Autowired
     private RefundRepository refundRepository;
+    @Autowired
+    private UserSignInService userSignInService;
     @Autowired
     private UserCardService userCardService;
     @Autowired
@@ -37,10 +45,14 @@ public class UserSetUp {
     @Autowired
     private AdminRefundEstimateService adminRefundEstimateService;
 
+    private String TEST_DEVICE_ID;
+    private String TEST_NICKNAME;
+    private String TEST_PASSPORT_IMAGE;
+
     public UserEntity saveUser() {
-        String TEST_DEVICE_ID = "TEST";
-        String TEST_NICKNAME = "TEST";
-        String TEST_PASSPORT_IMAGE = "TEST";
+        TEST_DEVICE_ID = "TEST";
+        TEST_NICKNAME = "TEST";
+        TEST_PASSPORT_IMAGE = "TEST";
 
         UserEntity savedUser = userRepository.save(UserEntity.builder()
                 .deviceId(TEST_DEVICE_ID)
@@ -49,6 +61,11 @@ public class UserSetUp {
         savedUser.uploadPassportImagePath(TEST_PASSPORT_IMAGE);
 
         return savedUser;
+    }
+
+    public String signIn() {
+        UserSignInRequest request = new UserSignInRequest(TEST_DEVICE_ID);
+        return userSignInService.signIn(request).getToken();
     }
 
     public void registerCard(UserEntity TEST_USER_ENTITY, CardEntity TEST_CARD_ENTITY) {
