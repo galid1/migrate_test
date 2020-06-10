@@ -7,6 +7,7 @@ import com.galid.card_refund.config.UserSetUp;
 import com.galid.card_refund.domains.card.card.domain.CardEntity;
 import com.galid.card_refund.domains.user.domain.UsageHistory;
 import com.galid.card_refund.domains.user.domain.UserEntity;
+import org.apache.http.HttpHeaders;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.time.LocalDateTime;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -32,6 +35,7 @@ class UserCardUsageHistoryControllerTest extends BaseIntegrationTest {
 
     private UserEntity TEST_USER_ENTITY;
     private CardEntity TEST_CARD_ENTITY;
+    private String TEST_TOKEN;
 
     @BeforeEach
     public void init() {
@@ -39,6 +43,8 @@ class UserCardUsageHistoryControllerTest extends BaseIntegrationTest {
         TEST_CARD_ENTITY = cardSetUp.saveCard();
 
         userSetUp.registerCard(TEST_USER_ENTITY, TEST_CARD_ENTITY);
+
+        TEST_TOKEN = userSetUp.signIn();
     }
 
     @Test
@@ -59,17 +65,8 @@ class UserCardUsageHistoryControllerTest extends BaseIntegrationTest {
 
 
         //when
-        ResultActions resultActions = mvc.perform(get("/users/{userId}/user-cards/usage", TEST_USER_ENTITY.getUserId()))
-                .andDo(document("user/{method-name}",
-                        preprocessResponse(prettyPrint()),
-                        responseFields(
-                                fieldWithPath("data[0].date").description("카드 사용날짜"),
-                                fieldWithPath("data[0].place").description("카드 사용 장소"),
-                                fieldWithPath("data[0].paymentAmount").description("사용 금액"),
-                                fieldWithPath("data[0].remainAmount").description("카드 잔액")
-                        )
-                ));
-
+        ResultActions resultActions = mvc.perform(get("/users/{userId}/user-cards/usage", TEST_USER_ENTITY.getUserId())
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + TEST_TOKEN));
 
         //then
         resultActions
@@ -78,5 +75,20 @@ class UserCardUsageHistoryControllerTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("data[0].place").value(TEST_PLACE))
                 .andExpect(jsonPath("data[0].paymentAmount").value(TEST_PAYMENT.getValue()))
                 .andExpect(jsonPath("data[0].remainAmount").value(TEST_REMAIN.getValue()));
+
+        //restdocs
+        resultActions
+                .andDo(document("user/{method-name}",
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer <TOKEN>")
+                        ),
+                        responseFields(
+                                fieldWithPath("data[0].date").description("카드 사용날짜"),
+                                fieldWithPath("data[0].place").description("카드 사용 장소"),
+                                fieldWithPath("data[0].paymentAmount").description("사용 금액"),
+                                fieldWithPath("data[0].remainAmount").description("카드 잔액")
+                        )
+                ));
     }
 }
