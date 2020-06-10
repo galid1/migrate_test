@@ -30,7 +30,7 @@ public class UserSignInService {
         return new UserSignInResponse(userEntity.getUserId(), token);
     }
 
-    public String generateToken(UserEntity user) {
+    private String generateToken(UserEntity user) {
         Optional<TokenEntity> findToken = tokenQuery.getTokenBy(user.getUserId());
 
         if(findToken.isPresent()) {
