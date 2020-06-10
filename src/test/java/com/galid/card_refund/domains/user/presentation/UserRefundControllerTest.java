@@ -8,6 +8,7 @@ import com.galid.card_refund.domains.card.card.domain.CardEntity;
 import com.galid.card_refund.domains.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundRequest;
+import org.apache.http.HttpHeaders;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ class UserRefundControllerTest extends BaseIntegrationTest {
     private UserEntity TEST_USER_ENTITY;
     private CardEntity TEST_CARD_ENTITY;
     private RefundEntity TEST_REFUND_ENTITY;
+    private String TEST_TOKEN;
 
     @BeforeEach
     public void init() {
@@ -42,6 +44,7 @@ class UserRefundControllerTest extends BaseIntegrationTest {
         TEST_CARD_ENTITY = cardSetUp.saveCard();
         userSetUp.registerCard(TEST_USER_ENTITY, TEST_CARD_ENTITY);
         userSetUp.estimateUserPassport(TEST_USER_ENTITY);
+        TEST_TOKEN = userSetUp.signIn();
     }
 
     @Test
@@ -74,25 +77,8 @@ class UserRefundControllerTest extends BaseIntegrationTest {
 
         //when
         ResultActions resultActions = mvc.perform(get("/users/{userId}/refunds", TEST_USER_ENTITY.getUserId())
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(document("user/{method-name}",
-                        preprocessRequest(prettyPrint()),
-                        preprocessResponse(prettyPrint()),
-                        responseFields(
-                                fieldWithPath("userInformation.name").description("유저의 이름(여권 검증을 통해 저장된)"),
-                                fieldWithPath("userInformation.nation").description("유저의 국가(여권 검증을 통해 저장된)"),
-                                fieldWithPath("userInformation.address").description("유저의 주소(여권 검증을 통해 저장된)"),
-                                fieldWithPath("userInformation.passportNum").description("여권 번호"),
-
-                                fieldWithPath("refundResultResponseLineList[0].place").description("환급처리 결과 대상 상품 구매 장소"),
-                                fieldWithPath("refundResultResponseLineList[0].paymentAmount").description("환급처리 결과 대상 상품 지불 금액"),
-                                fieldWithPath("refundResultResponseLineList[0].refundAmount").description("환급처리 결과 대상 상품 환급 금액"),
-
-                                fieldWithPath("unRefundableLineDescription").description("환급 처리 불가능한 상품 이유 설명"),
-                                fieldWithPath("refundResultBarcodeImageUrl").description("환급 요청 결과 화면 바코드 이미지")
-                        )
-                ));
-
+                .accept(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + TEST_TOKEN));
 
         //then
         resultActions
@@ -116,5 +102,25 @@ class UserRefundControllerTest extends BaseIntegrationTest {
 
                 .andExpect(jsonPath("unRefundableLineDescription").value(TEST_REFUND_ENTITY.getUnRefundableLineDescription()))
                 .andExpect(jsonPath("refundResultBarcodeImageUrl").value(TEST_REFUND_ENTITY.getRefundResultBarcodeImageUrl()));
+
+        //restdocs
+        resultActions
+                .andDo(document("user/{method-name}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        responseFields(
+                                fieldWithPath("userInformation.name").description("유저의 이름(여권 검증을 통해 저장된)"),
+                                fieldWithPath("userInformation.nation").description("유저의 국가(여권 검증을 통해 저장된)"),
+                                fieldWithPath("userInformation.address").description("유저의 주소(여권 검증을 통해 저장된)"),
+                                fieldWithPath("userInformation.passportNum").description("여권 번호"),
+
+                                fieldWithPath("refundResultResponseLineList[0].place").description("환급처리 결과 대상 상품 구매 장소"),
+                                fieldWithPath("refundResultResponseLineList[0].paymentAmount").description("환급처리 결과 대상 상품 지불 금액"),
+                                fieldWithPath("refundResultResponseLineList[0].refundAmount").description("환급처리 결과 대상 상품 환급 금액"),
+
+                                fieldWithPath("unRefundableLineDescription").description("환급 처리 불가능한 상품 이유 설명"),
+                                fieldWithPath("refundResultBarcodeImageUrl").description("환급 요청 결과 화면 바코드 이미지")
+                        )
+                ));
     }
 }
