@@ -77,12 +77,14 @@ public class CardEntity extends BaseEntity {
     }
 
     public void recordRemainAmount(Money remainAmount) {
-        verifyRegistered();
+        //TODO 카드 상태에 따라 기능을 제한하고 싶은 경우 주석 해제
+//        verifyRegistered();
         this.remainAmount = remainAmount;
     }
 
     public void reportLoss() {
-        this.verifyRegistered();
+        //TODO 카드 상태에 따라 기능을 제한하고 싶은 경우 주석 해제
+//        this.verifyRegistered();
         this.cardStatus = CardStatus.LOSS_STATUS;
     }
 
