@@ -24,6 +24,15 @@ include::{snippets}/card/카드생성/http-response.adoc[]
 include::{snippets}/card/카드생성/response-fields.adoc[]
 
 
+#### 여권 평가
+
+.request
+include::{snippets}/admin/여권평가/http-request.adoc[]
+include::{snippets}/admin/여권평가/request-fields.adoc[]
+
+.response
+include::{snippets}/admin/여권평가/http-response.adoc[]
+
 == 2. User
 
 === /users
