@@ -86,7 +86,7 @@ class AdminRefundEstimateControllerTest extends BaseIntegrationTest {
                                 partWithName("barcodeImage").description("환급 결과 바코드 이미지")
                         ),
                         requestParameters(
-                                parameterWithName("estimateInformation").description("환급 평가 정보 \n ex. \n {refundEstimateLineList:[{'placeAndName':'TEST', 'paymentAmount':'1000'}], unRefundableLineDescription:'asd'}")
+                                parameterWithName("estimateInformation").description("환급 평가 정보 \n ex. \n {refundEstimateLineList:[{'placeAndName':'TEST', 'paymentAmount':'1000'}], unRefundableLineDescription: 'unrefundable reason...'}")
                         )
                 ));
     }
