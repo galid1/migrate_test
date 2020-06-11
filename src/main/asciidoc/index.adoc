@@ -137,7 +137,8 @@ include::{snippets}/user/카드사용내역_조회/response-fields.adoc[]
 #### 환급요청
 .request
 include::{snippets}/user/환급요청/http-request.adoc[]
-include::{snippets}/user/환급요청/
+include::{snippets}/user/환급요청/request-parts.adoc[]
+include::{snippets}/user/환급요청/request-parameters.adoc[]
 
 .response
 include::{snippets}/user/환급요청/http-response.adoc[]
