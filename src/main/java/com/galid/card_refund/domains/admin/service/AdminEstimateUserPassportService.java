@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.admin.service;
 
-import com.galid.card_refund.domains.admin.presentation.request_response.AdminEstimateUserPassportRequest;
+import com.galid.card_refund.domains.admin.service.request_response.AdminEstimateUserPassportRequest;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserPassportInformation;
 import com.galid.card_refund.domains.user.domain.UserRepository;

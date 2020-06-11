@@ -1,8 +1,7 @@
 package com.galid.card_refund.config;
 
-import com.galid.card_refund.common.config.interceptor.AuthenticationInterceptor;
-import com.galid.card_refund.domains.admin.presentation.request_response.AdminEstimateUserPassportRequest;
-import com.galid.card_refund.domains.admin.presentation.request_response.AdminRefundEstimateRequest;
+import com.galid.card_refund.domains.admin.service.request_response.AdminEstimateUserPassportRequest;
+import com.galid.card_refund.domains.admin.service.request_response.AdminRefundEstimateRequest;
 import com.galid.card_refund.domains.admin.service.AdminEstimateUserPassportService;
 import com.galid.card_refund.domains.admin.service.AdminRefundEstimateService;
 import com.galid.card_refund.domains.card.card.domain.CardEntity;
@@ -20,13 +19,10 @@ import com.galid.card_refund.domains.user.service.request_response.UserRefundRes
 import com.galid.card_refund.domains.user.service.request_response.UserRegisterCardRequest;
 import com.galid.card_refund.domains.user.service.request_response.UserSignInRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-
-import static org.mockito.BDDMockito.given;
 
 @Component
 public class UserSetUp {

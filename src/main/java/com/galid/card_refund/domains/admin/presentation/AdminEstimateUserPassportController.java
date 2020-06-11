@@ -1,7 +1,7 @@
 package com.galid.card_refund.domains.admin.presentation;
 
 import com.galid.card_refund.domains.admin.service.AdminEstimateUserPassportService;
-import com.galid.card_refund.domains.admin.presentation.request_response.AdminEstimateUserPassportRequest;
+import com.galid.card_refund.domains.admin.service.request_response.AdminEstimateUserPassportRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

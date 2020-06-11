@@ -2,7 +2,7 @@ package com.galid.card_refund.common.config.converter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.galid.card_refund.domains.admin.presentation.request_response.AdminRefundEstimateRequest;
+import com.galid.card_refund.domains.admin.service.request_response.AdminRefundEstimateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Component;
