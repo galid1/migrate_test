@@ -9,6 +9,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -40,6 +42,9 @@ class UserSignUpControllerTest extends BaseIntegrationTest {
                     ),
                     requestParts(
                             partWithName("image").description("여권 이미지")
+                    ),
+                    responseFields(
+                            fieldWithPath("userId").description("Database상의 user_id")
                     )
                 ));
     }
