@@ -1,4 +1,4 @@
-package com.galid.card_refund.domains.card.card.presentation;
+package com.galid.card_refund.domains.admin.presentation;
 
 import com.galid.card_refund.domains.card.card.service.CardService;
 import com.galid.card_refund.domains.card.card.service.request_response.CardCreateRequest;
@@ -13,10 +13,10 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-public class CardController {
+public class AdminCardCreateController {
     private final CardService cardService;
 
-    @PostMapping("/cards")
+    @PostMapping("/admin/cards")
     public Result createCard(@RequestBody @Valid CardCreateRequest request) {
         return new Result(cardService.createCard(request));
     }
@@ -26,4 +26,5 @@ public class CardController {
     private class Result {
         private Long cardId;
     }
+
 }
