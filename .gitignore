@@ -4,10 +4,13 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+**/src/main/.DS_Store
+
 
 
 ### asciidoc ###
 **/target/**
+Src/main/resources/static/html5/*
 
 ### STS ###
 .apt_generated
