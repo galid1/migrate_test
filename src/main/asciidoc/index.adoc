@@ -7,7 +7,7 @@
 #### 06.11
 - 카드생성 (/cards)를 admin 하위 도메인으로 이동(/admin/cards)
 - admin 관련 api 추가
-- 회원가입 및, 이미지 관련 api 추가
+- 회원가입 , 환급요청 등 이미지 관련 api 추가
 
 
 
@@ -48,6 +48,15 @@ include::{snippets}/admin/환급요청평가/http-response.adoc[]
 == 2. User
 
 === /users
+
+#### 회원가입
+.request
+include::{snippets}/user/회원가입/http-request.adoc[]
+include::{snippets}/user/회원가입/request-parts.adoc[]
+include::{snippets}/user/회원가입/request-parameters.adoc[]
+
+.response
+include::{snippets}/user/회원가입/http-response.adoc[]
 
 #### 로그인
 .request
