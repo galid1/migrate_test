@@ -20,10 +20,11 @@ include::{snippets}/admin/카드생성/http-request.adoc[]
 include::{snippets}/admin/카드생성/request-fields.adoc[]
 
 .response
-include::{snippets}/card/카드생성/http-response.adoc[]
-include::{snippets}/card/카드생성/response-fields.adoc[]
+include::{snippets}/admin/카드생성/http-response.adoc[]
+include::{snippets}/admin/카드생성/response-fields.adoc[]
 
 
+=== /admin/users/{userId}/passport
 #### 여권 평가
 
 .request
