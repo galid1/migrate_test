@@ -34,6 +34,17 @@ include::{snippets}/admin/여권평가/request-fields.adoc[]
 .response
 include::{snippets}/admin/여권평가/http-response.adoc[]
 
+=== /admin/refunds/{refundId}
+#### 환급요청 평가
+
+.request
+include::{snippets}/admin/환급요청평가/http-request.adoc[]
+include::{snippets}/admin/환급요청평가/request-parameters.adoc[]
+include::{snippets}/admin/환급요청평가/request-parts.adoc[]
+
+.response
+include::{snippets}/admin/환급요청평가/http-response.adoc[]
+
 == 2. User
 
 === /users
@@ -60,6 +71,7 @@ include::{snippets}/user/유저정보_조회/http-response.adoc[]
 include::{snippets}/user/유저정보_조회/response-fields.adoc[]
 
 
+=== /users/{userId}/passport-status
 #### 여권상태 조회
 .request
 include::{snippets}/user/여권상태_조회/http-request.adoc[]
