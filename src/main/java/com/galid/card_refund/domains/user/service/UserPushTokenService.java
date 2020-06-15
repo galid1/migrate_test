@@ -29,6 +29,7 @@ public class UserPushTokenService {
         findPushTokenEntity.updatePushToken(request.getNewPushToken());
     }
 
+    @Transactional(readOnly = true)
     public String getPushToken(Long userId) {
         return findPushTokenEntityBy(userId).getPushToken();
     }
