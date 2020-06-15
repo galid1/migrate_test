@@ -4,6 +4,7 @@ import com.galid.card_refund.config.UserSetUp;
 import com.galid.card_refund.domains.user.domain.PushTokenRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.service.request_response.StorePushTokenRequest;
+import com.galid.card_refund.domains.user.service.request_response.UpdatePushTokenRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +55,10 @@ class UserPushTokenServiceTest {
         //given
         storeToken();
         String NEW_PUSH_TOKEN = "NEW";
+        UpdatePushTokenRequest request = new UpdatePushTokenRequest(NEW_PUSH_TOKEN);
 
         //when
-        pushTokenService.updatePushToken(TEST_USER_ID, NEW_PUSH_TOKEN);
+        pushTokenService.updatePushToken(TEST_USER_ID, request);
 
         //then
         String findPushToken = pushTokenRepository.findByUserId(TEST_USER_ID)
