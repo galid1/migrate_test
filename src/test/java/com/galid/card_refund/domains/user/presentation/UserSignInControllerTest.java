@@ -41,7 +41,7 @@ class UserSignInControllerTest extends BaseIntegrationTest {
                         ),
                         responseFields(
                                 fieldWithPath("userId").description("Database상의 user_id"),
-                                fieldWithPath("token").description("restapi 인증 token")
+                                fieldWithPath("apiToken").description("restapi 인증 token")
                         )
                 ));
 
@@ -49,6 +49,6 @@ class UserSignInControllerTest extends BaseIntegrationTest {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("userId", is(notNullValue())))
-                .andExpect(jsonPath("token", is(notNullValue())));
+                .andExpect(jsonPath("apiToken", is(notNullValue())));
     }
 }

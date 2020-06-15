@@ -61,7 +61,7 @@ public class UserSetUp {
 
     public String signIn() {
         UserSignInRequest request = new UserSignInRequest(TEST_DEVICE_ID);
-        return userSignInService.signIn(request).getToken();
+        return userSignInService.signIn(request).getApiToken();
     }
 
     public void registerCard(UserEntity TEST_USER_ENTITY, CardEntity TEST_CARD_ENTITY) {
