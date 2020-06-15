@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -53,7 +54,7 @@ class UserPushTokenServiceTest {
     @Test
     public void 토큰갱신() throws Exception {
         //given
-        storeToken();
+        userSetUp.savePushToken(TEST_USER_ENTITY, TEST_PUSH_TOKEN);
         String NEW_PUSH_TOKEN = "NEW";
         UpdatePushTokenRequest request = new UpdatePushTokenRequest(NEW_PUSH_TOKEN);
 
@@ -69,9 +70,9 @@ class UserPushTokenServiceTest {
     }
 
     @Test
-    public void 토큰반환() throws Exception {
+    public void 토큰조회() throws Exception {
         //given
-        storeToken();
+        userSetUp.savePushToken(TEST_USER_ENTITY, TEST_PUSH_TOKEN);
 
         //when
         String findPushToken = pushTokenService.getPushToken(TEST_USER_ID);
@@ -80,8 +81,4 @@ class UserPushTokenServiceTest {
         assertEquals(findPushToken, TEST_PUSH_TOKEN);
     }
 
-    private void storeToken() {
-        StorePushTokenRequest request = new StorePushTokenRequest(TEST_PUSH_TOKEN);
-        pushTokenService.storeUserPushToken(TEST_USER_ID, request);
-    }
 }

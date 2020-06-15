@@ -4,6 +4,7 @@ import com.galid.card_refund.common.BaseIntegrationTest;
 import com.galid.card_refund.config.UserSetUp;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.service.request_response.StorePushTokenRequest;
+import com.galid.card_refund.domains.user.service.request_response.UpdatePushTokenRequest;
 import org.apache.http.HttpHeaders;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class UserPushTokenControllerTest extends BaseIntegrationTest {
@@ -62,9 +64,29 @@ class UserPushTokenControllerTest extends BaseIntegrationTest {
     @Test
     public void 푸시토큰_갱신() throws Exception{
         //given
+        String NEW_PUSH_TOKEN = "NEW";
+        userSetUp.savePushToken(TEST_USER_ENTITY, TEST_PUSH_TOKEN);
+        UpdatePushTokenRequest request = new UpdatePushTokenRequest(NEW_PUSH_TOKEN);
+
         //when
+        ResultActions resultActions = mvc.perform(put("/users/{userId}/push-token", TEST_USER_ENTITY.getUserId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request))
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + API_TOKEN));
+
         //then
+        resultActions
+                .andExpect(status().isOk());
+
         //rest docs
+        resultActions
+            .andDo(document("user/{method-name}",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    requestFields(
+                            fieldWithPath("newPushToken").description("새로 발급된 PushToken")
+                    )
+            ));
     }
 
 }
