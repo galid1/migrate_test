@@ -12,12 +12,10 @@ import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserPassportStatus;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.UserCardService;
+import com.galid.card_refund.domains.user.service.UserPushTokenService;
 import com.galid.card_refund.domains.user.service.UserRefundService;
 import com.galid.card_refund.domains.user.service.UserSignInService;
-import com.galid.card_refund.domains.user.service.request_response.UserRefundRequest;
-import com.galid.card_refund.domains.user.service.request_response.UserRefundResponse;
-import com.galid.card_refund.domains.user.service.request_response.UserRegisterCardRequest;
-import com.galid.card_refund.domains.user.service.request_response.UserSignInRequest;
+import com.galid.card_refund.domains.user.service.request_response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +34,8 @@ public class UserSetUp {
     private UserCardService userCardService;
     @Autowired
     private UserRefundService userRefundService;
+    @Autowired
+    private UserPushTokenService userPushTokenService;
     @Autowired
     private AdminEstimateUserPassportService userPassportEstimateService;
     @Autowired
@@ -104,5 +104,9 @@ public class UserSetUp {
                         .unRefundableLineDescription("TEST")
                         .build(),
                 "TEST".getBytes());
+    }
+
+    public void savePushToken(UserEntity userEntity, String pushToken) {
+        userPushTokenService.storeUserPushToken(userEntity.getUserId(), new StorePushTokenRequest(pushToken));
     }
 }
