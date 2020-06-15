@@ -1,8 +1,8 @@
 package com.galid.card_refund.domains.user.service;
 
 import com.galid.card_refund.common.jwt.JwtUtil;
-import com.galid.card_refund.domains.user.domain.TokenEntity;
-import com.galid.card_refund.domains.user.domain.TokenRepository;
+import com.galid.card_refund.domains.user.domain.ApiTokenEntity;
+import com.galid.card_refund.domains.user.domain.ApiTokenRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.infra.TokenQuery;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserSignInService {
     private final UserRepository userRepository;
-    private final TokenRepository tokenRepository;
+    private final ApiTokenRepository apiTokenRepository;
     private final JwtUtil jwtUtil;
     private final TokenQuery tokenQuery;
 
@@ -31,19 +31,19 @@ public class UserSignInService {
     }
 
     private String generateToken(UserEntity user) {
-        Optional<TokenEntity> findToken = tokenQuery.getTokenBy(user.getUserId());
+        Optional<ApiTokenEntity> findToken = tokenQuery.getTokenBy(user.getUserId());
 
         if(findToken.isPresent()) {
             return findToken.get()
-                    .getToken();
+                    .getApiToken();
         }
         else {
             String token = jwtUtil.generateToken();
-            TokenEntity tokenEntity = TokenEntity.builder()
-                    .token(token)
+            ApiTokenEntity apiTokenEntity = ApiTokenEntity.builder()
+                    .apiToken(token)
                     .user(user)
                     .build();
-            tokenRepository.save(tokenEntity);
+            apiTokenRepository.save(apiTokenEntity);
 
             return token;
         }

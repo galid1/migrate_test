@@ -1,16 +1,15 @@
 package com.galid.card_refund.domains.user.infra;
 
-import com.galid.card_refund.domains.user.domain.QTokenEntity;
-import com.galid.card_refund.domains.user.domain.TokenEntity;
+import com.galid.card_refund.domains.user.domain.ApiTokenEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
 
-import static com.galid.card_refund.domains.user.domain.QTokenEntity.*;
+import static com.galid.card_refund.domains.user.domain.QApiTokenEntity.*;
+
 
 @Component
 public class TokenQuery {
@@ -21,10 +20,10 @@ public class TokenQuery {
         this.query = new JPAQueryFactory(em);
     }
 
-    public Optional<TokenEntity> getTokenBy(Long userId) {
+    public Optional<ApiTokenEntity> getTokenBy(Long userId) {
         return Optional.ofNullable(query
-                .selectFrom(tokenEntity)
-                .where(tokenEntity.user.userId.eq(userId))
+                .selectFrom(apiTokenEntity)
+                .where(apiTokenEntity.user.userId.eq(userId))
                 .fetchOne());
     }
 }

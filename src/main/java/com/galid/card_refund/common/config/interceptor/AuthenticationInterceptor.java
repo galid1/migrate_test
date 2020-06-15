@@ -25,7 +25,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     }
 
     private void validateToken(String authorizationHeader) {
-        String token = authorizationHeader.split(" ")[1];
-        jwtUtil.validateToken(token);
+        String apiToken = authorizationHeader.split(" ")[1];
+        jwtUtil.validateToken(apiToken);
     }
 }

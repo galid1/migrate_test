@@ -9,19 +9,19 @@ import javax.persistence.*;
 @Table(name = "token")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TokenEntity extends BaseEntity {
+public class ApiTokenEntity extends BaseEntity {
     @Id @GeneratedValue
     private Long tokenId;
 
-    private String token;
+    private String apiToken;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @Builder
-    public TokenEntity(String token, UserEntity user) {
-        this.token = token;
+    public ApiTokenEntity(String apiToken, UserEntity user) {
+        this.apiToken = apiToken;
         this.user = user;
     }
 }
