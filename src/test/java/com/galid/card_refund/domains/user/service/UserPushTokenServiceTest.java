@@ -3,6 +3,7 @@ package com.galid.card_refund.domains.user.service;
 import com.galid.card_refund.config.UserSetUp;
 import com.galid.card_refund.domains.user.domain.PushTokenRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
+import com.galid.card_refund.domains.user.service.request_response.GetPushTokenResponse;
 import com.galid.card_refund.domains.user.service.request_response.StorePushTokenRequest;
 import com.galid.card_refund.domains.user.service.request_response.UpdatePushTokenRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,10 +76,10 @@ class UserPushTokenServiceTest {
         userSetUp.savePushToken(TEST_USER_ENTITY, TEST_PUSH_TOKEN);
 
         //when
-        String findPushToken = pushTokenService.getPushToken(TEST_USER_ID);
+        GetPushTokenResponse getPushTokenResponse = pushTokenService.getPushToken(TEST_USER_ID);
 
         //then
-        assertEquals(findPushToken, TEST_PUSH_TOKEN);
+        assertEquals(getPushTokenResponse.getPushToken(), TEST_PUSH_TOKEN);
     }
 
 }

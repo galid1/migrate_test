@@ -3,6 +3,7 @@ package com.galid.card_refund.domains.user.presentation;
 import com.galid.card_refund.common.BaseIntegrationTest;
 import com.galid.card_refund.config.UserSetUp;
 import com.galid.card_refund.domains.user.domain.UserEntity;
+import com.galid.card_refund.domains.user.service.request_response.GetPushTokenResponse;
 import com.galid.card_refund.domains.user.service.request_response.StorePushTokenRequest;
 import com.galid.card_refund.domains.user.service.request_response.UpdatePushTokenRequest;
 import org.apache.http.HttpHeaders;
@@ -14,10 +15,9 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class UserPushTokenControllerTest extends BaseIntegrationTest {
@@ -87,6 +87,30 @@ class UserPushTokenControllerTest extends BaseIntegrationTest {
                             fieldWithPath("newPushToken").description("새로 발급된 PushToken")
                     )
             ));
+    }
+
+    @Test
+    public void 푸시토큰_조회() throws Exception{
+        //given
+        userSetUp.savePushToken(TEST_USER_ENTITY, TEST_PUSH_TOKEN);
+
+        //when
+        ResultActions resultActions = mvc.perform(get("/users/{userId}/push-token", TEST_USER_ENTITY.getUserId())
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + API_TOKEN));
+
+        //then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("pushToken").value(TEST_PUSH_TOKEN));
+
+        //rest docs
+        resultActions
+                .andDo(document("user/{method-name}",
+                        preprocessResponse(prettyPrint()),
+                        responseFields(
+                                fieldWithPath("pushToken").description("Push 알림을 위한 DeviceToken")
+                        )
+                ));
     }
 
 }

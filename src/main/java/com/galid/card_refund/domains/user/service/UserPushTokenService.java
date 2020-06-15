@@ -2,6 +2,7 @@ package com.galid.card_refund.domains.user.service;
 
 import com.galid.card_refund.domains.user.domain.PushTokenEntity;
 import com.galid.card_refund.domains.user.domain.PushTokenRepository;
+import com.galid.card_refund.domains.user.service.request_response.GetPushTokenResponse;
 import com.galid.card_refund.domains.user.service.request_response.StorePushTokenRequest;
 import com.galid.card_refund.domains.user.service.request_response.UpdatePushTokenRequest;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +31,8 @@ public class UserPushTokenService {
     }
 
     @Transactional(readOnly = true)
-    public String getPushToken(Long userId) {
-        return findPushTokenEntityBy(userId).getPushToken();
+    public GetPushTokenResponse getPushToken(Long userId) {
+        return new GetPushTokenResponse(findPushTokenEntityBy(userId).getPushToken());
     }
 
     private PushTokenEntity findPushTokenEntityBy(Long userId) {

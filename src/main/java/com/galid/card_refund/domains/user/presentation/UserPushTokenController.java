@@ -1,6 +1,7 @@
 package com.galid.card_refund.domains.user.presentation;
 
 import com.galid.card_refund.domains.user.service.UserPushTokenService;
+import com.galid.card_refund.domains.user.service.request_response.GetPushTokenResponse;
 import com.galid.card_refund.domains.user.service.request_response.StorePushTokenRequest;
 import com.galid.card_refund.domains.user.service.request_response.UpdatePushTokenRequest;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,10 @@ public class UserPushTokenController {
         pushTokenService.updatePushToken(userId, request);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public GetPushTokenResponse getPushToken(@PathVariable("userId") Long userId) {
+        return pushTokenService.getPushToken(userId);
     }
 }

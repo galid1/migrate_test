@@ -6,6 +6,7 @@
 == 추가사항
 #### 06.15
 - 로그인 후, 응답에 담긴 token 필드명 변경(token -> apiToken)
+- push token 관련 api 추가 (저장, 갱신, 조회)
 
 #### 06.11
 - 카드생성 (/cards)를 admin 하위 도메인으로 이동(/admin/cards)
@@ -177,3 +178,19 @@ include::{snippets}/user/푸시토큰_저장/request-fields.adoc[]
 
 .response
 include::{snippets}/user/푸시토큰_저장/http-response.adoc[]
+
+#### 푸시토큰 갱신
+.request
+include::{snippets}/user/푸시토큰_갱신/http-request.adoc[]
+include::{snippets}/user/푸시토큰_갱신/request-fields.adoc[]
+
+.response
+include::{snippets}/user/푸시토큰_갱신/http-response.adoc[]
+
+#### 푸시토큰 조회
+.request
+include::{snippets}/user/푸시토큰_조회/http-request.adoc[]
+
+.response
+include::{snippets}/user/푸시토큰_조회/http-response.adoc[]
+include::{snippets}/user/푸시토큰_조회/response-fields.adoc[]
