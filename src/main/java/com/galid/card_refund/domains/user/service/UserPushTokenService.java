@@ -2,6 +2,7 @@ package com.galid.card_refund.domains.user.service;
 
 import com.galid.card_refund.domains.user.domain.PushTokenEntity;
 import com.galid.card_refund.domains.user.domain.PushTokenRepository;
+import com.galid.card_refund.domains.user.service.request_response.StorePushTokenRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserPushTokenService {
     private final PushTokenRepository pushTokenRepository;
 
-    public void storeUserPushToken(long userId, String userPushToken) {
+    public void storeUserPushToken(long userId, StorePushTokenRequest request) {
         PushTokenEntity pushTokenEntity = PushTokenEntity.builder()
-                .pushToken(userPushToken)
+                .pushToken(request.getPushToken())
                 .userId(userId)
                 .build();
 

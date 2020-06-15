@@ -3,6 +3,7 @@ package com.galid.card_refund.domains.user.service;
 import com.galid.card_refund.config.UserSetUp;
 import com.galid.card_refund.domains.user.domain.PushTokenRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
+import com.galid.card_refund.domains.user.service.request_response.StorePushTokenRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,11 @@ class UserPushTokenServiceTest {
 
     @Test
     public void 토큰저장() throws Exception {
+        //given
+        StorePushTokenRequest request = new StorePushTokenRequest(TEST_PUSH_TOKEN);
+
         //when
-        pushTokenService.storeUserPushToken(TEST_USER_ID, TEST_PUSH_TOKEN);
+        pushTokenService.storeUserPushToken(TEST_USER_ID, request);
 
         //then
         String findPushToken = pushTokenRepository.findByUserId(TEST_USER_ID)
@@ -75,6 +79,7 @@ class UserPushTokenServiceTest {
     }
 
     private void storeToken() {
-        pushTokenService.storeUserPushToken(TEST_USER_ID, TEST_PUSH_TOKEN);
+        StorePushTokenRequest request = new StorePushTokenRequest(TEST_PUSH_TOKEN);
+        pushTokenService.storeUserPushToken(TEST_USER_ID, request);
     }
 }
