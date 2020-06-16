@@ -5,7 +5,6 @@ import com.galid.card_refund.domains.user.domain.ApiTokenEntity;
 import com.galid.card_refund.domains.user.domain.ApiTokenRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
-import com.galid.card_refund.domains.user.infra.TokenQuery;
 import com.galid.card_refund.domains.user.service.request_response.UserSignInRequest;
 import com.galid.card_refund.domains.user.service.request_response.UserSignInResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,19 +18,18 @@ public class UserSignInService {
     private final UserRepository userRepository;
     private final ApiTokenRepository apiTokenRepository;
     private final JwtUtil jwtUtil;
-    private final TokenQuery tokenQuery;
 
     public UserSignInResponse signIn(UserSignInRequest request) {
         UserEntity userEntity = userRepository.findByDeviceId(request.getDeviceId())
                 .orElseThrow(() -> new IllegalArgumentException("존재 하지 않는 유저입니다."));
 
-        String token = generateToken(userEntity);
+        String token = generateToken(userEntity.getUserId());
 
         return new UserSignInResponse(userEntity.getUserId(), token);
     }
 
-    private String generateToken(UserEntity user) {
-        Optional<ApiTokenEntity> findToken = tokenQuery.getTokenBy(user.getUserId());
+    private String generateToken(Long userId) {
+        Optional<ApiTokenEntity> findToken = apiTokenRepository.findFirstByUserId(userId);
 
         if(findToken.isPresent()) {
             return findToken.get()
@@ -41,7 +39,7 @@ public class UserSignInService {
             String token = jwtUtil.generateToken();
             ApiTokenEntity apiTokenEntity = ApiTokenEntity.builder()
                     .apiToken(token)
-                    .user(user)
+                    .userId(userId)
                     .build();
             apiTokenRepository.save(apiTokenEntity);
 

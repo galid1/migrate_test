@@ -15,13 +15,11 @@ public class ApiTokenEntity extends BaseEntity {
 
     private String apiToken;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private Long userId;
 
     @Builder
-    public ApiTokenEntity(String apiToken, UserEntity user) {
+    public ApiTokenEntity(String apiToken, Long userId) {
         this.apiToken = apiToken;
-        this.user = user;
+        this.userId = userId;
     }
 }
