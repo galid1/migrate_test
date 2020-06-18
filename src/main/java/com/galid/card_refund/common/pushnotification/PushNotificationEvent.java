@@ -1,0 +1,14 @@
+package com.galid.card_refund.common.pushnotification;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Getter
+public class PushNotificationEvent {
+    private String targetToken;
+    private String title;
+    private String body;
+}
