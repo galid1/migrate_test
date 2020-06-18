@@ -2,6 +2,8 @@ package com.galid.card_refund.common.pushnotification;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.galid.card_refund.domains.user.domain.PushTokenEntity;
+import com.galid.card_refund.domains.user.domain.PushTokenRepository;
 import com.google.auth.oauth2.GoogleCredentials;
 import lombok.RequiredArgsConstructor;
 import okhttp3.*;
@@ -17,9 +19,10 @@ import java.util.List;
 public class FirebaseCloudMessageService {
     private final String API_URL = "https://fcm.googleapis.com/v1/projects/tourcash-13092/messages:send";
     private final ObjectMapper objectMapper;
+    private final PushTokenRepository pushTokenRepository;
 
     public void sendMessageTo(PushNotificationEvent event) {
-        String message = makeMessage(event.getTargetToken(),
+        String message = makeMessage(event.getUserId(),
                                      event.getTitle(),
                                      event.getBody());
 
@@ -57,10 +60,13 @@ public class FirebaseCloudMessageService {
         return googleCredentials.getAccessToken().getTokenValue();
     }
 
-    private String makeMessage(String targetToken, String title, String body) {
+    private String makeMessage(Long userId, String title, String body) {
+        PushTokenEntity pushTokenEntity = pushTokenRepository.findFirstByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+
         FcmMessage fcmMessage = FcmMessage.builder()
                 .message(FcmMessage.Message.builder()
-                    .token(targetToken)
+                    .token(pushTokenEntity.getPushToken())
                     .notification(FcmMessage.Notification.builder()
                         .title(title)
                         .body(body)

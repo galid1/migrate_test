@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public class PushNotificationEvent {
-    private String targetToken;
+    private Long userId;
     private String title;
     private String body;
 }

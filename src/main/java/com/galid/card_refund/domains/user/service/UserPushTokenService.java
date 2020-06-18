@@ -36,7 +36,7 @@ public class UserPushTokenService {
     }
 
     private PushTokenEntity findPushTokenEntityBy(Long userId) {
-        return pushTokenRepository.findByUserId(userId)
+        return pushTokenRepository.findFirstByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
     }
 }
