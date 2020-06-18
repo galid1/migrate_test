@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "token")
+@Table(name = "api_token")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ApiTokenEntity extends BaseEntity {
