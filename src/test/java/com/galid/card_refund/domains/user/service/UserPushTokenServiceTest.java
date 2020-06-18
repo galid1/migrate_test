@@ -43,7 +43,7 @@ class UserPushTokenServiceTest {
         pushTokenService.storeUserPushToken(TEST_USER_ID, request);
 
         //then
-        String findPushToken = pushTokenRepository.findByUserId(TEST_USER_ID)
+        String findPushToken = pushTokenRepository.findFirstByUserId(TEST_USER_ID)
                 .get()
                 .getPushToken();
 
@@ -63,7 +63,7 @@ class UserPushTokenServiceTest {
         pushTokenService.updatePushToken(TEST_USER_ID, request);
 
         //then
-        String findPushToken = pushTokenRepository.findByUserId(TEST_USER_ID)
+        String findPushToken = pushTokenRepository.findFirstByUserId(TEST_USER_ID)
                 .get()
                 .getPushToken();
 
