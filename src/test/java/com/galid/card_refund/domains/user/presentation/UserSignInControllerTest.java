@@ -29,7 +29,7 @@ class UserSignInControllerTest extends BaseIntegrationTest {
         UserSignInRequest signInRequest = new UserSignInRequest(userEntity.getDeviceId());
 
         //when
-        ResultActions resultActions = mvc.perform(put("/auth/users")
+        ResultActions resultActions = mvc.perform(put("/users/auth")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(signInRequest))
                 .accept(MediaType.APPLICATION_JSON))

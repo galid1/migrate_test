@@ -4,6 +4,9 @@
 
 
 == 추가사항
+#### 06.18
+- 로그인, 회원가입 api 주소 변경 (/auth/users -> /users/auth)
+
 #### 06.15
 - 로그인 후, 응답에 담긴 token 필드명 변경(token -> apiToken)
 - push token 관련 api 추가 (저장, 갱신, 조회)
@@ -51,7 +54,7 @@ include::{snippets}/admin/환급요청평가/http-response.adoc[]
 
 == 2. User
 
-=== /users
+=== /users/auth
 
 #### 회원가입
 .request

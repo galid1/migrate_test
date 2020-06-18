@@ -15,7 +15,7 @@ import javax.validation.Valid;
 public class UserSignInController {
     private final UserSignInService userSignInService;
 
-    @PutMapping("/auth/users")
+    @PutMapping("/users/auth")
     public UserSignInResponse signIn(@RequestBody @Valid UserSignInRequest userSignInRequest) {
         return userSignInService.signIn(userSignInRequest);
     }

@@ -25,7 +25,7 @@ class UserSignUpControllerTest extends BaseIntegrationTest {
         MockMultipartFile passportImage = new MockMultipartFile("test", "test".getBytes());
 
         //when
-        ResultActions resultActions = mvc.perform(multipart("/auth/users")
+        ResultActions resultActions = mvc.perform(multipart("/users/auth")
                 .file("image", passportImage.getBytes())
                 .param("information", objectMapper.writeValueAsString(request)));
 
