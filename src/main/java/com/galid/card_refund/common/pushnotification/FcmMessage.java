@@ -1,4 +1,4 @@
-package com.galid.card_refund.common.firebase;
+package com.galid.card_refund.common.pushnotification;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
