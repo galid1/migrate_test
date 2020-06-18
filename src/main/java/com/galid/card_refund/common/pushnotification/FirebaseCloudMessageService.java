@@ -62,7 +62,7 @@ public class FirebaseCloudMessageService {
 
     private String makeMessage(Long userId, String title, String body) {
         PushTokenEntity pushTokenEntity = pushTokenRepository.findFirstByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("유저에게 알림을 보내기 위한 PushToken이 존재하지 않거나, PushToken이 잘못되었습니다."));
 
         FcmMessage fcmMessage = FcmMessage.builder()
                 .message(FcmMessage.Message.builder()
