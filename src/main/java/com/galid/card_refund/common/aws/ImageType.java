@@ -1,11 +1,11 @@
 package com.galid.card_refund.common.aws;
 
 public enum ImageType {
-    PASSPORT_IMAGE("user"), REFUND_IMAGE("refund"), BARCODE_IMAGE("refund-result-barcode");
+    PASSPORT_IMAGE("PASSPORT"), REFUND_IMAGE("REFUND"), BARCODE_IMAGE("REFUND_BARCODE");
 
-    String group;
+    String type;
 
-    ImageType(String group) {
-        this.group = group;
+    ImageType(String type) {
+        this.type = type;
     }
 }

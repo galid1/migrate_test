@@ -48,7 +48,7 @@ public class S3FileUploader {
         int month = LocalDate.now().getMonthValue();
         int day = LocalDate.now().getDayOfMonth();
 
-        return imageType.group + "/"
+        return imageType.type + "/"
                 + key + "/"
                 + year + "/"
                 + month + "-" + day + "/"
