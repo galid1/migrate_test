@@ -53,7 +53,6 @@ public class FirebaseCloudMessageService {
 
             googleCredentials.refreshIfExpired();
         } catch(IOException e) {
-            System.out.println("Firebase로 부터 AccessToken을 얻는 도중 에러 발생.");
             e.printStackTrace();
         }
 
