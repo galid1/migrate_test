@@ -17,14 +17,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class AdminRefundEstimateService {
     private final RefundRepository refundRepository;
     private final S3FileUploader s3FileUploader;
     private final ApplicationEventPublisher eventPublisher;
 
-    @Transactional
     public void estimateRefundRequest(Long refundId, AdminRefundEstimateRequest request, byte[] refundResultBarcodeImageBytes) {
         RefundEntity refundEntity = refundRepository.findById(refundId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 환급 요청입니다."));
