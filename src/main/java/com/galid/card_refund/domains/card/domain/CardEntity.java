@@ -28,8 +28,7 @@ public class CardEntity extends BaseEntity {
     @Embedded
     private CardInformation cardInformation;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "card")
-    private UserEntity owner;
+    private Long ownerId;
 
     @Builder
     public CardEntity(CardInformation cardInformation, CardInitMoney initMoney) {
@@ -56,7 +55,7 @@ public class CardEntity extends BaseEntity {
         this.verifyRegistrableState();
         this.verifyRegistration(cardRegistration);
 
-        this.owner = cardRegistration.getOwner();
+        this.ownerId = cardRegistration.getOwnerId();
         this.cardStatus = CardStatus.REGISTERED_STATUS;
     }
 
