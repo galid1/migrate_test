@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    Optional<UserEntity> findByDeviceId(String deviceId);
+    Optional<UserEntity> findFirstByDeviceId(String deviceId);
 
     interface UserIdModel {
         Long getUserId();

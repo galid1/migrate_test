@@ -20,7 +20,7 @@ public class UserSignInService {
     private final JwtUtil jwtUtil;
 
     public UserSignInResponse signIn(UserSignInRequest request) {
-        UserEntity userEntity = userRepository.findByDeviceId(request.getDeviceId())
+        UserEntity userEntity = userRepository.findFirstByDeviceId(request.getDeviceId())
                 .orElseThrow(() -> new IllegalArgumentException("존재 하지 않는 유저입니다."));
 
         String token = generateToken(userEntity.getUserId());

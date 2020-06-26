@@ -36,7 +36,7 @@ public class UserSignUpService {
     }
 
     private void validateDuplicateUser(String deviceId) {
-        if(userRepository.findByDeviceId(deviceId).isPresent())
+        if(userRepository.findFirstByDeviceId(deviceId).isPresent())
             throw new IllegalArgumentException("이미 가입된 디바이스 ID 입니다.");
     }
 
