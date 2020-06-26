@@ -4,7 +4,7 @@ import com.galid.card_refund.domains.admin.service.request_response.AdminEstimat
 import com.galid.card_refund.domains.admin.service.request_response.AdminRefundEstimateRequest;
 import com.galid.card_refund.domains.admin.service.AdminEstimateUserPassportService;
 import com.galid.card_refund.domains.admin.service.AdminRefundEstimateService;
-import com.galid.card_refund.domains.card.card.domain.CardEntity;
+import com.galid.card_refund.domains.card.domain.CardEntity;
 import com.galid.card_refund.domains.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.refund.domain.RefundRepository;
 import com.galid.card_refund.domains.user.domain.UsageHistory;

@@ -1,9 +1,9 @@
-package com.galid.card_refund.domains.card.card.service;
+package com.galid.card_refund.domains.card.service;
 
-import com.galid.card_refund.domains.card.card.domain.CardInitMoney;
-import com.galid.card_refund.domains.card.card.domain.CardEntity;
-import com.galid.card_refund.domains.card.card.domain.CardRepository;
-import com.galid.card_refund.domains.card.card.service.request_response.CardCreateRequest;
+import com.galid.card_refund.domains.card.domain.CardInitMoney;
+import com.galid.card_refund.domains.card.domain.CardEntity;
+import com.galid.card_refund.domains.card.domain.CardRepository;
+import com.galid.card_refund.domains.card.service.request_response.CardCreateRequest;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.UserCardService;
 import org.junit.jupiter.api.Test;

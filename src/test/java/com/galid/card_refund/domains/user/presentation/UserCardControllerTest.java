@@ -1,20 +1,17 @@
 package com.galid.card_refund.domains.user.presentation;
 
 import com.galid.card_refund.common.BaseIntegrationTest;
-import com.galid.card_refund.common.config.interceptor.AuthenticationInterceptor;
 import com.galid.card_refund.config.CardSetUp;
 import com.galid.card_refund.config.UserSetUp;
-import com.galid.card_refund.domains.card.card.domain.CardEntity;
-import com.galid.card_refund.domains.card.card.domain.CardInformation;
-import com.galid.card_refund.domains.card.card.domain.CardInitMoney;
-import com.galid.card_refund.domains.card.card.domain.CardStatus;
+import com.galid.card_refund.domains.card.domain.CardEntity;
+import com.galid.card_refund.domains.card.domain.CardInitMoney;
+import com.galid.card_refund.domains.card.domain.CardStatus;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.service.UserCardService;
 import com.galid.card_refund.domains.user.service.request_response.UserRegisterCardRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;

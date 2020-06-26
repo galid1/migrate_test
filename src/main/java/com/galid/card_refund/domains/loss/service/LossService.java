@@ -1,8 +1,8 @@
-package com.galid.card_refund.domains.card.loss.service;
+package com.galid.card_refund.domains.loss.service;
 
-import com.galid.card_refund.domains.card.card.domain.CardEntity;
-import com.galid.card_refund.domains.card.loss.domain.LossEntity;
-import com.galid.card_refund.domains.card.loss.domain.LossRepository;
+import com.galid.card_refund.domains.card.domain.CardEntity;
+import com.galid.card_refund.domains.loss.domain.LossEntity;
+import com.galid.card_refund.domains.loss.domain.LossRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;

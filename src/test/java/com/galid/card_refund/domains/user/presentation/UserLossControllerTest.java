@@ -3,7 +3,7 @@ package com.galid.card_refund.domains.user.presentation;
 import com.galid.card_refund.common.BaseIntegrationTest;
 import com.galid.card_refund.config.CardSetUp;
 import com.galid.card_refund.config.UserSetUp;
-import com.galid.card_refund.domains.card.card.domain.CardEntity;
+import com.galid.card_refund.domains.card.domain.CardEntity;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import org.apache.http.HttpHeaders;
 import org.junit.jupiter.api.BeforeEach;

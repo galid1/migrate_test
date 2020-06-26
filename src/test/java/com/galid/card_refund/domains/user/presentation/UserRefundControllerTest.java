@@ -3,7 +3,7 @@ package com.galid.card_refund.domains.user.presentation;
 import com.galid.card_refund.common.BaseIntegrationTest;
 import com.galid.card_refund.config.CardSetUp;
 import com.galid.card_refund.config.UserSetUp;
-import com.galid.card_refund.domains.card.card.domain.CardEntity;
+import com.galid.card_refund.domains.card.domain.CardEntity;
 import com.galid.card_refund.domains.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.service.request_response.UserRefundRequest;

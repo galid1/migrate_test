@@ -10,6 +10,7 @@ import com.galid.card_refund.domains.admin.service.request_response.AdminRefundE
 import com.galid.card_refund.domains.admin.service.request_response.AdminRefundEstimateRequest.RefundEstimateLineRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,13 +34,14 @@ public class AdminRefundEstimateService {
                 .map(refundEstimateLine -> toRefundResultLine(refundEstimateLine))
                 .collect(Collectors.toList());
 
-
         refundEntity.estimate(refundableLineList,
                               request.getUnRefundableLineDescription(),
                               s3FileUploader.uploadFile(String.valueOf(refundId), ImageType.BARCODE_IMAGE, refundResultBarcodeImageBytes));
 
         eventPublisher.publishEvent(new PushNotificationEvent(refundEntity.getRequestorId(), "환급평가 완료", "환급 평가가 완료되었습니다."));
     }
+
+
 
     private RefundResultLine toRefundResultLine(RefundEstimateLineRequest request) {
         return RefundResultLine.builder()

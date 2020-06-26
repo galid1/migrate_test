@@ -1,4 +1,4 @@
-package com.galid.card_refund.domains.card.card.domain;
+package com.galid.card_refund.domains.card.domain;
 
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
