@@ -50,11 +50,11 @@ public class CardEntity extends BaseEntity {
         this.initMoney = initMoney;
     }
 
-    public void register(CardRegistration cardRegistration) {
+    public void register(Long ownerId, String serial) {
         this.verifyRegistrableState();
-        this.verifySerialNumber(cardRegistration.getSerial());
+        this.verifySerialNumber(serial);
 
-        this.ownerId = cardRegistration.getOwnerId();
+        this.ownerId = ownerId;
         this.cardStatus = CardStatus.REGISTERED_STATUS;
     }
 

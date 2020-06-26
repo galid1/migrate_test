@@ -1,7 +1,6 @@
 package com.galid.card_refund.domains.user.service;
 
 import com.galid.card_refund.domains.card.domain.CardEntity;
-import com.galid.card_refund.domains.card.domain.CardRegistration;
 import com.galid.card_refund.domains.card.domain.CardRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
@@ -26,18 +25,11 @@ public class UserCardService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드번호입니다."));
 
         userEntity.registerCard(cardEntity);
-        cardEntity.register(toCardRegistration(userId, request));
+        cardEntity.register(userId, request.getSerial());
 
         return new UserRegisterCardResponse(cardEntity.getCardId());
     }
 
-    private CardRegistration toCardRegistration(long userId, UserRegisterCardRequest request) {
-        return CardRegistration.builder()
-                .cardNum(request.getCardNum())
-                .serial(request.getSerial())
-                .owner(getUserEntity(userId))
-                .build();
-    }
 
     @Transactional
     public void returnCard(long userId) {
@@ -58,7 +50,7 @@ public class UserCardService {
 
     private UserCardConfirmResponse toCardRegistrationConfirmResponse(CardEntity cardEntity) {
         return UserCardConfirmResponse.builder()
-                .ownerId(cardEntity.getOwner().getUserId())
+                .ownerId(cardEntity.getOwnerId())
                 .remainAmount(cardEntity.getRemainAmount().getValue())
                 .build();
     }
