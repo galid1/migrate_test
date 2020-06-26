@@ -2,7 +2,6 @@ package com.galid.card_refund.domains.card.domain;
 
 import com.galid.card_refund.common.config.logging.BaseEntity;
 import com.galid.card_refund.common.model.Money;
-import com.galid.card_refund.domains.user.domain.UserEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -53,7 +52,7 @@ public class CardEntity extends BaseEntity {
 
     public void register(CardRegistration cardRegistration) {
         this.verifyRegistrableState();
-        this.verifyRegistration(cardRegistration);
+        this.verifySerialNumber(cardRegistration.getSerial());
 
         this.ownerId = cardRegistration.getOwnerId();
         this.cardStatus = CardStatus.REGISTERED_STATUS;
@@ -64,8 +63,8 @@ public class CardEntity extends BaseEntity {
             throw new IllegalStateException("이미 등록되었거나, 분실상태의 카드입니다.");
     }
 
-    private void verifyRegistration(CardRegistration cardRegistration) {
-        if(! cardRegistration.getSerial().equals(this.cardInformation.getSerial()))
+    private void verifySerialNumber(String serial) {
+        if(! serial.equals(this.cardInformation.getSerial()))
             throw new IllegalArgumentException("serial 번호가 일치하지 않습니다.");
     }
 
