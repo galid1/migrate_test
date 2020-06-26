@@ -17,12 +17,12 @@ public class LossEntity extends BaseEntity {
     @Id @GeneratedValue
     private Long lossId;
 
+    @Enumerated(value = EnumType.STRING)
+    private LossStatus lossStatus;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lost_card_id")
     private CardEntity lostCard;
-
-    @Enumerated(value = EnumType.STRING)
-    private LossStatus lossStatus;
 
     @Builder
     public LossEntity(CardEntity lostCard) {

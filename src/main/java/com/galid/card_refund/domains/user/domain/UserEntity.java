@@ -22,20 +22,20 @@ public class UserEntity extends BaseEntity {
     private String deviceId;
     private String nickname;
     private String passPortImagePath;
-
-    @Embedded
-    private UserPassportInformation userPassportInformation;
     @Enumerated(value = EnumType.STRING)
     private UserPassportStatus passportStatus;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_id")
-    private CardEntity card;
+    @Embedded
+    private UserPassportInformation userPassportInformation;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "user_card_usage_history",
             joinColumns = @JoinColumn(name = "user_id"))
     private List<UsageHistory> usageHistoryList = new ArrayList<>();
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "card_id")
+    private CardEntity card;
 
     @Builder
     public UserEntity(String deviceId, String nickname) {

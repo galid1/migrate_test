@@ -19,15 +19,14 @@ public class CardEntity extends BaseEntity {
     @Id @GeneratedValue
     private long cardId;
 
-    @Embedded
-    private CardInformation cardInformation;
-
-    @Enumerated(value = EnumType.STRING)
-    private CardStatus cardStatus;
-
     private CardInitMoney initMoney;
     private LocalDate registeredDate;
     private Money remainAmount;
+    @Enumerated(value = EnumType.STRING)
+    private CardStatus cardStatus;
+
+    @Embedded
+    private CardInformation cardInformation;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "card")
     private UserEntity owner;

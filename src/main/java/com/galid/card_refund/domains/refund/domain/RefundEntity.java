@@ -20,11 +20,21 @@ public class RefundEntity extends BaseEntity {
     @Id @GeneratedValue
     private Long refundId;
 
+    private String refundResultBarcodeImageUrl;
+    private String unRefundableLineDescription;
+    @AttributeOverride(name = "value", column = @Column(name = "total_amount"))
+    private Money totalAmount;
+    @AttributeOverride(name = "value", column = @Column(name = "expect_refund_amount"))
+    private Money expectRefundAmount;
     @Enumerated(value = EnumType.STRING)
     private RefundStatus refundStatus;
 
-    @Column(unique = true)
-    private Long requestorId;
+    @ElementCollection
+    @CollectionTable(
+            name = "refund_result_line",
+            joinColumns = @JoinColumn(name = "refund_id")
+    )
+    private List<RefundResultLine> refundResultLineList = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(
@@ -33,19 +43,8 @@ public class RefundEntity extends BaseEntity {
     )
     private List<RefundLine> refundLineList = new ArrayList<>();
 
-    @AttributeOverride(name = "value", column = @Column(name = "total_amount"))
-    private Money totalAmount;
-    @AttributeOverride(name = "value", column = @Column(name = "expect_refund_amount"))
-    private Money expectRefundAmount;
-
-    @ElementCollection
-    @CollectionTable(
-            name = "refund_result_line",
-            joinColumns = @JoinColumn(name = "refund_id")
-    )
-    private List<RefundResultLine> refundResultLineList = new ArrayList<>();
-    private String refundResultBarcodeImageUrl;
-    private String unRefundableLineDescription;
+    @Column(unique = true)
+    private Long requestorId;
 
     @Builder
     public RefundEntity(List<RefundLine> requestRefundLineList, Long requestorId) {
