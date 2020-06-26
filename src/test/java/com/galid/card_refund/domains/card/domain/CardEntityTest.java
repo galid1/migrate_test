@@ -66,34 +66,19 @@ public class CardEntityTest {
     public void whenRegisterUserTest() throws Exception {
         // given
         String serial = card.getCardInformation().getSerial();
-
-        CardRegistration cardRegistration = CardRegistration.builder()
-                .owner(owner)
-                .cardNum(RIGHT_CARD_NUM)
-                .serial(serial)
-                .build();
-
         // when
-        card.register(cardRegistration);
-
+        card.register(owner.getUserId(), serial);
         // then
-        Assertions.assertNotEquals(card.getOwner(), null);
+        Assertions.assertNotEquals(card.getOwnerId(), null);
         Assertions.assertEquals(card.getCardStatus(), CardStatus.REGISTERED_STATUS);
     }
 
     @Test
     @Transactional
     public void whenRegisterUserWithWrongSerialThenThrowException() throws Exception {
-        // given
-        CardRegistration cardRegistration = CardRegistration.builder()
-                .owner(owner)
-                .cardNum(RIGHT_CARD_NUM)
-                .serial(WRONG_SERIAL)
-                .build();
-
         // when, then
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> card.register(cardRegistration));
+                () -> card.register(owner.getUserId(), WRONG_SERIAL));
     }
 
     @Test
@@ -101,13 +86,8 @@ public class CardEntityTest {
     public void whenReturnCardThenCardStateIsUNREGISTERED() throws Exception {
         // given
         String serial = card.getCardInformation().getSerial();
-        CardRegistration cardRegistration = CardRegistration.builder()
-                .owner(owner)
-                .cardNum(RIGHT_CARD_NUM)
-                .serial(serial)
-                .build();
 
-        card.register(cardRegistration);
+        card.register(owner.getUserId(), serial);
 
         // when
         card.returnCard();

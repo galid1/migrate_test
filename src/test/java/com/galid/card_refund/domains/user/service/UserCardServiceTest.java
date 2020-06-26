@@ -46,7 +46,7 @@ public class UserCardServiceTest {
 
 
         //then
-        assertEquals(savedUser.getUserId(), savedStoredCard.getOwner().getUserId());
+        assertEquals(savedUser.getUserId(), savedStoredCard.getOwnerId());
     }
 
     @Test
