@@ -33,10 +33,6 @@ public class UserEntity extends BaseEntity {
             joinColumns = @JoinColumn(name = "user_id"))
     private List<UsageHistory> usageHistoryList = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_id")
-    private CardEntity card;
-
     @Builder
     public UserEntity(String deviceId, String nickname) {
         this.setDeviceId(deviceId);
@@ -57,32 +53,10 @@ public class UserEntity extends BaseEntity {
         this.nickname = nickname;
     }
 
-    public void registerCard(CardEntity card) {
-        if(this.card != null)
-            throw new IllegalStateException("이미 등록된 카드가 존재합니다.");
-        this.card = card;
-    }
-
-    public void returnCard() {
-        this.verifyCardIsRegistered();
-        this.card = null;
-    }
-
     public void recordCardUsage(UsageHistory usageHistory) {
-        this.verifyCardIsRegistered();
         this.usageHistoryList.add(usageHistory);
-        this.card.recordRemainAmount(usageHistory.getRemainAmount());
     }
 
-    private void verifyCardIsRegistered() {
-        if(this.card == null)
-            throw new IllegalStateException("카드가 등록된 상태가 아닙니다.");
-    }
-
-    public CardEntity getCard() {
-        verifyCardIsRegistered();
-        return this.card;
-    }
 
     public void estimatePassport(UserPassportStatus passportStatus, UserPassportInformation userPassportInformation) {
         this.passportStatus = passportStatus;
