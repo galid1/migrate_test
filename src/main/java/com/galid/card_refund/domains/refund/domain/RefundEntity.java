@@ -76,24 +76,23 @@ public class RefundEntity extends BaseEntity {
                 .build();
     }
 
+    // 환급 평가
     public void estimate(List<RefundResultLine> refundResultLineList, String unRefundableLineDescription, String refundResultBarcodeImageUrl) {
-        verifyNotYetEstimate();
+        if(this.refundStatus != RefundStatus.ESTIMATING_STATUS)
+            throw new IllegalStateException("이미 평가한 환급요청입니다.");
+
         verifyEstimate(refundResultLineList, unRefundableLineDescription);
 
         this.refundResultLineList = refundResultLineList;
         this.unRefundableLineDescription = unRefundableLineDescription;
         this.refundResultBarcodeImageUrl = refundResultBarcodeImageUrl;
-        this.refundStatus = RefundStatus.COMPLETE_STATUS;
+        this.refundStatus = RefundStatus.ESTIMATED_STATUS;
     }
 
+    // 환급 평가 검증
     private void verifyEstimate(List<RefundResultLine> refundableLineList, String unRefundableLineDescription) {
         if(refundableLineList == null || unRefundableLineDescription == null)
             throw new IllegalArgumentException("환급 가능, 불가능 내역은 필수값입니다.");
-    }
-
-    private void verifyNotYetEstimate() {
-        if(this.refundStatus == RefundStatus.COMPLETE_STATUS)
-            throw new IllegalStateException("이미 평가한 환급요청입니다.");
     }
 
     public List<RefundResultLine> getRefundResultLineList() {
@@ -111,9 +110,11 @@ public class RefundEntity extends BaseEntity {
         return this.refundResultBarcodeImageUrl;
     }
 
+    // 환급 평가가 완료 되었는지 검증
     private void verifyIsEstimated() {
-        if(this.refundStatus != RefundStatus.COMPLETE_STATUS) {
+        if(this.refundStatus == RefundStatus.ESTIMATING_STATUS) {
             throw new NotYetEstimatedException();
         }
     }
+
 }
