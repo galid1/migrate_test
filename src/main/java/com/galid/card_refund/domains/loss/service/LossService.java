@@ -1,6 +1,7 @@
 package com.galid.card_refund.domains.loss.service;
 
 import com.galid.card_refund.domains.card.domain.CardEntity;
+import com.galid.card_refund.domains.card.domain.CardRepository;
 import com.galid.card_refund.domains.loss.domain.LossEntity;
 import com.galid.card_refund.domains.loss.domain.LossRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
@@ -14,27 +15,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LossService {
     private final LossRepository lossRepository;
-    private final UserRepository userRepository;
+    private final CardRepository cardRepository;
 
     public Long reportLossCard(Long ownerId) {
-        UserEntity userEntity = findLossCardOwner(ownerId);
-        CardEntity card = userEntity.getCard();
-
-        card.reportLoss();
-        userEntity.returnCard();
+        CardEntity card = cardRepository.findFirstByOwnerIdOrderByCreatedDateDesc(ownerId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 소유한 카드가 존재하지 않습니다."));
 
         validateDuplicatedLossReport(card);
-        return saveLossEntity(card).getLossId();
+        card.reportLoss();
+        return saveLossEntity(card.getCardId()).getLossId();
     }
 
-    private UserEntity findLossCardOwner(Long ownerId) {
-        return userRepository.findById(ownerId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-    }
-
-    private LossEntity saveLossEntity(CardEntity card) {
+    private LossEntity saveLossEntity(Long lossCardId) {
         LossEntity savedLossEntity = lossRepository.save(LossEntity.builder()
-                .lostCard(card)
+                .lossCardId(lossCardId)
                 .build());
 
         return savedLossEntity;
