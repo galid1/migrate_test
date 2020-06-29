@@ -1,16 +1,21 @@
 package com.galid.card_refund.domains.user.service;
 
+import com.galid.card_refund.config.UserSetUp;
 import com.galid.card_refund.domains.card.domain.*;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.service.request_response.UserCardConfirmResponse;
 import com.galid.card_refund.domains.user.service.request_response.UserRegisterCardRequest;
+import com.sun.tools.javac.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
@@ -62,7 +67,7 @@ public class UserCardServiceTest {
         UserRegisterCardRequest userRegisterCardRequest = new UserRegisterCardRequest(STORED_CARD_NUM, savedStoredCard.getCardInformation().getSerial());
 
         //when, then
-        long notExistUserId = 1l;
+        long notExistUserId = 0l;
         assertThrows(IllegalArgumentException.class, () -> userCardService.registerCard(notExistUserId, userRegisterCardRequest));
     }
     
@@ -124,7 +129,7 @@ public class UserCardServiceTest {
         userCardService.registerCard(userEntity.getUserId(), new UserRegisterCardRequest(CARD_NUM, cardEntity.getCardInformation().getSerial()));
 
         //when
-        UserCardConfirmResponse userCardConfirmResponse = userCardService.confirmCardRegistration(userEntity.getUserId());
+        UserCardConfirmResponse userCardConfirmResponse = userCardService.getCardRegistrationStatus(userEntity.getUserId());
 
         //then
         assertEquals(userCardConfirmResponse.getOwnerId(), userEntity.getUserId());

@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -20,11 +22,10 @@ public class UserCardService {
 
     @Transactional
     public UserRegisterCardResponse registerCard(long userId, UserRegisterCardRequest request) {
-        UserEntity userEntity = getUserEntity(userId);
+        verifyExistUser(userId);
         CardEntity cardEntity = cardRepository.findByCardInformation_CardNum(request.getCardNum())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드번호입니다."));
 
-        userEntity.registerCard(cardEntity);
         cardEntity.register(userId, request.getSerial());
 
         return new UserRegisterCardResponse(cardEntity.getCardId());
@@ -32,20 +33,22 @@ public class UserCardService {
 
 
     @Transactional
-    public void returnCard(long userId) {
-        UserEntity findUser = getUserEntity(userId);
-
-        cardRepository.findById(findUser.getCard().getCardId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 카드입니다."))
-                .returnCard();
-
-        findUser.returnCard();
+    public void returnCard(long ownerId) {
+        findCardByOwnerId(ownerId).returnCard();
     }
 
-    public UserCardConfirmResponse confirmCardRegistration(Long ownerId) {
-        UserEntity userEntity = getUserEntity(ownerId);
+    public UserCardConfirmResponse getCardRegistrationStatus(Long ownerId) {
+        return toCardRegistrationConfirmResponse(findCardByOwnerId(ownerId));
+    }
 
-        return toCardRegistrationConfirmResponse(userEntity.getCard());
+    private void verifyExistUser(Long userId) {
+        if(!userRepository.findById(userId).isPresent())
+            throw new IllegalArgumentException("존재하지 않는 사용자입니다.");
+    }
+
+    private CardEntity findCardByOwnerId(Long ownerId) {
+        return cardRepository.findFirstByOwnerIdOrderByCreatedDateDesc(ownerId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 소유한 카드가 존재하지 않습니다."));
     }
 
     private UserCardConfirmResponse toCardRegistrationConfirmResponse(CardEntity cardEntity) {
@@ -53,10 +56,5 @@ public class UserCardService {
                 .ownerId(cardEntity.getOwnerId())
                 .remainAmount(cardEntity.getRemainAmount().getValue())
                 .build();
-    }
-
-    private UserEntity getUserEntity(long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
     }
 }

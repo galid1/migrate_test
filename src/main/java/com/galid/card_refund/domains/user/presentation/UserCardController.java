@@ -17,7 +17,7 @@ public class UserCardController {
 
     @GetMapping
     public UserCardConfirmResponse confirmCardRegistration(@PathVariable("userId") Long userId) {
-        return userCardService.confirmCardRegistration(userId);
+        return userCardService.getCardRegistrationStatus(userId);
     }
 
     @PostMapping
