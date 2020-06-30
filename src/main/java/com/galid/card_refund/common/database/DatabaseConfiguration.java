@@ -1,4 +1,4 @@
-package com.galid.card_refund.common.config.database;
+package com.galid.card_refund.common.database;
 
 import com.galid.card_refund.common.file.KeyValueFileLoader;
 import lombok.RequiredArgsConstructor;

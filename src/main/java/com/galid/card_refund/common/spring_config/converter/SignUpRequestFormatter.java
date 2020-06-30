@@ -1,4 +1,4 @@
-package com.galid.card_refund.common.config.converter;
+package com.galid.card_refund.common.spring_config.converter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

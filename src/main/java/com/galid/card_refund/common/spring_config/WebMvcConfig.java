@@ -1,6 +1,6 @@
-package com.galid.card_refund.common.config;
+package com.galid.card_refund.common.spring_config;
 
-import com.galid.card_refund.common.config.interceptor.AuthenticationInterceptor;
+import com.galid.card_refund.common.spring_config.interceptor.AuthenticationInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

@@ -1,4 +1,4 @@
-package com.galid.card_refund.common.config.async;
+package com.galid.card_refund.common.spring_config.async;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.galid.card_refund.common.exception;
+package com.galid.card_refund.common.spring_config.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

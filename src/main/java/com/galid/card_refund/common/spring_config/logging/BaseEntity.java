@@ -1,4 +1,4 @@
-package com.galid.card_refund.common.config.logging;
+package com.galid.card_refund.common.spring_config.logging;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

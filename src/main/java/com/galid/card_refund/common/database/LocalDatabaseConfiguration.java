@@ -1,4 +1,4 @@
-package com.galid.card_refund.common.config.database;
+package com.galid.card_refund.common.database;
 
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;

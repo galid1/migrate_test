@@ -1,4 +1,4 @@
-package com.galid.card_refund.common.config.interceptor;
+package com.galid.card_refund.common.spring_config.interceptor;
 
 import com.galid.card_refund.common.jwt.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.galid.card_refund.common.config.validation;
+package com.galid.card_refund.common.spring_config.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
