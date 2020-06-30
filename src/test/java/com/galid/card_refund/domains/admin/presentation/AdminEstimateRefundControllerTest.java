@@ -22,7 +22,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class AdminRefundEstimateControllerTest extends BaseIntegrationTest {
+class AdminEstimateRefundControllerTest extends BaseIntegrationTest {
     @Autowired
     private UserSetUp userSetUp;
 

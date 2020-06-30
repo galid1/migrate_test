@@ -10,7 +10,7 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
-public class AdminRefundEstimateController {
+public class AdminEstimateRefundController {
     private final AdminEstimateRefundService adminEstimateRefundService;
 
     @PostMapping("/admin/refunds/{refundId}")
