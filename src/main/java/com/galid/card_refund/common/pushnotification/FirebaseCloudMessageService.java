@@ -21,10 +21,8 @@ public class FirebaseCloudMessageService {
     private final ObjectMapper objectMapper;
     private final PushTokenRepository pushTokenRepository;
 
-    public void sendMessageTo(PushNotificationEvent event) {
-        String message = makeMessage(event.getUserId(),
-                                     event.getTitle(),
-                                     event.getBody());
+    public void sendMessageTo(Long userId, String title, String body) {
+        String message = makeMessage(userId, title, body);
 
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(message, MediaType.get("application/json; charset=utf-8"));
