@@ -27,7 +27,7 @@ class AdminRefundEstimateServiceTest {
         estimate(refundEntity);
 
         //then
-        assertEquals(refundEntity.getRefundStatus(), RefundStatus.COMPLETE_STATUS);
+        assertEquals(refundEntity.getRefundStatus(), RefundStatus.ESTIMATED_STATUS);
     }
 
     private RefundEntity makeRefundEntity() {

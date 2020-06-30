@@ -3,7 +3,13 @@
 :toclevels: 2
 
 
-== 추가사항
+== 추가 및 변경사항
+#### 06.29
+- 환급 상태 변경 (
+    환급 평가완료상태(COMPLETE_STATUS)를 ESTIMATED_STATUS 로 변경
+    환급 완료상태(REFUNDED_STATUS) 추가 (공항 관리자가 사용자에게 환급을 완료한 상태)
+)
+
 #### 06.18
 - 로그인, 회원가입 api 주소 변경 (/auth/users -> /users/auth)
 
