@@ -2,7 +2,7 @@ package com.galid.card_refund.domains.admin.presentation;
 
 import com.galid.card_refund.common.BaseIntegrationTest;
 import com.galid.card_refund.config.UserSetUp;
-import com.galid.card_refund.domains.admin.service.request_response.AdminEstimateUserPassportRequest;
+import com.galid.card_refund.domains.admin.application.request_response.AdminEstimateUserPassportRequest;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserPassportStatus;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;

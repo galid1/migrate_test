@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.user.presentation;
 
-import com.galid.card_refund.domains.loss.service.LossService;
+import com.galid.card_refund.domains.loss.application.LossService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

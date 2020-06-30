@@ -2,8 +2,8 @@ package com.galid.card_refund.domains.user.presentation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.galid.card_refund.domains.user.service.UserCardUsageHistoryService;
-import com.galid.card_refund.domains.user.service.request_response.UsageRecordRequest;
+import com.galid.card_refund.domains.user.application.UserCardUsageHistoryService;
+import com.galid.card_refund.domains.user.application.request_response.UsageRecordRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

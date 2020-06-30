@@ -3,7 +3,7 @@ package com.galid.card_refund.domains.user.presentation;
 import com.galid.card_refund.common.BaseIntegrationTest;
 import com.galid.card_refund.config.UserSetUp;
 import com.galid.card_refund.domains.user.domain.UserEntity;
-import com.galid.card_refund.domains.user.service.request_response.UserSignInRequest;
+import com.galid.card_refund.domains.user.application.request_response.UserSignInRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

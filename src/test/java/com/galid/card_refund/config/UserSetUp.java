@@ -1,9 +1,9 @@
 package com.galid.card_refund.config;
 
-import com.galid.card_refund.domains.admin.service.request_response.AdminEstimateUserPassportRequest;
-import com.galid.card_refund.domains.admin.service.request_response.AdminRefundEstimateRequest;
-import com.galid.card_refund.domains.admin.service.AdminEstimateUserPassportService;
-import com.galid.card_refund.domains.admin.service.AdminRefundEstimateService;
+import com.galid.card_refund.domains.admin.application.request_response.AdminEstimateUserPassportRequest;
+import com.galid.card_refund.domains.admin.application.request_response.AdminRefundEstimateRequest;
+import com.galid.card_refund.domains.admin.application.AdminEstimateUserPassportService;
+import com.galid.card_refund.domains.admin.application.AdminRefundEstimateService;
 import com.galid.card_refund.domains.card.domain.CardEntity;
 import com.galid.card_refund.domains.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.refund.domain.RefundRepository;
@@ -11,11 +11,11 @@ import com.galid.card_refund.domains.user.domain.UsageHistory;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserPassportStatus;
 import com.galid.card_refund.domains.user.domain.UserRepository;
-import com.galid.card_refund.domains.user.service.UserCardService;
-import com.galid.card_refund.domains.user.service.UserPushTokenService;
-import com.galid.card_refund.domains.user.service.UserRefundService;
-import com.galid.card_refund.domains.user.service.UserSignInService;
-import com.galid.card_refund.domains.user.service.request_response.*;
+import com.galid.card_refund.domains.user.application.UserCardService;
+import com.galid.card_refund.domains.user.application.UserPushTokenService;
+import com.galid.card_refund.domains.user.application.UserRefundService;
+import com.galid.card_refund.domains.user.application.UserSignInService;
+import com.galid.card_refund.domains.user.application.request_response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

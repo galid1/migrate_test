@@ -1,8 +1,8 @@
 package com.galid.card_refund.domains.user.presentation;
 
-import com.galid.card_refund.domains.user.service.UserSignUpService;
-import com.galid.card_refund.domains.user.service.request_response.UserSignUpRequest;
-import com.galid.card_refund.domains.user.service.request_response.UserSignUpResponse;
+import com.galid.card_refund.domains.user.application.UserSignUpService;
+import com.galid.card_refund.domains.user.application.request_response.UserSignUpRequest;
+import com.galid.card_refund.domains.user.application.request_response.UserSignUpResponse;
 import lombok.*;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;

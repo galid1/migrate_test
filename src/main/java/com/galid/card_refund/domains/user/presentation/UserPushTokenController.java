@@ -1,9 +1,9 @@
 package com.galid.card_refund.domains.user.presentation;
 
-import com.galid.card_refund.domains.user.service.UserPushTokenService;
-import com.galid.card_refund.domains.user.service.request_response.GetPushTokenResponse;
-import com.galid.card_refund.domains.user.service.request_response.StorePushTokenRequest;
-import com.galid.card_refund.domains.user.service.request_response.UpdatePushTokenRequest;
+import com.galid.card_refund.domains.user.application.UserPushTokenService;
+import com.galid.card_refund.domains.user.application.request_response.GetPushTokenResponse;
+import com.galid.card_refund.domains.user.application.request_response.StorePushTokenRequest;
+import com.galid.card_refund.domains.user.application.request_response.UpdatePushTokenRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

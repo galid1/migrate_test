@@ -2,7 +2,7 @@ package com.galid.card_refund.domains.admin.presentation;
 
 import com.galid.card_refund.common.BaseIntegrationTest;
 import com.galid.card_refund.domains.card.domain.CardInitMoney;
-import com.galid.card_refund.domains.card.service.request_response.CardCreateRequest;
+import com.galid.card_refund.domains.card.application.request_response.CardCreateRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;

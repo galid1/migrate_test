@@ -1,7 +1,7 @@
 package com.galid.card_refund.domains.user.presentation;
 
 import com.galid.card_refund.common.BaseIntegrationTest;
-import com.galid.card_refund.domains.user.service.request_response.UserSignUpRequest;
+import com.galid.card_refund.domains.user.application.request_response.UserSignUpRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.ResultActions;

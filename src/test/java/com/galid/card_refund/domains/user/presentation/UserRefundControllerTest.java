@@ -6,7 +6,7 @@ import com.galid.card_refund.config.UserSetUp;
 import com.galid.card_refund.domains.card.domain.CardEntity;
 import com.galid.card_refund.domains.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.user.domain.UserEntity;
-import com.galid.card_refund.domains.user.service.request_response.UserRefundRequest;
+import com.galid.card_refund.domains.user.application.request_response.UserRefundRequest;
 import org.apache.http.HttpHeaders;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
