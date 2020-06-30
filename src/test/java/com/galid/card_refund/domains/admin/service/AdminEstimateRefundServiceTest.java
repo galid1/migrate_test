@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class AdminRefundEstimateServiceTest {
+class AdminEstimateRefundServiceTest {
     private Money REFUND_REQUEST_AMOUNT = Money.builder()
             .value(1000)
             .build();

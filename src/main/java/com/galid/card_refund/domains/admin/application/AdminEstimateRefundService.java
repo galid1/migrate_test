@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class AdminRefundEstimateService {
+public class AdminEstimateRefundService {
     private final RefundRepository refundRepository;
     private final S3FileUploader s3FileUploader;
     private final ApplicationEventPublisher eventPublisher;

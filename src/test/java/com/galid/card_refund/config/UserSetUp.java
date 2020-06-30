@@ -3,7 +3,7 @@ package com.galid.card_refund.config;
 import com.galid.card_refund.domains.admin.application.request_response.AdminEstimateUserPassportRequest;
 import com.galid.card_refund.domains.admin.application.request_response.AdminRefundEstimateRequest;
 import com.galid.card_refund.domains.admin.application.AdminEstimateUserPassportService;
-import com.galid.card_refund.domains.admin.application.AdminRefundEstimateService;
+import com.galid.card_refund.domains.admin.application.AdminEstimateRefundService;
 import com.galid.card_refund.domains.card.domain.CardEntity;
 import com.galid.card_refund.domains.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.refund.domain.RefundRepository;
@@ -39,7 +39,7 @@ public class UserSetUp {
     @Autowired
     private AdminEstimateUserPassportService userPassportEstimateService;
     @Autowired
-    private AdminRefundEstimateService adminRefundEstimateService;
+    private AdminEstimateRefundService adminEstimateRefundService;
 
     private String TEST_DEVICE_ID;
     private String TEST_NICKNAME;
@@ -96,7 +96,7 @@ public class UserSetUp {
     }
 
     public void estimateRefundRequest(Long refundId) {
-        adminRefundEstimateService.estimateRefundRequest(refundId,
+        adminEstimateRefundService.estimateRefundRequest(refundId,
                 AdminRefundEstimateRequest.builder()
                         .refundEstimateLineList(List.of(
                                 new AdminRefundEstimateRequest.RefundEstimateLineRequest("TEST", 1000)
