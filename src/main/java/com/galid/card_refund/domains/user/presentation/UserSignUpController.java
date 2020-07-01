@@ -5,6 +5,7 @@ import com.galid.card_refund.domains.user.application.request_response.UserSignU
 import com.galid.card_refund.domains.user.application.request_response.UserSignUpResponse;
 import lombok.*;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,9 +20,8 @@ public class UserSignUpController {
     private final UserSignUpService signUpService;
 
     @PostMapping(value = "/users/auth", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public UserSignUpResponse signUp(@RequestParam("information") @Valid UserSignUpRequest request,
-                                     @RequestParam("image") MultipartFile passportImage) throws IOException {
-        return signUpService.signUp(request, passportImage);
+    public UserSignUpResponse signUp(@ModelAttribute @Valid UserSignUpRequest request) throws IOException {
+        return signUpService.signUp(request);
     }
 
 }

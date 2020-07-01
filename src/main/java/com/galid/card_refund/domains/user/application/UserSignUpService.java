@@ -21,7 +21,7 @@ public class UserSignUpService {
     private final S3FileUploader s3FileUploader;
 
     @Transactional
-    public UserSignUpResponse signUp(UserSignUpRequest request, MultipartFile passportImage) throws IOException {
+    public UserSignUpResponse signUp(UserSignUpRequest request) throws IOException {
         validateDuplicateUser(request.getDeviceId());
 
         UserEntity newUser = UserEntity.builder()
@@ -30,7 +30,7 @@ public class UserSignUpService {
                 .build();
 
         UserEntity savedUser = this.userRepository.save(newUser);
-        uploadUserPassportImage(passportImage, savedUser);
+        uploadUserPassportImage(request.getPassportImage(), savedUser);
 
         return new UserSignUpResponse(savedUser.getUserId());
     }
