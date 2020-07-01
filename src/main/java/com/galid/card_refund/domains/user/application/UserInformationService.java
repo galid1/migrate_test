@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -30,12 +32,12 @@ public class UserInformationService {
     }
 
     @Transactional
-    public void updateUserInformation(Long userId, UserInformationUpdateRequest request) {
+    public void updateUserInformation(Long userId, UserInformationUpdateRequest request) throws IOException {
         verifyExistUser(userId);
         UserEntity userEntity = userRepository.findById(userId).get();
 
         userEntity.updateUserInformation(request.getNickname(),
-                s3FileUploader.uploadFile(String.valueOf(userId), ImageType.PASSPORT_IMAGE, request.getUserPassportImageByte()));
+                s3FileUploader.uploadFile(String.valueOf(userId), ImageType.PASSPORT_IMAGE, request.getUserPassportImage().getBytes()));
     }
 
     public UserPassportStatusResponse getUserPassportStatus(Long userId) {
