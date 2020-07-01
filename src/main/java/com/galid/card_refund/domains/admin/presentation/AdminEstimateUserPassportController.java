@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 public class AdminEstimateUserPassportController {
@@ -16,8 +18,8 @@ public class AdminEstimateUserPassportController {
 
     @PostMapping("/admin/users/{userId}/passport")
     public ResponseEntity addUserInformation(@PathVariable("userId") Long userId,
-                                             @RequestBody AdminEstimateUserPassportRequest request) {
-        adminEstimateUserPassportService.addUserInformation(userId, request);
+                                             @RequestBody @Valid AdminEstimateUserPassportRequest request) {
+        adminEstimateUserPassportService.estimateUserPassport(userId, request);
         return ResponseEntity.ok().build();
     }
 }

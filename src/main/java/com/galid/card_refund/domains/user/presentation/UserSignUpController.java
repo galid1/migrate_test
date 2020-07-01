@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -18,7 +19,7 @@ public class UserSignUpController {
     private final UserSignUpService signUpService;
 
     @PostMapping(value = "/users/auth", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public UserSignUpResponse signUp(@RequestParam("information") UserSignUpRequest request,
+    public UserSignUpResponse signUp(@RequestParam("information") @Valid UserSignUpRequest request,
                                      @RequestParam("image") MultipartFile passportImage) throws IOException {
         return signUpService.signUp(request, passportImage);
     }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -15,7 +16,7 @@ public class AdminEstimateRefundController {
 
     @PostMapping("/admin/refunds/{refundId}")
     public void estimateRefundRequest(@PathVariable("refundId") Long refundId,
-                                      @RequestParam("estimateInformation") AdminRefundEstimateRequest request,
+                                      @RequestParam("estimateInformation") @Valid AdminRefundEstimateRequest request,
                                       @RequestParam("barcodeImage") MultipartFile barcodeImage) throws IOException {
         adminEstimateRefundService.estimateRefundRequest(refundId, request, barcodeImage.getBytes());
     }

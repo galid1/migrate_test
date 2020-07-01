@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -14,5 +16,6 @@ public class CardCreateRequest {
     @CardNumLength
     private String cardNum;
 
+    @NotNull
     private CardInitMoney cardInitMoney;
 }

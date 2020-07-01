@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/users/{userId}/push-token")
@@ -16,7 +18,7 @@ public class UserPushTokenController {
 
     @PostMapping
     public ResponseEntity storePushToken(@PathVariable("userId") Long userId,
-                                         @RequestBody StorePushTokenRequest request) {
+                                         @RequestBody @Valid StorePushTokenRequest request) {
         pushTokenService.storeUserPushToken(userId, request);
 
         return ResponseEntity.ok().build();
@@ -24,7 +26,7 @@ public class UserPushTokenController {
 
     @PutMapping
     public ResponseEntity updatePushToken(@PathVariable("userId") Long userId,
-                                          @RequestBody UpdatePushTokenRequest request) {
+                                          @RequestBody @Valid UpdatePushTokenRequest request) {
         pushTokenService.updatePushToken(userId, request);
 
         return ResponseEntity.ok().build();

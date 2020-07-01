@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class UserRefundController {
 
     @PostMapping("/users/{userId}/refunds")
     public UserRefundResponse requestRefund(@PathVariable("userId") Long userId,
-                                            @RequestParam("refundItemInformationList") List<UserRefundRequest> userRefundRequestList,
+                                            @RequestParam("refundItemInformationList") @Valid List<UserRefundRequest> userRefundRequestList,
                                             @RequestParam Map<String, MultipartFile> refundItemImageMap) {
         if(userRefundRequestList.size() != refundItemImageMap.size())
             throw new IllegalArgumentException("환급요청 내역과, 환급 대상 이미지의 수가 맞지 않습니다.");

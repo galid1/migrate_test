@@ -2,6 +2,7 @@ package com.galid.card_refund.domains.user.application.request_response;
 
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 
@@ -12,10 +13,10 @@ import javax.validation.constraints.NotNull;
 public class UserRefundRequest {
     @NotNull
     private int refundItemId;
-    @NotNull
+    @NotBlank
     private String place;
-    @NotNull
+    @NotBlank
     private String purchaseDateTime;
-    @NotNull
+    @NotBlank
     private double paymentAmount;
 }
