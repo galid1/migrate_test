@@ -10,28 +10,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class AdminEstimateRefundService {
     private final RefundRepository refundRepository;
     private final S3FileUploader s3FileUploader;
 
-    public void estimateRefundRequest(Long refundId, AdminRefundEstimateRequest request, byte[] refundResultBarcodeImageBytes) {
+    @Transactional
+    public void estimateRefundRequest(Long refundId, AdminRefundEstimateRequest request) throws IOException {
         RefundEntity refundEntity = refundRepository.findById(refundId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 환급 요청입니다."));
 
-        List<RefundResultLine> refundableLineList = request.getRefundEstimateLineList()
-                .stream()
-                .map(refundEstimateLine -> toRefundResultLine(refundEstimateLine))
-                .collect(Collectors.toList());
+        List<RefundResultLine> refundableLineList = makeRefundableLineList(request);
 
         refundEntity.estimate(refundableLineList,
                               request.getUnRefundableLineDescription(),
-                              s3FileUploader.uploadFile(String.valueOf(refundId), ImageType.BARCODE_IMAGE, refundResultBarcodeImageBytes));
+                              s3FileUploader.uploadFile(String.valueOf(refundId), ImageType.BARCODE_IMAGE, request.getBarcodeImage().getBytes()));
     }
 
     private RefundResultLine toRefundResultLine(AdminRefundEstimateRequest.RefundEstimateLineRequest request) {
@@ -39,5 +37,12 @@ public class AdminEstimateRefundService {
                 .place(request.getPlaceAndName())
                 .paymentAmount(request.getPaymentAmount())
                 .build();
+    }
+
+    private List<RefundResultLine> makeRefundableLineList(AdminRefundEstimateRequest request) {
+        return request.getRefundEstimateLineList()
+                .stream()
+                .map(refundEstimateLine -> toRefundResultLine(refundEstimateLine))
+                .collect(Collectors.toList());
     }
 }

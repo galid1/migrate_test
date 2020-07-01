@@ -16,8 +16,7 @@ public class AdminEstimateRefundController {
 
     @PostMapping("/admin/refunds/{refundId}")
     public void estimateRefundRequest(@PathVariable("refundId") Long refundId,
-                                      @RequestParam("estimateInformation") @Valid AdminRefundEstimateRequest request,
-                                      @RequestParam("barcodeImage") MultipartFile barcodeImage) throws IOException {
-        adminEstimateRefundService.estimateRefundRequest(refundId, request, barcodeImage.getBytes());
+                                      @ModelAttribute @Valid AdminRefundEstimateRequest request) throws IOException {
+        adminEstimateRefundService.estimateRefundRequest(refundId, request);
     }
 }

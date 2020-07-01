@@ -1,6 +1,7 @@
 package com.galid.card_refund.domains.admin.application.request_response;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -17,6 +18,8 @@ public class AdminRefundEstimateRequest {
     private List<RefundEstimateLineRequest> refundEstimateLineList;
     @NotNull
     private String unRefundableLineDescription;
+    @NotBlank
+    private MultipartFile barcodeImage;
 
     @Getter
     @AllArgsConstructor
