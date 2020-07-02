@@ -32,12 +32,12 @@ public class UserInformationService {
     }
 
     @Transactional
-    public void updateUserInformation(Long userId, UserInformationUpdateRequest request) throws IOException {
+    public void updateUserInformation(Long userId, UserInformationUpdateRequest request) {
         verifyExistUser(userId);
         UserEntity userEntity = userRepository.findById(userId).get();
 
         userEntity.updateUserInformation(request.getNickname(),
-                s3FileUploader.uploadFile(String.valueOf(userId), ImageType.PASSPORT_IMAGE, request.getUserPassportImage().getBytes()));
+                s3FileUploader.uploadFile(String.valueOf(userId), ImageType.PASSPORT_IMAGE, request.getUserPassportImageByte()));
     }
 
     public UserPassportStatusResponse getUserPassportStatus(Long userId) {

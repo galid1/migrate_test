@@ -25,6 +25,7 @@ public class UserController {
     @PutMapping("/information")
     public ResponseEntity updateUserInformation(@PathVariable("userId") Long userId,
                                                 @ModelAttribute UserInformationUpdateRequest request) throws IOException {
+        request.userPassportImageToByte();
         service.updateUserInformation(userId, request);
         return ResponseEntity.ok().build();
     }

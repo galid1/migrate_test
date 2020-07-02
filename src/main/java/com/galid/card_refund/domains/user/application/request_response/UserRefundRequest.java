@@ -9,9 +9,7 @@ import java.io.IOException;
 
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 public class UserRefundRequest {
     @NotBlank
     private String place;
@@ -25,6 +23,14 @@ public class UserRefundRequest {
     private MultipartFile refundItemImage;
 
     private byte[] refundItemImageByte;
+
+    @Builder
+    public UserRefundRequest(@NotBlank String place, @NotBlank String purchaseDateTime, @NotBlank double paymentAmount, @NotBlank MultipartFile refundItemImage) {
+        this.place = place;
+        this.purchaseDateTime = purchaseDateTime;
+        this.paymentAmount = paymentAmount;
+        this.refundItemImage = refundItemImage;
+    }
 
     public void setRefundItemImageByte() {
         try {

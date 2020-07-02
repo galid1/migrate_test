@@ -21,7 +21,7 @@ public class AdminEstimateRefundService {
     private final S3FileUploader s3FileUploader;
 
     @Transactional
-    public void estimateRefundRequest(Long refundId, AdminRefundEstimateRequest request) throws IOException {
+    public void estimateRefundRequest(Long refundId, AdminRefundEstimateRequest request) {
         RefundEntity refundEntity = refundRepository.findById(refundId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 환급 요청입니다."));
 
@@ -29,7 +29,7 @@ public class AdminEstimateRefundService {
 
         refundEntity.estimate(refundableLineList,
                               request.getUnRefundableLineDescription(),
-                              s3FileUploader.uploadFile(String.valueOf(refundId), ImageType.BARCODE_IMAGE, request.getBarcodeImage().getBytes()));
+                              s3FileUploader.uploadFile(String.valueOf(refundId), ImageType.BARCODE_IMAGE, request.getBarcodeImageByte()));
     }
 
     private RefundResultLine toRefundResultLine(AdminRefundEstimateRequest.RefundEstimateLineRequest request) {

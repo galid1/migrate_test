@@ -21,6 +21,7 @@ public class UserSignUpController {
 
     @PostMapping(value = "/users/auth", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UserSignUpResponse signUp(@ModelAttribute @Valid UserSignUpRequest request) throws IOException {
+        request.passportImageToByte();
         return signUpService.signUp(request);
     }
 

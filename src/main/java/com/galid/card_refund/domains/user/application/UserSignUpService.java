@@ -21,7 +21,7 @@ public class UserSignUpService {
     private final S3FileUploader s3FileUploader;
 
     @Transactional
-    public UserSignUpResponse signUp(UserSignUpRequest request) throws IOException {
+    public UserSignUpResponse signUp(UserSignUpRequest request) {
         validateDuplicateUser(request.getDeviceId());
 
         UserEntity newUser = UserEntity.builder()
@@ -30,7 +30,7 @@ public class UserSignUpService {
                 .build();
 
         UserEntity savedUser = this.userRepository.save(newUser);
-        uploadUserPassportImage(request.getPassportImage(), savedUser);
+        uploadUserPassportImage(request.getPassportImageByte(), savedUser);
 
         return new UserSignUpResponse(savedUser.getUserId());
     }
@@ -40,10 +40,10 @@ public class UserSignUpService {
             throw new IllegalArgumentException("이미 가입된 디바이스 ID 입니다.");
     }
 
-    private void uploadUserPassportImage(MultipartFile passportImage, UserEntity newUser) throws IOException {
+    private void uploadUserPassportImage(byte[] passportImageByte, UserEntity newUser) {
         String passPortImagePath = s3FileUploader.uploadFile(String.valueOf(newUser.getUserId()),
                 ImageType.PASSPORT_IMAGE,
-                passportImage.getBytes());
+                passportImageByte);
 
         newUser.uploadPassportImagePath(passPortImagePath);
     }
