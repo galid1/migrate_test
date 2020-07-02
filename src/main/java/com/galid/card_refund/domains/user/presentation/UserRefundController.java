@@ -25,7 +25,6 @@ public class UserRefundController {
     @PostMapping("/users/{userId}/refunds")
     public UserRefundResponse requestRefund(@PathVariable("userId") Long userId,
                                             @ModelAttribute UserRefundRequestList request) {
-        request.refundItemImageToByte();
         return refundService.refund(userId, request);
     }
 

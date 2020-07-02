@@ -25,10 +25,25 @@ public class AdminRefundEstimateRequest {
     private byte[] barcodeImageByte;
 
     @Builder
-    public AdminRefundEstimateRequest(@Size(min = 1) List<RefundEstimateLineRequest> refundEstimateLineList, @NotNull String unRefundableLineDescription, @NotBlank MultipartFile barcodeImage) {
+    public AdminRefundEstimateRequest(List<RefundEstimateLineRequest> refundEstimateLineList,
+                                      String unRefundableLineDescription,
+                                      MultipartFile barcodeImage) {
         this.refundEstimateLineList = refundEstimateLineList;
         this.unRefundableLineDescription = unRefundableLineDescription;
         this.barcodeImage = barcodeImage;
+    }
+
+    public void setBarcodeImage(MultipartFile barcodeImage) {
+        this.barcodeImage = barcodeImage;
+        barcodeImageToByte();
+    }
+
+    public void barcodeImageToByte() {
+        try {
+            this.barcodeImageByte = barcodeImage.getBytes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Getter
@@ -39,13 +54,6 @@ public class AdminRefundEstimateRequest {
         private String placeAndName;
         @Min(0)
         private double paymentAmount;
-    }
 
-    public void barcodeImageToByte() {
-        try {
-            this.barcodeImageByte = barcodeImage.getBytes();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

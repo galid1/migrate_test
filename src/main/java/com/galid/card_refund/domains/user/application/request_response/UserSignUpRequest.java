@@ -28,6 +28,11 @@ public class UserSignUpRequest {
         this.passportImage = passportImage;
     }
 
+    public void setPassportImage(MultipartFile passportImage) {
+        this.passportImage = passportImage;
+        passportImageToByte();
+    }
+
     public void passportImageToByte() {
         try {
             this.passportImageByte = this.passportImage.getBytes();

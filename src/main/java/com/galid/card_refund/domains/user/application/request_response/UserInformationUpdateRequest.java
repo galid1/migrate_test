@@ -24,6 +24,11 @@ public class UserInformationUpdateRequest {
         this.userPassportImage = userPassportImage;
     }
 
+    public void setUserPassportImage(MultipartFile userPassportImage) {
+        this.userPassportImage = userPassportImage;
+        userPassportImageToByte();
+    }
+
     public void userPassportImageToByte() {
         try {
             this.userPassportImageByte = this.userPassportImage.getBytes();
