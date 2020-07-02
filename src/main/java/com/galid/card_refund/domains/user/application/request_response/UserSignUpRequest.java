@@ -8,6 +8,7 @@ import java.io.IOException;
 
 @NoArgsConstructor
 @Getter
+@Setter
 @ToString
 public class UserSignUpRequest {
     @NotBlank
@@ -16,7 +17,6 @@ public class UserSignUpRequest {
     private String nickname;
 
     @Getter(value = AccessLevel.PRIVATE)
-    @NotBlank
     private MultipartFile passportImage;
 
     private byte[] passportImageByte;

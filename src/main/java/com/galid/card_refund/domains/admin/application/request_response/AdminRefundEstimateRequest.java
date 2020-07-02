@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class AdminRefundEstimateRequest {
     @Size(min = 1)
@@ -19,7 +20,6 @@ public class AdminRefundEstimateRequest {
     private String unRefundableLineDescription;
 
     @Getter(value = AccessLevel.PRIVATE)
-    @NotBlank
     private MultipartFile barcodeImage;
 
     private byte[] barcodeImageByte;
