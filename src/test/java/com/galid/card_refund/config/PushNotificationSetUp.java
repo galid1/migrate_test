@@ -1,7 +1,6 @@
 package com.galid.card_refund.config;
 
 import com.galid.card_refund.common.pushnotification.FirebaseCloudMessageService;
-import com.galid.card_refund.common.pushnotification.PushNotificationEvent;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +16,6 @@ public class PushNotificationSetUp {
 
     @PostConstruct
     public void init() {
-        doNothing().when(service).sendMessageTo(any(PushNotificationEvent.class));
+        doNothing().when(service).sendMessageTo(any(), any(), any());
     }
 }
