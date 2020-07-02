@@ -1,5 +1,6 @@
 package com.galid.card_refund.domains.user.application;
 
+import com.galid.card_refund.common.BaseTestConfig;
 import com.galid.card_refund.domains.card.domain.*;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
@@ -8,14 +9,13 @@ import com.galid.card_refund.domains.user.application.request_response.UserRegis
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@SpringBootTest
-@Transactional
-public class UserCardServiceTest {
+public class UserCardServiceTest extends BaseTestConfig {
     @Autowired
     private UserRepository userRepository;
     @Autowired

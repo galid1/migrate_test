@@ -1,17 +1,15 @@
 package com.galid.card_refund.domains.card.domain;
 
+import com.galid.card_refund.common.BaseTestConfig;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
-@Transactional
-public class CardEntityTest {
+public class CardEntityTest extends BaseTestConfig {
     @Autowired
     private CardRepository cardRepository;
     @Autowired

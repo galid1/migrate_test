@@ -19,7 +19,7 @@ import java.io.IOException;
 public class UserSignUpController {
     private final UserSignUpService signUpService;
 
-    @PostMapping(value = "/users/auth", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/users/auth")
     public UserSignUpResponse signUp(@ModelAttribute @Valid UserSignUpRequest request) throws IOException {
         return signUpService.signUp(request);
     }

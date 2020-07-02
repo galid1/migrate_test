@@ -5,9 +5,11 @@ import com.galid.card_refund.domains.card.domain.CardInformation;
 import com.galid.card_refund.domains.card.domain.CardInitMoney;
 import com.galid.card_refund.domains.card.domain.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("test")
 public class CardSetUp {
     @Autowired
     private CardRepository cardRepository;

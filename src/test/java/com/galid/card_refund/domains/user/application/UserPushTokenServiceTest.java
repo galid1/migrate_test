@@ -1,5 +1,6 @@
 package com.galid.card_refund.domains.user.application;
 
+import com.galid.card_refund.common.BaseTestConfig;
 import com.galid.card_refund.config.UserSetUp;
 import com.galid.card_refund.domains.user.domain.PushTokenRepository;
 import com.galid.card_refund.domains.user.domain.UserEntity;
@@ -15,9 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
-@Transactional
-class UserPushTokenServiceTest {
+class UserPushTokenServiceTest extends BaseTestConfig {
     @Autowired
     private UserSetUp userSetUp;
     @Autowired

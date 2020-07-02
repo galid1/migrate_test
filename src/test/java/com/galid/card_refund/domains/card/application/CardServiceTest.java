@@ -1,22 +1,19 @@
 package com.galid.card_refund.domains.card.application;
 
-import com.galid.card_refund.domains.card.domain.CardInitMoney;
-import com.galid.card_refund.domains.card.domain.CardEntity;
-import com.galid.card_refund.domains.card.domain.CardRepository;
+import com.galid.card_refund.common.BaseTestConfig;
 import com.galid.card_refund.domains.card.application.request_response.CardCreateRequest;
-import com.galid.card_refund.domains.user.domain.UserRepository;
+import com.galid.card_refund.domains.card.domain.CardEntity;
+import com.galid.card_refund.domains.card.domain.CardInitMoney;
+import com.galid.card_refund.domains.card.domain.CardRepository;
 import com.galid.card_refund.domains.user.application.UserCardService;
+import com.galid.card_refund.domains.user.domain.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-@SpringBootTest
-@Transactional
-public class CardServiceTest {
+public class CardServiceTest extends BaseTestConfig {
     @Autowired
     private CardService cardService;
 

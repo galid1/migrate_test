@@ -17,12 +17,15 @@ import com.galid.card_refund.domains.user.application.UserRefundService;
 import com.galid.card_refund.domains.user.application.UserSignInService;
 import com.galid.card_refund.domains.user.application.request_response.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
 @Component
+@Profile("test")
 public class UserSetUp {
     @Autowired
     private UserRepository userRepository;
@@ -77,7 +80,7 @@ public class UserSetUp {
     }
 
     public void estimateUserPassport(UserEntity userEntity) {
-        userPassportEstimateService.addUserInformation(userEntity.getUserId(),
+        userPassportEstimateService.estimateUserPassport(userEntity.getUserId(),
                 AdminEstimateUserPassportRequest.builder()
                         .address("TEST")
                         .estimateResultStatus(UserPassportStatus.SUCCESS_STATUS)
@@ -87,23 +90,19 @@ public class UserSetUp {
                         .build());
     }
 
-    public RefundEntity saveUserRefundRequest(UserEntity userEntity, List<UserRefundRequest> refundRequestList, Map<String, byte[]> refundItemImageBytMap) {
-        UserRefundResponse refund = userRefundService.refund(userEntity.getUserId(),
-                refundRequestList,
-                refundItemImageBytMap
-        );
+    public RefundEntity saveUserRefundRequest(UserEntity userEntity, UserRefundRequestList userRefundRequestList) {
+        UserRefundResponse refund = userRefundService.refund(userEntity.getUserId(), userRefundRequestList);
         return refundRepository.findById(refund.getRefundId()).get();
     }
 
     public void estimateRefundRequest(Long refundId) {
-        adminEstimateRefundService.estimateRefundRequest(refundId,
-                AdminRefundEstimateRequest.builder()
+        adminEstimateRefundService.estimateRefundRequest(refundId, AdminRefundEstimateRequest.builder()
+                        .barcodeImage(new MockMultipartFile("TEST", "TEST".getBytes()))
                         .refundEstimateLineList(List.of(
                                 new AdminRefundEstimateRequest.RefundEstimateLineRequest("TEST", 1000)
                         ))
                         .unRefundableLineDescription("TEST")
-                        .build(),
-                "TEST".getBytes());
+                        .build());
     }
 
     public void savePushToken(UserEntity userEntity, String pushToken) {

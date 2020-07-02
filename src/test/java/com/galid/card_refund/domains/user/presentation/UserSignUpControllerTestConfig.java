@@ -1,14 +1,13 @@
 package com.galid.card_refund.domains.user.presentation;
 
-import com.galid.card_refund.common.BaseIntegrationTest;
-import com.galid.card_refund.domains.user.application.request_response.UserSignUpRequest;
+import com.galid.card_refund.common.BaseIntegrationTestConfig;
 import org.junit.jupiter.api.Test;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -16,18 +15,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class UserSignUpControllerTest extends BaseIntegrationTest {
-
+class UserSignUpControllerTestConfig extends BaseIntegrationTestConfig {
     @Test
     public void 회원가입() throws Exception {
-        //given
-        UserSignUpRequest request = new UserSignUpRequest("TEST", "TEST");
-        MockMultipartFile passportImage = new MockMultipartFile("test", "test".getBytes());
-
         //when
         ResultActions resultActions = mvc.perform(multipart("/users/auth")
-                .file("image", passportImage.getBytes())
-                .param("information", objectMapper.writeValueAsString(request)));
+                .file("passportImage", "TEST".getBytes())
+                .param("deviceId", "TEST")
+                .param("nickname", "TEST"));
 
         //then
         resultActions
@@ -37,14 +32,17 @@ class UserSignUpControllerTest extends BaseIntegrationTest {
         //rest docs
         resultActions
                 .andDo(document("user/{method-name}",
-                    requestParameters(
-                            parameterWithName("information").description("회원가입 정보 \n ex. {'deviceId': 'TEST', 'nickname': 'TEST'}")
-                    ),
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
                     requestParts(
-                            partWithName("image").description("여권 이미지")
+                            partWithName("passportImage").description("여권이미지")
+                    ),
+                    requestParameters(
+                            parameterWithName("deviceId").description("유저의 mobile device id"),
+                            parameterWithName("nickname").description("닉네임")
                     ),
                     responseFields(
-                            fieldWithPath("userId").description("Database상의 user_id")
+                            fieldWithPath("userId").description("Database상의 userId")
                     )
                 ));
     }

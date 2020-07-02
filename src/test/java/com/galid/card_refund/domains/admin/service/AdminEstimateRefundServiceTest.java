@@ -1,21 +1,18 @@
 package com.galid.card_refund.domains.admin.service;
 
+import com.galid.card_refund.common.BaseTestConfig;
 import com.galid.card_refund.common.model.Money;
 import com.galid.card_refund.domains.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.refund.domain.RefundLine;
 import com.galid.card_refund.domains.refund.domain.RefundResultLine;
 import com.galid.card_refund.domains.refund.domain.RefundStatus;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-@Transactional
-class AdminEstimateRefundServiceTest {
+class AdminEstimateRefundServiceTest extends BaseTestConfig {
     private Money REFUND_REQUEST_AMOUNT = Money.builder()
             .value(1000)
             .build();

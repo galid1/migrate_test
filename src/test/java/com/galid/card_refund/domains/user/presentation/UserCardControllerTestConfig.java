@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.user.presentation;
 
-import com.galid.card_refund.common.BaseIntegrationTest;
+import com.galid.card_refund.common.BaseIntegrationTestConfig;
 import com.galid.card_refund.config.CardSetUp;
 import com.galid.card_refund.config.UserSetUp;
 import com.galid.card_refund.domains.card.domain.CardEntity;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class UserCardControllerTest  extends BaseIntegrationTest {
+class UserCardControllerTestConfig extends BaseIntegrationTestConfig {
     @Autowired
     private UserSetUp userSetUp;
     @Autowired

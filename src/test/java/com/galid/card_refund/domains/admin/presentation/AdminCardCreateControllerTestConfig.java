@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.admin.presentation;
 
-import com.galid.card_refund.common.BaseIntegrationTest;
+import com.galid.card_refund.common.BaseIntegrationTestConfig;
 import com.galid.card_refund.domains.card.domain.CardInitMoney;
 import com.galid.card_refund.domains.card.application.request_response.CardCreateRequest;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class AdminCardCreateControllerTest extends BaseIntegrationTest {
+class AdminCardCreateControllerTestConfig extends BaseIntegrationTestConfig {
     private String TEST_CARD_NUM = "1234123412341234";
     private CardInitMoney TEST_CARD_INIT_MONEY = CardInitMoney.TEN;
 

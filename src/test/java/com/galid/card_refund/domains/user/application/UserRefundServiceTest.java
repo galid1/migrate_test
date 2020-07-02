@@ -1,7 +1,9 @@
 package com.galid.card_refund.domains.user.application;
 
+import com.galid.card_refund.common.BaseTestConfig;
 import com.galid.card_refund.common.model.Money;
 import com.galid.card_refund.domains.refund.domain.*;
+import com.galid.card_refund.domains.user.application.request_response.UserRefundRequestList;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserRepository;
 import com.galid.card_refund.domains.user.application.request_response.UserRefundRequest;
@@ -9,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -17,9 +20,7 @@ import java.util.Map;
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@Transactional
-public class UserRefundServiceTest {
+public class UserRefundServiceTest extends BaseTestConfig {
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -38,18 +39,12 @@ public class UserRefundServiceTest {
                 .nickname("JJY")
                 .build());
 
-        List<UserRefundRequest> request = List.of(
-                UserRefundRequest.builder()
-                        .refundItemId(1)
-                        .paymentAmount(REFUND_REQUEST_AMOUNT.getValue())
-                        .place("TEST")
-                        .purchaseDateTime("date")
-                        .build()
-        );
+        UserRefundRequestList userRefundRequestList = new UserRefundRequestList();
+        userRefundRequestList.setUserRefundRequestList(List.of(
+                new UserRefundRequest("TEST", "TEST", 1000, new MockMultipartFile("TEST", "TEST".getBytes()))
+        ));
 
-        userRefundService.refund(savedUser.getUserId(),
-                                 request,
-                                 Map.ofEntries(entry("", new String("").getBytes())));
+        userRefundService.refund(savedUser.getUserId(), userRefundRequestList);
 
         findRefund = refundRepository.findByRequestorId(savedUser.getUserId()).get();
     }
@@ -65,33 +60,4 @@ public class UserRefundServiceTest {
         Money expectRefundAmount = new Money(Math.floor(REFUND_REQUEST_AMOUNT.getValue() * 1 / 11));
         assertEquals(findRefund.getExpectRefundAmount(), expectRefundAmount);
     }
-    
-    @Test
-    public void 환급요청시_이미지개수가_맞지않는경우_에러() throws Exception {
-        //given, when
-        List<UserRefundRequest> refundLineList = List.of(
-                UserRefundRequest.builder()
-                        .place("TEST")
-                        .purchaseDateTime("TEST")
-                        .paymentAmount(1000)
-                        .refundItemId(1)
-                        .build(),
-                UserRefundRequest.builder()
-                        .place("TEST")
-                        .purchaseDateTime("TEST")
-                        .paymentAmount(1000)
-                        .refundItemId(1)
-                        .build()
-        );
-
-        Map<String, byte[]> refundItemImageByteMap = Map.ofEntries(
-            entry("TEST", "TEST".getBytes())
-        );
-
-        // Then
-        assertThrows(IllegalArgumentException.class
-                ,() -> userRefundService.refund(savedUser.getUserId(), refundLineList, refundItemImageByteMap));
-    }
-
-
 }

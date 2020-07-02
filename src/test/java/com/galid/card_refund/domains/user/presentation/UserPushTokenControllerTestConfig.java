@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.user.presentation;
 
-import com.galid.card_refund.common.BaseIntegrationTest;
+import com.galid.card_refund.common.BaseIntegrationTestConfig;
 import com.galid.card_refund.config.UserSetUp;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.application.request_response.StorePushTokenRequest;
@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class UserPushTokenControllerTest extends BaseIntegrationTest {
+class UserPushTokenControllerTestConfig extends BaseIntegrationTestConfig {
     @Autowired
     private UserSetUp userSetUp;
 

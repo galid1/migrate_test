@@ -1,17 +1,16 @@
 package com.galid.card_refund.domains.refund.domain;
 
+import com.galid.card_refund.common.BaseTestConfig;
 import com.galid.card_refund.common.model.Money;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-public class RefundEntityTest {
+public class RefundEntityTest extends BaseTestConfig {
     @Autowired
     private RefundRepository refundRepository;
 
