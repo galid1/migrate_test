@@ -22,7 +22,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 @Component
 @Profile("test")

@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.user.domain;
 
-import com.galid.card_refund.common.logging.BaseEntity;
+import com.galid.card_refund.common.logging.BaseAuditEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "push_token")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class PushTokenEntity extends BaseEntity {
+public class PushTokenEntity extends BaseAuditEntity {
     @Id @GeneratedValue
     private Long pushTokenId;
 

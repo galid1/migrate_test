@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.refund.domain;
 
-import com.galid.card_refund.common.logging.BaseEntity;
+import com.galid.card_refund.common.logging.BaseAuditEntity;
 import com.galid.card_refund.common.model.Money;
 import com.galid.card_refund.domains.user.exception.NotYetEstimatedException;
 import lombok.AccessLevel;
@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "refund")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class RefundEntity extends BaseEntity {
+public class RefundEntity extends BaseAuditEntity {
     @Id @GeneratedValue
     private Long refundId;
 

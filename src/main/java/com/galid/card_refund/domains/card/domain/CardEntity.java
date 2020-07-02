@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.card.domain;
 
-import com.galid.card_refund.common.logging.BaseEntity;
+import com.galid.card_refund.common.logging.BaseAuditEntity;
 import com.galid.card_refund.common.model.Money;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Table(name = "card")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class CardEntity extends BaseEntity {
+public class CardEntity extends BaseAuditEntity {
     @Id @GeneratedValue
     private long cardId;
 

@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.loss.domain;
 
-import com.galid.card_refund.common.logging.BaseEntity;
+import com.galid.card_refund.common.logging.BaseAuditEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "loss")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class LossEntity extends BaseEntity {
+public class LossEntity extends BaseAuditEntity {
     @Id @GeneratedValue
     private Long lossId;
 

@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.user.domain;
 
-import com.galid.card_refund.common.logging.BaseEntity;
+import com.galid.card_refund.common.logging.BaseAuditEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "user")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserEntity extends BaseEntity {
+public class UserEntity extends BaseAuditEntity {
     @Id @GeneratedValue
     private Long userId;
 
