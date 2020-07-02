@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.refund.domain;
 
-import com.galid.card_refund.common.spring_config.logging.BaseEntity;
+import com.galid.card_refund.common.logging.BaseEntity;
 import com.galid.card_refund.common.model.Money;
 import com.galid.card_refund.domains.user.exception.NotYetEstimatedException;
 import lombok.AccessLevel;

@@ -1,6 +1,6 @@
 package com.galid.card_refund.domains.user.domain;
 
-import com.galid.card_refund.common.spring_config.logging.BaseEntity;
+import com.galid.card_refund.common.logging.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
