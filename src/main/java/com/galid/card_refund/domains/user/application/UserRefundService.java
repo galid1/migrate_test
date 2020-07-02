@@ -6,6 +6,7 @@ import com.galid.card_refund.common.model.Money;
 import com.galid.card_refund.domains.refund.domain.RefundEntity;
 import com.galid.card_refund.domains.refund.domain.RefundLine;
 import com.galid.card_refund.domains.refund.domain.RefundRepository;
+import com.galid.card_refund.domains.user.application.request_response.UserRefundRequestList;
 import com.galid.card_refund.domains.user.domain.UserEntity;
 import com.galid.card_refund.domains.user.domain.UserPassportInformation;
 import com.galid.card_refund.domains.user.domain.UserRepository;
@@ -38,14 +39,11 @@ public class UserRefundService {
     private final S3FileUploader s3FileUploader;
 
     @Transactional
-    public UserRefundResponse refund(Long requestorId, List<UserRefundRequest> refundLineList, Map<String, byte[]> refundItemImageByteMap) {
+    public UserRefundResponse refund(Long requestorId, UserRefundRequestList request) {
         verifyDuplicateRefundRequest(requestorId);
-        verifyRefundRequestImageCount(refundLineList, refundItemImageByteMap);
-
-        Map<String, String> refundItemImageUrlMap = uploadRefundItemImageList(requestorId, refundItemImageByteMap);
 
         RefundEntity refundEntity = RefundEntity.builder()
-                .requestRefundLineList(toRefundLineList(refundLineList, refundItemImageUrlMap))
+                .requestRefundLineList(toRefundLineList(String.valueOf(requestorId), request.getUserRefundRequestList()))
                 .requestorId(requestorId)
                 .build();
 
@@ -55,38 +53,20 @@ public class UserRefundService {
                 savedRefundEntity.getExpectRefundAmount().getValue());
     }
 
+    private List<RefundLine> toRefundLineList(String imageKey, List<UserRefundRequest> userRefundRequestList) {
+        return userRefundRequestList.stream()
+                .map(request -> RefundLine.builder()
+                        .itemImageUrl(s3FileUploader.uploadFile(imageKey, ImageType.REFUND_IMAGE, request.getRefundItemImageByte()))
+                        .paymentAmount(new Money(request.getPaymentAmount()))
+                        .place(request.getPlace())
+                        .purchaseDateTime(request.getPurchaseDateTime())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
     private void verifyDuplicateRefundRequest(Long requestorId) {
         if (refundRepository.findByRequestorId(requestorId).isPresent())
             throw new IllegalArgumentException("환급 요청은 한번만 가능합니다.");
-    }
-
-    private void verifyRefundRequestImageCount(List<UserRefundRequest> refundLineList, Map<String, byte[]> refundItemImageByteMap) {
-        if (refundLineList.size() != refundItemImageByteMap.size())
-            throw new IllegalArgumentException("환급 요청 상품의 수와 상품의 이미지 수가 다릅니다.");
-    }
-
-    private Map<String, String> uploadRefundItemImageList(Long requestorId, Map<String, byte[]> refundItemImageByteMap) {
-        return refundItemImageByteMap.entrySet()
-                .stream()
-                .map(e -> entry(e.getKey(),
-                                s3FileUploader.uploadFile(String.valueOf(requestorId), ImageType.REFUND_IMAGE, e.getValue())
-                        )
-                )
-                .collect(toMap(e -> e.getKey(), e -> e.getValue()));
-    }
-
-    private List<RefundLine> toRefundLineList(List<UserRefundRequest> refundRequestList,
-                                              Map<String, String> refundItemImageUrlMap) {
-        return refundRequestList.stream()
-                .map(userRefundRequest ->
-                        RefundLine.builder()
-                                .place(userRefundRequest.getPlace())
-                                .itemImageUrl(refundItemImageUrlMap.get(userRefundRequest.getRefundItemId()))
-                                .paymentAmount(new Money(userRefundRequest.getPaymentAmount()))
-                                .purchaseDateTime(userRefundRequest.getPurchaseDateTime())
-                                .build()
-                )
-                .collect(Collectors.toList());
     }
 
     public UserRefundResultResponse getRefundRequestResult(Long userId) {
