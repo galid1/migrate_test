@@ -6,11 +6,13 @@ import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 @RequiredArgsConstructor
+@Profile("deploy")
 public class FcmAopConfig {
     private final FirebaseCloudMessageService messageService;
     private final RefundRepository refundRepository;
