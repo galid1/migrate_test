@@ -5,6 +5,6 @@
 3. s3에 접근 가능한 IAM User를 만들어, 해당 정보를 아래와 같이 입력
 ```
 [default]
-aws_access_key_id = AKIA5BITJ2KPZ5BR7ZGK
-aws_secret_access_key = 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
+aws_access_key_id = ...
+aws_secret_access_key = ...
 ```
