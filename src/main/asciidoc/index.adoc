@@ -1,0 +1,210 @@
+= Tour-Cash REST API Docs
+:toc: left
+:toclevels: 2
+
+== 추가 및 변경사항
+#### 07.01
+- 회원가입 요청 인터페이스 변경
+- 유저정보 변경 인터페이스 변경
+- 관리자 환급평가 요청 인터페이스 변경
+- 유저 환급 요청 인터페이스 변경
+
+#### 06.29
+- 환급 상태 변경 (
+    환급 평가완료상태(COMPLETE_STATUS)를 ESTIMATED_STATUS 로 변경
+    환급 완료상태(REFUNDED_STATUS) 추가 (공항 관리자가 사용자에게 환급을 완료한 상태)
+)
+
+#### 06.18
+- 로그인, 회원가입 api 주소 변경 (/auth/users -> /users/auth)
+
+#### 06.15
+- 로그인 후, 응답에 담긴 token 필드명 변경(token -> apiToken)
+- push token 관련 api 추가 (저장, 갱신, 조회)
+
+#### 06.11
+- 카드생성 (/cards)를 admin 하위 도메인으로 이동(/admin/cards)
+- admin 관련 api 추가
+- 회원가입 , 환급요청 등 이미지 관련 api 추가
+
+
+
+== 1. Admin
+=== /admins/cards
+#### 카드 생성
+
+.request
+include::{snippets}/admin/카드생성/http-request.adoc[]
+include::{snippets}/admin/카드생성/request-fields.adoc[]
+
+.response
+include::{snippets}/admin/카드생성/http-response.adoc[]
+include::{snippets}/admin/카드생성/response-fields.adoc[]
+
+
+=== /admin/users/{userId}/passport
+#### 여권 평가
+
+.request
+include::{snippets}/admin/여권평가/http-request.adoc[]
+include::{snippets}/admin/여권평가/request-fields.adoc[]
+
+.response
+include::{snippets}/admin/여권평가/http-response.adoc[]
+
+=== /admin/refunds/{refundId}
+#### 환급요청 평가
+
+.request
+include::{snippets}/admin/환급요청평가/http-request.adoc[]
+include::{snippets}/admin/환급요청평가/request-parameters.adoc[]
+include::{snippets}/admin/환급요청평가/request-parts.adoc[]
+
+.response
+include::{snippets}/admin/환급요청평가/http-response.adoc[]
+
+== 2. User
+
+=== /users/auth
+
+#### 회원가입
+.request
+include::{snippets}/user/회원가입/http-request.adoc[]
+include::{snippets}/user/회원가입/request-parts.adoc[]
+include::{snippets}/user/회원가입/request-parameters.adoc[]
+
+.response
+include::{snippets}/user/회원가입/http-response.adoc[]
+include::{snippets}/user/회원가입/response-fields.adoc[]
+
+
+#### 로그인
+.request
+include::{snippets}/user/로그인/http-request.adoc[]
+include::{snippets}/user/로그인/request-fields.adoc[]
+
+.response
+include::{snippets}/user/로그인/http-response.adoc[]
+include::{snippets}/user/로그인/response-fields.adoc[]
+
+
+=== /users/{userId}/information
+
+#### 유저정보 조회
+
+.request
+include::{snippets}/user/유저정보_조회/http-request.adoc[]
+
+.response
+include::{snippets}/user/유저정보_조회/http-response.adoc[]
+include::{snippets}/user/유저정보_조회/response-fields.adoc[]
+
+
+=== /users/{userId}/passport-status
+#### 여권상태 조회
+.request
+include::{snippets}/user/여권상태_조회/http-request.adoc[]
+
+.response
+include::{snippets}/user/여권상태_조회/http-response.adoc[]
+include::{snippets}/user/여권상태_조회/response-fields.adoc[]
+
+
+=== /users/{userId}/user-cards
+
+#### 유저 카드등록
+.request
+include::{snippets}/user/유저_카드등록/http-request.adoc[]
+include::{snippets}/user/유저_카드등록/request-fields.adoc[]
+
+.response
+include::{snippets}/user/유저_카드등록/http-response.adoc[]
+include::{snippets}/user/유저_카드등록/response-fields.adoc[]
+
+
+#### 유저 카드반납
+.request
+include::{snippets}/user/유저_카드반납/http-request.adoc[]
+
+.response
+include::{snippets}/user/유저_카드반납/http-response.adoc[]
+
+
+#### 유저 카드 등록상태 조회
+.request
+include::{snippets}/user/유저_카드등록상태_조회/http-request.adoc[]
+
+.response
+include::{snippets}/user/유저_카드등록상태_조회/http-response.adoc[]
+include::{snippets}/user/유저_카드등록상태_조회/response-fields.adoc[]
+
+
+=== /users/{userId}/user-cards/usage
+
+#### 유저 카드 사용내역 조회
+.request
+include::{snippets}/user/카드사용내역_조회/http-request.adoc[]
+
+.response
+include::{snippets}/user/카드사용내역_조회/http-response.adoc[]
+include::{snippets}/user/카드사용내역_조회/response-fields.adoc[]
+
+
+=== /users/{userId}/refunds
+
+#### 환급요청
+.request
+include::{snippets}/user/환급요청/http-request.adoc[]
+include::{snippets}/user/환급요청/request-parts.adoc[]
+include::{snippets}/user/환급요청/request-parameters.adoc[]
+
+.response
+include::{snippets}/user/환급요청/http-response.adoc[]
+include::{snippets}/user/환급요청/response-fields.adoc[]
+
+
+#### 환급요청 결과 조회
+.request
+include::{snippets}/user/환급요청_결과_조회/http-request.adoc[]
+
+.response
+include::{snippets}/user/환급요청_결과_조회/http-response.adoc[]
+include::{snippets}/user/환급요청_결과_조회/response-fields.adoc[]
+
+
+=== /users/{userId}/loss
+
+#### 분실 신고
+.request
+include::{snippets}/user/분실신고/http-request.adoc[]
+
+.response
+include::{snippets}/user/분실신고/http-response.adoc[]
+include::{snippets}/user/분실신고/response-fields.adoc[]
+
+
+=== /users/{userId}/push-token
+
+#### 푸시토큰 저장
+.request
+include::{snippets}/user/푸시토큰_저장/http-request.adoc[]
+include::{snippets}/user/푸시토큰_저장/request-fields.adoc[]
+
+.response
+include::{snippets}/user/푸시토큰_저장/http-response.adoc[]
+
+#### 푸시토큰 갱신
+.request
+include::{snippets}/user/푸시토큰_갱신/http-request.adoc[]
+include::{snippets}/user/푸시토큰_갱신/request-fields.adoc[]
+
+.response
+include::{snippets}/user/푸시토큰_갱신/http-response.adoc[]
+
+#### 푸시토큰 조회
+.request
+include::{snippets}/user/푸시토큰_조회/http-request.adoc[]
+
+.response
+include::{snippets}/user/푸시토큰_조회/http-response.adoc[]
+include::{snippets}/user/푸시토큰_조회/response-fields.adoc[]
