@@ -40,6 +40,22 @@ public class LossService {
             throw new IllegalStateException("이미 요청된 분실신고가 존재합니다.");
     }
 
+    @Transactional
+    public Long processLoss(Long ownerId) {
+        CardEntity cardEntity = getCardEntityByOwnerId(ownerId);
+        LossEntity lossEntity = getCurrentReceiptLossEntity(cardEntity.getCardId());
+        lossEntity.processLoss();
+        return lossEntity.getLossId();
+    }
+
+    @Transactional
+    public Long cancelLoss(Long ownerId) {
+        CardEntity cardEntity = getCardEntityByOwnerId(ownerId);
+        LossEntity lossEntity = getCurrentReceiptLossEntity(cardEntity.getCardId());
+        lossEntity.cancel();
+        return lossEntity.getLossId();
+    }
+
     private CardEntity getCardEntityByOwnerId(Long ownerId) {
         return cardRepository.findFirstByOwnerIdOrderByCreatedDateDesc(ownerId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 소유한 카드가 존재하지 않습니다."));
