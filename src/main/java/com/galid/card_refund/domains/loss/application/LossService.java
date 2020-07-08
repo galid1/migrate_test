@@ -36,9 +36,8 @@ public class LossService {
     }
 
     private void validateDuplicatedLossReport(Long cardId) {
-        Optional<LossEntity> lossEntity = getCurrentReceiptLossEntity(cardId);
-        if (lossEntity.isPresent())
-            throw new IllegalStateException("이미 분실 요청된 카드입니다.");
+        if(getCurrentReceiptLossEntity(cardId) != null)
+            throw new IllegalStateException("이미 요청된 분실신고가 존재합니다.");
     }
 
     private CardEntity getCardEntityByOwnerId(Long ownerId) {
@@ -46,7 +45,8 @@ public class LossService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 소유한 카드가 존재하지 않습니다."));
     }
 
-    private Optional<LossEntity> getCurrentReceiptLossEntity(Long cardId) {
-        return lossRepository.findFirstByCardIdAndLossStatus(cardId, LossStatus.RECEIPT_STATUS);
+    private LossEntity getCurrentReceiptLossEntity(Long cardId) {
+        return lossRepository.findFirstByCardIdAndLossStatus(cardId, LossStatus.RECEIPT_STATUS)
+                .orElseThrow(() -> new IllegalArgumentException("현재 접수된 분실신고가 존재하지 않습니다."));
     }
 }
