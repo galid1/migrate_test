@@ -20,8 +20,7 @@ public class LossService {
 
     @Transactional
     public Long reportLossCard(Long ownerId) {
-        CardEntity card = cardRepository.findFirstByOwnerIdOrderByCreatedDateDesc(ownerId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 소유한 카드가 존재하지 않습니다."));
+        CardEntity card = getCardEntityByOwnerId(ownerId);
 
         validateDuplicatedLossReport(card.getCardId());
         card.reportLoss();
@@ -40,6 +39,11 @@ public class LossService {
         Optional<LossEntity> lossEntity = getCurrentReceiptLossEntity(cardId);
         if (lossEntity.isPresent())
             throw new IllegalStateException("이미 분실 요청된 카드입니다.");
+    }
+
+    private CardEntity getCardEntityByOwnerId(Long ownerId) {
+        return cardRepository.findFirstByOwnerIdOrderByCreatedDateDesc(ownerId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 소유한 카드가 존재하지 않습니다."));
     }
 
     private Optional<LossEntity> getCurrentReceiptLossEntity(Long cardId) {
