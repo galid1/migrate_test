@@ -35,7 +35,7 @@ public class UserSignInService {
                     .getApiToken();
         }
         else {
-            String token = jwtUtil.generateToken();
+            String token = jwtUtil.generateAccessToken();
             ApiTokenEntity apiTokenEntity = ApiTokenEntity.builder()
                     .apiToken(token)
                     .userId(userId)

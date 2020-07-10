@@ -20,7 +20,7 @@ public class JwtUtil {
         this.expiration = 3600 * 1000;
     }
 
-    public String generateToken() {
+    public String generateAccessToken() {
         return Jwts.builder()
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
