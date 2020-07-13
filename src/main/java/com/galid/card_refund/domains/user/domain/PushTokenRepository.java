@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface PushTokenRepository extends JpaRepository<PushTokenEntity, Long> {
     Optional<PushTokenEntity> findFirstByUserId(Long userId);
+    Optional<PushTokenEntity> findById(Long tokenId);
 }

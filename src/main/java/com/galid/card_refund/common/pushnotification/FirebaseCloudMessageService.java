@@ -54,6 +54,8 @@ public class FirebaseCloudMessageService {
             e.printStackTrace();
         }
 
+        System.out.println("credentials : " + googleCredentials);
+
         return googleCredentials.getAccessToken().getTokenValue();
     }
 

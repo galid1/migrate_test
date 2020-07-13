@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: deploy
+    active: capture
 
   jpa:
     hibernate:
@@ -61,3 +61,15 @@ server:
 spring:
   profiles: deploy
 
+
+---
+#### for capture ####
+server:
+  port: 443
+  ssl:
+    key-store: classpath:keystore/capture.p12
+    key-store-type: PKCS12
+    key-store-password: crew1207
+
+spring:
+  profiles: capture

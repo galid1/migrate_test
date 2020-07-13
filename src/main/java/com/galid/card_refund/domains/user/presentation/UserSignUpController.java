@@ -20,6 +20,7 @@ public class UserSignUpController {
     @PostMapping(value = "/users/auth", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UserSignUpResponse signUp(@RequestParam("information") UserSignUpRequest request,
                                      @RequestParam("image") MultipartFile passportImage) throws IOException {
+        System.out.println("sign up @@@@@@@@@");
         return signUpService.signUp(request, passportImage);
     }
 

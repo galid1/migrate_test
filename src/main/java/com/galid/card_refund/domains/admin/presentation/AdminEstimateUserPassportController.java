@@ -17,7 +17,7 @@ public class AdminEstimateUserPassportController {
     @PostMapping("/admin/users/{userId}/passport")
     public ResponseEntity addUserInformation(@PathVariable("userId") Long userId,
                                              @RequestBody AdminEstimateUserPassportRequest request) {
-        adminEstimateUserPassportService.addUserInformation(userId, request);
+        adminEstimateUserPassportService.estimateUserPassport(userId, request);
         return ResponseEntity.ok().build();
     }
 }
