@@ -20,5 +20,4 @@ public class UserSignUpController {
     public UserSignUpResponse signUp(@ModelAttribute @Valid UserSignUpRequest request) throws IOException {
         return signUpService.signUp(request);
     }
-
 }
